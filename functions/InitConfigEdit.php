@@ -116,9 +116,6 @@ file_put_contents($configFilePath, $configContent);
 
 // Création de la table users
 try {
-    // Connexion à la base de données
-    $pdo = new PDO($dsn, $username, $password);
-
     // Définir le mode d'erreur de PDO sur Exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -172,9 +169,6 @@ try {
 
 // Création de la table users
 try {
-    // Connexion à la base de données
-    $pdo = new PDO($dsn, $username, $password);
-
     // Définir le mode d'erreur de PDO sur Exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
