@@ -2,8 +2,8 @@
 // controllers/InitController.php
 
 class InitController {
-    public function index() {
-        $content = "Initialisation du site";
-        echo json_encode(['content' => $content]);
+    public function show() {
+        $titre = "Initialisation du site";
+        require_once 'website/admin/init.php';
     }
 }

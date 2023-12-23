@@ -1,24 +1,59 @@
 <?php
-var_dump($_SESSION);
-// router.php
-$url = $_SERVER['REQUEST_URI'];
+// Récupération du fichier de configuration 
+$ConfigFile = 'base/config.php';
 
-// Connectez-vous à votre base de données ici
-require_once 'base/nexus_base.php';
+if (!file_exists($ConfigFile)) {
+    $route = [
+        'controller' => 'InitController',
+        'action' => 'show'
+    ];
+}else{
+    require_once($ConfigFile);
 
-// Requête SQL pour récupérer les informations de routage
-try {
-    $query = "SELECT * FROM routes WHERE url_pattern = :url";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(':url', $url);
-    $stmt->execute();
-    $route = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($stmt->rowCount() == 0) {
-        header("Location: /initialisation");
-        exit();
+    if (STAT_INSTALL != 'true'){
+        // Si le système d'installation est active
+        $route = [
+            'controller' => 'InitController',
+            'action' => 'show'
+        ];
+    
+    }else if (WEB_MAINTENANCE == 'true'){
+        // Si le système de maintenace est actif
+        $route = [
+            'controller' => 'MaintenanceController',
+            'action' => 'show'
+        ];
+    }else{
+        echo ' -----------  check  ------------';
+        // Connectez-vous à votre base de données ici
+        require_once 'base/nexus_base.php';
+        // Requête SQL pour récupérer les informations de routage
+        try {
+            $query = "SELECT * FROM routes WHERE url_pattern = :url";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(':url', $url);
+            $stmt->execute();
+            $route = $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            // Gérer d'autres exceptions
+            echo "An unexpected error occurred: " . $e->getMessage();
+        }
     }
-} catch (Exception $e) {
-    // Gérer d'autres exceptions
-    echo "An unexpected error occurred: " . $e->getMessage();
+}
+
+
+// Vérifiez si une route correspond à l'URL demandée
+if ($route) {
+    $controllerName = $route['controller'];
+    $actionName = $route['action'];
+
+    // Inclure et instancier le contrôleur
+    require_once("controllers/{$controllerName}.php");
+    $controller = new $controllerName();
+
+    // Appeler l'action
+    $controller->$actionName();
+} else {
+    // Gérer les routes non trouvées (par exemple, afficher une page d'erreur)
+    echo "Route not found";
 }

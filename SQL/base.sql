@@ -7,5 +7,7 @@ CREATE TABLE routes (
 
 INSERT INTO routes (url_pattern, controller, action) VALUES
     ('/accueil', 'HomeController', 'index'),
-    ('/contact', 'ContactController', 'show');
+    ('/connexion', 'ConnexionController', 'show'),
+    ('/admin', 'AdminController', 'show');
+    ('/admin/routes', 'AdminRoutesController', 'show');
 
