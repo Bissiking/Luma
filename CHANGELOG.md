@@ -10,3 +10,6 @@
 - Création des utilisateurs (Par default) avec le script
 - Vérification du fichier de configuration
 - Redirection en cas de non présence du fichie rde configuration
+- Vérification de la présence des utilisateurs (Éviter les doublons)
+- Vérification de la présence des routes (Éviter les doublons)
+- Création des trois blocs d'état de connexion et API

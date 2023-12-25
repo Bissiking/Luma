@@ -121,7 +121,7 @@ try {
 
     // Requête de création de table
     $query = "
-		CREATE TABLE luma_routes (
+		CREATE TABLE IF NOT EXISTS luma_routes (
 			id INT PRIMARY KEY AUTO_INCREMENT,
 			url_pattern VARCHAR(255) NOT NULL,
 			controller VARCHAR(255) NOT NULL,
@@ -135,90 +135,147 @@ try {
     $pdo->exec($query);
 
 	//Création de la route Accueil
-	$insertRoutes1 = "
-        INSERT INTO luma_routes (url_pattern, controller, action, url_domain)
-        VALUES ('/', 'HomeController', 'index', '".SITE_URL."')
-    ";
-    $pdo->exec($insertRoutes1);
+	$urlToCheck = '/';
+	$query = "SELECT * FROM luma_routes WHERE url_pattern = :url";
+	$stmt = $pdo->prepare($query);
+	$stmt->bindParam(':url', $urlToCheck);
+	$stmt->execute();
+	$route = $stmt->fetch(PDO::FETCH_ASSOC);
+
+	if (!$route) {
+		$insertRoutes1 = "
+			INSERT INTO luma_routes (url_pattern, controller, action, url_domain)
+			VALUES ('/', 'HomeController', 'index', '".SITE_URL."')
+		";
+		$pdo->exec($insertRoutes1);
+	}
+
 
 	//Création de la route de connexion
-	$insertRoutes2 = "
+	$urlToCheck = '/connexion';
+	$query = "SELECT * FROM luma_routes WHERE url_pattern = :url";
+	$stmt = $pdo->prepare($query);
+	$stmt->bindParam(':url', $urlToCheck);
+	$stmt->execute();
+	$route = $stmt->fetch(PDO::FETCH_ASSOC);
+
+	if (!$route) {
+		$insertRoutes2 = "
         INSERT INTO luma_routes (url_pattern, controller, action, url_domain)
         VALUES ('/connexion', 'ConnexionController', 'show', '".SITE_URL."')
     ";
     $pdo->exec($insertRoutes2);
+	}
 
 	//Création de la route Admin
-	$insertRoutes3 = "
+	$urlToCheck = '/admin';
+	$query = "SELECT * FROM luma_routes WHERE url_pattern = :url";
+	$stmt = $pdo->prepare($query);
+	$stmt->bindParam(':url', $urlToCheck);
+	$stmt->execute();
+	$route = $stmt->fetch(PDO::FETCH_ASSOC);
+
+	if (!$route) {
+		$insertRoutes3 = "
         INSERT INTO luma_routes (url_pattern, controller, action, url_domain)
         VALUES ('/admin', 'AdminController', 'show', '".SITE_URL."')
     ";
     $pdo->exec($insertRoutes3);
+	}
 
 	//Création de la route Admin/routes
-	$insertRoutes3 = "
+	$urlToCheck = '/admin/routes';
+	$query = "SELECT * FROM luma_routes WHERE url_pattern = :url";
+	$stmt = $pdo->prepare($query);
+	$stmt->bindParam(':url', $urlToCheck);
+	$stmt->execute();
+	$route = $stmt->fetch(PDO::FETCH_ASSOC);
+
+	if (!$route) {
+		$insertRoutes3 = "
         INSERT INTO luma_routes (url_pattern, controller, action, url_domain)
         VALUES ('/admin/routes', 'AdminRoutesController', 'show', '".SITE_URL."')
     ";
     $pdo->exec($insertRoutes3);
-
+	}
 
 } catch (PDOException $e) {
-    echo 'configCreateTable01-echec';
+    echo 'configCreateTable01-echec --> '.$e->getMessage();
+	exit;
 }
 
-// Création de la table users
+// Création de la table users et des users
 try {
     // Définir le mode d'erreur de PDO sur Exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Requête de création de table
     $query = "
-		CREATE TABLE luma_users (
+		CREATE TABLE IF NOT EXISTS luma_users (
 			id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
 			identifiant VARCHAR(255) NOT NULL,
 			password VARCHAR(255) NOT NULL,
-			system TINYINT(4) NOT NULL,
-			users_domain VARCHAR(255) NOT NULL
+			account_system TINYINT(4) NOT NULL DEFAULT 0,
+			users_domain VARCHAR(255) NOT NULL,
+			account_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    		account_edit TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 		)
     ";
 
     // Exécution de la requête
     $pdo->exec($query);
 
-	// Chargement de la LIB (password_generate)
+	// Création du déclancheur de mise à jour
+	$query = "
+		CREATE TRIGGER IF NOT EXISTS update_account_edit
+		BEFORE UPDATE ON luma_users
+		FOR EACH ROW
+		SET NEW.account_edit = CURRENT_TIMESTAMP;
+    ";
 
+    // Exécution de la requête
+    $pdo->exec($query);
+
+	// Chargement de la LIB (password_generate)
+	require_once '../lib/password_generate.php';
 	$motDePasseGenere = genererMotDePasse(24);
 
 	//Création de l'utilisateur SYSTEM
-	$insertUser1Query = "
-        INSERT INTO luma_users (identifiant, password)
-        VALUES ('system', '" . password_hash("".$motDePasseGenere."", PASSWORD_BCRYPT) . "')
+	$UserToCheck = 'system';
+	$query = "SELECT * FROM luma_users WHERE identifiant = :identifiant";
+	$stmt = $pdo->prepare($query);
+	$stmt->bindParam(':identifiant', $UserToCheck);
+	$stmt->execute();
+	$user = $stmt->fetch(PDO::FETCH_ASSOC);
+	
+	if (!$user) {
+		$insertUser1Query = "
+        INSERT INTO luma_users (identifiant, password, users_domain)
+        VALUES ('system', '" . password_hash("".$motDePasseGenere."", PASSWORD_BCRYPT) . "', '".SITE_URL."')
     ";
-
-    // Exécution de la requête d'insertion pour le premier utilisateur 
     $pdo->exec($insertUser1Query);
-
+	}
+	
 	// Création de l'utilisateur (ADMINISTRATEUR)
-    $insertUser2Query = "
-        INSERT INTO users (identifiant, password)
-        VALUES ('".$USER_ADMIN."', '" . password_hash($USER_ADMIN_MDP, PASSWORD_BCRYPT) . "')
+	$query = "SELECT * FROM luma_users WHERE identifiant = :identifiant";
+	$stmt = $pdo->prepare($query);
+	$stmt->bindParam(':identifiant', $USER_ADMIN);
+	$stmt->execute();
+	$user = $stmt->fetch(PDO::FETCH_ASSOC);
+	
+	if (!$user) {
+		$insertUser2Query = "
+        INSERT INTO luma_users (identifiant, password, users_domain)
+        VALUES ('".$USER_ADMIN."', '" . password_hash($USER_ADMIN_MDP, PASSWORD_BCRYPT) . "', '".SITE_URL."')
     ";
-
-    // Exécution de la requête d'insertion pour le deuxième utilisateur
     $pdo->exec($insertUser2Query);
+	}
 
-
-} catch (PDOException $e) {
-    echo 'configCreateTable02-echec';
-}
-
-// Création du compte system et admin
-try {
 
 
 } catch (PDOException $e) {
-    echo 'configCreateUserSystem-echec';
+    echo 'configCreateUserSystem-echec // -> '.$e->getMessage();
+	exit;
 }
 
 

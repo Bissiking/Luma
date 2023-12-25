@@ -3,6 +3,6 @@
 
 class HomeController {
     public function index() {
-        echo "Page d'accueil";
+        require_once './website/luma/home.php';
     }
 }

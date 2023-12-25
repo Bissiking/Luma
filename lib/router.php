@@ -24,23 +24,30 @@ if (!file_exists($ConfigFile)) {
             'action' => 'show'
         ];
     }else{
-        echo ' -----------  check  ------------';
         // Connectez-vous à votre base de données ici
         require_once 'base/nexus_base.php';
-        // Requête SQL pour récupérer les informations de routage
-        try {
-            $query = "SELECT * FROM routes WHERE url_pattern = :url";
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(':url', $url);
-            $stmt->execute();
-            $route = $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (Exception $e) {
-            // Gérer d'autres exceptions
-            echo "An unexpected error occurred: " . $e->getMessage();
+
+        // Si la base ne réponds pas
+        if ($ERROR == 1) {
+            $route = [
+                'controller' => 'HomeController',
+                'action' => 'index'
+            ];
+        }else{
+            // Requête SQL pour récupérer les informations de routage
+            try {
+                $query = "SELECT * FROM luma_routes WHERE url_pattern = :url";
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(':url', $url);
+                $stmt->execute();
+                $route = $stmt->fetch(PDO::FETCH_ASSOC);
+            } catch (Exception $e) {
+                // Gérer d'autres exceptions
+                echo "An unexpected error occurred: " . $e->getMessage();
+            }
         }
     }
 }
-
 
 // Vérifiez si une route correspond à l'URL demandée
 if ($route) {
