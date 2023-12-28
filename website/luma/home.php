@@ -4,31 +4,38 @@
 </script>
 
 <section class="server-status">
-    <h2>État des Serveurs</h2>
+    <h2>État des Serveurs <span class="betaPops">BETA</span></h2>
     <div class="server-block">
         <!-- Ajoutez ici des éléments pour afficher l'état du serveur -->
-        <div class="server" id="luma BDD" >
+        <div class="ServerBlock server" id="bdd_luma" data-ip="<?php if($_GET['offline'] === true ){ echo 'offline'; }else{ echo SITE_URL; } ?>">
             <div class="server-name">Base de donnée de Luma</div>
             <div class="status-container">
                 <div class="ping-circle warning" id="ping_bdd_luma">***</div>
             </div>
-            <div class="status online" id="status_bdd_luma">En ligne</div>
+            <div class="status" id="status_bdd_luma">Checking ...</div>
         </div>
 
-        <div class="server" id="Nino BDD">
+        <div class="ServerBlock server" id="bdd_nino" data-ip="offline">
             <div class="server-name">Base de donnée de Nino</div>
-            <div class="status offline" id="status_bdd_nino">Hors ligne</div>
+                        <div class="status-container">
+                <div class="ping-circle warning" id="ping_bdd_nino">***</div>
+            </div>
+            <div class="status" id="status_bdd_nino">Checking ...</div>
         </div>
 
-        <div class="server" id="Nino API">
+        <div class="ServerBlock server" id="api_nino" data-ip="offline">
             <div class="server-name">API de Nino</div>
-            <div class="status offline" id="status_api_nino">Hors ligne</div>
+                        <div class="status-container">
+                <div class="ping-circle warning" id="ping_api_nino">***</div>
+            </div>
+            <div class="status" id="status_api_nino">Checking ...</div>
         </div>
     </div>
 </section>
 
 <section class="latest-videos">
-    <h2>Dernières Vidéos</h2>
+    <h2>Dernières Vidéos <span class="betaPops">Pas encore disponible</span></h2>
+    <h5>Encore un peu de patience</h5>
     <!-- Ajoutez ici des éléments pour afficher les dernières vidéos -->
 </section>
 

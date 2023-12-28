@@ -13,3 +13,6 @@
 - Vérification de la présence des utilisateurs (Éviter les doublons)
 - Vérification de la présence des routes (Éviter les doublons)
 - Création des trois blocs d'état de connexion et API
+- Ajout d'une icon pour la connexion
+- Création du Controller de connexion
+- Création de la page de connexion

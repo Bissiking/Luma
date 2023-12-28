@@ -1,5 +1,4 @@
 <?php
-// controllers/ContactController.php
 
 class ContactController {
     public function show() {

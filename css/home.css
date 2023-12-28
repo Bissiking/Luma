@@ -16,7 +16,7 @@
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 10px;
+    margin: 0px 10px 10px 0px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -47,6 +47,10 @@ span.ping{
 
 .online {
     color: #28a745;
+}
+
+.warning {
+    color: #ff9900;
 }
 
 .offline {

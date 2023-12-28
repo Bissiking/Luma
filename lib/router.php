@@ -29,9 +29,10 @@ if (!file_exists($ConfigFile)) {
 
         // Si la base ne réponds pas
         if ($ERROR == 1) {
+            echo 'ERROR';
             $route = [
-                'controller' => 'HomeController',
-                'action' => 'index'
+                'controller' => 'HomeControllerOffline',
+                'action' => 'show'
             ];
         }else{
             // Requête SQL pour récupérer les informations de routage
