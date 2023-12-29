@@ -22,25 +22,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once '../base/nexus_base.php';
 
     // Requête pour récupérer le mot de passe hashé depuis la base de données
-    $v = array('identifiant' => $identifiant);
-    $query = "SELECT id, username, email FROM utilisateurs WHERE identifiant = ?";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute($v);
-    $result = $stmt->fetch();
+    extract($_REQUEST);
+    $identifiant = htmlspecialchars(trim($identifiant));
+    $password = htmlspecialchars(trim($password));
+    
+    if(!empty($_POST)){
+        $v = array('identifiant' => $identifiant);
+        $sql = 'SELECT id, identifiant, users_domain, password FROM luma_users WHERE identifiant = :identifiant';
+        $req = $pdo->prepare($sql);
+        $req->execute($v);
+        $result = $req->rowCount();
+    
+        if ($result == 1) {
+            foreach($req as $user){}
+            // Vérification du bon domaine
+            if($_SERVER['HTTP_HOST'] !== $user['users_domain']){
+                echo 'error_domain';
+                exit;
+            }
 
-    echo $result;
-
-    // Vérifier si le mot de passe est correct en utilisant Bcrypt
-    if (password_verify($password, $hashedPassword)) {
-        // Stocker les informations du compte en session
-        $_SESSION['auth']['user_id'] = $id;
-        $_SESSION['auth']['identifiant'] = $fetchedUsername;
-
-
-        echo 'Connexion réussie!';
-    } else {
-        echo 'Nom d\'utilisateur ou mot de passe incorrect.';
-    }
+            // Vérification du mot de passe et création de la session
+            if(password_verify($password, $user['password']) && $identifiant == $user['identifiant']){
+                // INTEGRATION DES SESSIONS
+                $_SESSION['authentification']['user'] = $user;
+                echo 'succes';    
+            } else { echo 'error'; }
+        }else{ echo 'error'; }
+    }else{ echo 'empty'; }
 
 } else {
     // Méthode de requête incorrecte
