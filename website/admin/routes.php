@@ -39,17 +39,14 @@ if ($routes === null) {
     
 }
 
-
-
-
 ?>
 
-<link rel="stylesheet" href="./css/admin.css">
+<link rel="stylesheet" href="<?= SITE_HTTP."://".SITE_URL ?>/css/admin.css">
 <script>
 	document.title = "Administration des routes";
 </script>
 
-<h1>ROUTES</h1>
+<h2>Manifest des routes <span class="betaPops">Aucun ajout ou modification disponible</span></h2>
 <table>
     <thead>
         <tr>
