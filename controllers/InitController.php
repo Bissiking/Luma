@@ -2,6 +2,10 @@
 
 $RedirHome = 'Location: /';
 
+if ($_SERVER['REQUEST_URI'] !== "/") {
+    header($RedirHome);
+}
+
 if (defined('STAT_INSTALL')) {
     if (STAT_INSTALL != 'false') {
         header($RedirHome);

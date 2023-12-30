@@ -1,4 +1,10 @@
 <?php
+// Détection du HTTPS
+if (isset($_SERVER['HTTP_X_FORWARDED_SCHEME'])) {
+	$uriHttp = 'https';
+}else{
+	$uriHttp = 'http';
+}
 
 // ETAPE 1 - Exctraction
 extract($_REQUEST);
@@ -43,6 +49,7 @@ try {
 	// Autres paramètres de configuration
 	$configContent .= "define('DEBUG_MODE', true);" . PHP_EOL;
 	$configContent .= "define('SITE_URL', '".$_SERVER['HTTP_HOST']."');" . PHP_EOL;
+	$configContent .= "define('SITE_HTTP', '".$uriHttp."');" . PHP_EOL;
 	$configContent .= PHP_EOL;
 
 	// Fin du fichier
