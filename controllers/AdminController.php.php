@@ -1,7 +1,7 @@
 <?php
 
-class NinoHomeController {
+class AdminController {
     public function show() {
-        require_once 'website/admin/routes.php';
+        require_once 'website/admin/home.php';
     }
 }

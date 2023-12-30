@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/css/home.css">
 <script>
 	document.title = "Nino - Accueil";
 </script>

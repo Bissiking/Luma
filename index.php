@@ -1,6 +1,12 @@
 <?php
     session_start();
     $url = $_SERVER['REQUEST_URI'];
+
+    if (isset($_SERVER['HTTP_X_FORWARDED_SCHEME'])) {
+        $uriHttp = 'https://';
+    }else{
+        $uriHttp = 'http://';
+    }
 ?>
 
 <!DOCTYPE html>
@@ -9,9 +15,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- LINK -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/all.min.css">
-    <link rel="icon" type="image/png" href="images/nexus30.png" />
+    <link rel="stylesheet" href="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/css/style.css">
+    <link rel="stylesheet" href="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/css/all.min.css">
+    <link rel="icon" type="image/png" href="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/images/nexus30.png" />
     <!-- SCRIPTS -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <title>Luma Projet</title>
@@ -30,7 +36,7 @@
         </nav>
 
         <!-- Icône représentant un compte non connecté -->
-        <img id="profileIcon" src="images/user-offline.png" alt="Icône de Profil">
+        <img id="profileIcon" src="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/images/user-offline.png" alt="Icône de Profil">
         
         <!-- Menu déroulant pour le profil -->
         <ul id="profileMenu">
@@ -58,8 +64,8 @@
     </div>
 
     <!-- Vos scripts JavaScript vont ici -->
-    <script src="javascripts/popup.js"></script>
-    <script src="javascripts/all-pages.js"></script>
+    <script src="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/javascripts/popup.js"></script>
+    <script src="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/javascripts/all-pages.js"></script>
 
     <footer>
         <p>&copy; 2023 HEMERY Mathéo</p>

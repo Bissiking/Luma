@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="../css/home.css">
 <script>
 	document.title = "Accueil";
 </script>
@@ -40,4 +40,4 @@
 </section>
 
 <!-- SCRIPTS SRV -->
-<script src="javascripts/home.js"></script>
+<script src="../javascripts/home.js"></script>

@@ -1,3 +1,22 @@
-[
-    
-]
+{
+    "Accueil" : {
+        "url_pattern": "/",
+        "controller":"HomeController",
+        "action":"index"
+    },
+    "Connexion" : {
+        "url_pattern": "/connexion",
+        "controller":"ConnexionController",
+        "action":"show"
+    },
+    "Admin" : {
+        "url_pattern": "/admin",
+        "controller":"AdminController",
+        "action":"show"
+    },
+    "Admin-Routes" : {
+        "url_pattern": "/admin/routes",
+        "controller":"AdminRoutesController",
+        "action":"show"
+    }
+}
