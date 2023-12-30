@@ -1,7 +1,12 @@
 <?php
 
-if (STAT_INSTALL != 'false') {
-    header('Location: /');
+$RedirHome = 'Location: /';
+
+if (defined('STAT_INSTALL')) {
+    if (STAT_INSTALL != 'false') {
+        header($RedirHome);
+    }
+    header($RedirHome);
 }
 
 class InitController {

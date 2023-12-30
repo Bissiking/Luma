@@ -1,7 +1,5 @@
 <?php
 
-
-
 // ETAPE 1 - Exctraction
 extract($_REQUEST);
 
