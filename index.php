@@ -41,6 +41,7 @@
         <!-- Menu déroulant pour le profil -->
         <ul id="profileMenu">
             <i class="fa-solid fa-sort-up"></i>
+            <li><a href="/admin">Administration du site</a></li>
             <?php if (isset($_SESSION['authentification']['user'])) { ?>
                 <li><a href="#">Configurer le Profil</a></li>
                 <li><a href="#">Autres Options</a></li>
