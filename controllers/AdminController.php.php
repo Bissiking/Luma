@@ -2,6 +2,6 @@
 
 class NinoHomeController {
     public function show() {
-        require_once 'website/nino/home.php';
+        require_once 'website/admin/routes.php';
     }
 }

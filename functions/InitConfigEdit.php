@@ -217,6 +217,7 @@ try {
 			id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
 			identifiant VARCHAR(255) NOT NULL,
 			password VARCHAR(255) NOT NULL,
+			account_administrator TINYINT(4) NOT NULL DEFAULT 0,
 			account_system TINYINT(4) NOT NULL DEFAULT 0,
 			users_domain VARCHAR(255) NOT NULL,
 			account_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -252,8 +253,8 @@ try {
 	
 	if (!$user) {
 		$insertUser1Query = "
-        INSERT INTO luma_users (identifiant, password, users_domain)
-        VALUES ('system', '" . password_hash("".$motDePasseGenere."", PASSWORD_BCRYPT) . "', '".SITE_URL."')
+        INSERT INTO luma_users (identifiant, password, users_domain, account_administrator)
+        VALUES ('system', '" . password_hash("".$motDePasseGenere."", PASSWORD_BCRYPT) . "', '".SITE_URL."', 1)
     ";
     $pdo->exec($insertUser1Query);
 	}

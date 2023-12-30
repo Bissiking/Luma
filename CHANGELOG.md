@@ -18,3 +18,4 @@
 - Création de la page de connexion
 - Connexion au site OK
 - Création de la page de Nino
+- Création d'un manifest répétoriant toutes les routes disponibles
