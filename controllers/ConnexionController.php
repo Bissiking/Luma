@@ -1,4 +1,7 @@
 <?php
+if (isset($_SESSION['authentification']['user'])) {
+    header('Location: /');
+}
 
 class ConnexionController {
     public function show() {

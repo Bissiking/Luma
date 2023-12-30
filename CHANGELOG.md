@@ -16,3 +16,5 @@
 - Ajout d'une icon pour la connexion
 - Création du Controller de connexion
 - Création de la page de connexion
+- Connexion au site OK
+- Création de la page de Nino

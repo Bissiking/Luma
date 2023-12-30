@@ -4,8 +4,6 @@ session_start(); // Toujours appeler session_start() au début du script qui uti
 extract($_REQUEST); // Extraction des valeurs JS
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
-    var_dump($identifiant);
 
     // Vérification si les champs sont vides
     if (!isset($identifiant) || $identifiant == "") {
@@ -25,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     extract($_REQUEST);
     $identifiant = htmlspecialchars(trim($identifiant));
     $password = htmlspecialchars(trim($password));
-    
+
     if(!empty($_POST)){
         $v = array('identifiant' => $identifiant);
         $sql = 'SELECT id, identifiant, users_domain, password FROM luma_users WHERE identifiant = :identifiant';

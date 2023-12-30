@@ -1,5 +1,8 @@
 <?php
-// controllers/InitController.php
+
+if (STAT_INSTALL != 'false') {
+    header('Location: /');
+}
 
 class InitController {
     public function show() {

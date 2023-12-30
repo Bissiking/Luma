@@ -10,9 +10,20 @@ function performLogin() {
         success: function(response) {
             // Afficher le résultat de la connexion
             $('#loginResult').html(response);
+            if (response == "succes") {
+                showPopup("Vous êtes connecté, Redirection dans 3 Secondes", true);
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 3000);
+            }else{
+                showPopup("Identitifant ou mot de passe incorrect", false)
+            }
         },
         error: function(error) {
             console.error('Erreur de connexion:', error);
+            showPopup("Une erreur inconnu est survenue. Reéssayer plus tard", false);
+            $('button').hide();
+
         }
     });
 }
