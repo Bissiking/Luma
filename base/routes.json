@@ -23,5 +23,10 @@
         "url_pattern": "/nino",
         "controller":"NinoHomeController",
         "action":"show"
+    },
+    "NinoNewVideo" : {
+        "url_pattern": "/nino/add",
+        "controller":"NinoNewVideoController",
+        "action":"show"
     }
 }

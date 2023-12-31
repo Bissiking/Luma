@@ -37,6 +37,7 @@
             <?php if (strpos($url, 'nino') !== false) { ?>
                 <a href="#">Bibliothèque</a>
                 <a href="#">Historique</a>
+                <a href="/nino">Ajouter une vidéo</a>
             <?php }else{ ?>
                 <a href="/nino">Nino</a>
                 <a style="color:grey" href="#">Serveur</a>
