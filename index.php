@@ -29,19 +29,19 @@
 <body>
     <header>
         <div>
-            <span id="projectName">LUMA</span>
+            <span id="logo"><?php if (strpos($url, 'nino') !== false) { ?> <img src="/images/nino75.png"> <?php }else{ ?> LUMA <?php } ?></span>
         </div>
 
         <nav>
             <a href="/">Accueil</a>
             <?php if (strpos($url, 'nino') !== false) { ?>
-                <a href="#">Accueil</a>
                 <a href="#">Bibliothèque</a>
                 <a href="#">Historique</a>
+            <?php }else{ ?>
+                <a href="/nino">Nino</a>
+                <a style="color:grey" href="#">Serveur</a>
+                <a style="color:grey" href="#">A propos</a>
             <?php } ?>
-            <a href="/nino">Nino</a>
-            <a style="color:grey" href="#">Serveur</a>
-            <a style="color:grey" href="#">A propos</a>
         </nav>
 
         <!-- Icône représentant un compte non connecté -->

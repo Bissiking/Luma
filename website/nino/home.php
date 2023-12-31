@@ -10,7 +10,7 @@
     <div class="video-info">
         <div class="video-title">Titre de la Vidéo 1</div>
         <div class="video-description">Description de la vidéo 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-        <button class="subscribe-button">S'abonner</button>
+        <button class="subscribe-button">Regarder la vidéo</button>
     </div>
 </div>
 
@@ -19,7 +19,7 @@
     <div class="video-info">
         <div class="video-title">Titre de la Vidéo 2</div>
         <div class="video-description">Description de la vidéo 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-        <button class="subscribe-button">S'abonner</button>
+        <button class="subscribe-button">Regarder la vidéo</button>
     </div>
 </div>
 

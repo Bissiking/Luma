@@ -17,7 +17,7 @@ header {
 #logo {
     font-size: 24px;
     font-weight: bold;
-    color: #ff0000; /* Rouge YouTube */
+    color: #0059ace3; /* Rouge YouTube */
 }
 
 #logo {
@@ -75,7 +75,7 @@ nav a {
 
 main {
     max-width: 1200px;
-    margin: 20px 20px 30px 20px;
+    margin: 20px 50px 30px 50px;
     padding: 0px;
 }
 
