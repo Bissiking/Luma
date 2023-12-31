@@ -118,6 +118,36 @@ main {
     border-radius: 3px;
     cursor: pointer;
 }
+/* NINO ADD */
+
+table {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    width: 90%;
+    margin: 10px auto auto auto;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+button {
+    background-color: #ff0000;
+    color: #fff;
+    padding: 8px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
 
 /* POPUP GENERIQUE */
 .popup {

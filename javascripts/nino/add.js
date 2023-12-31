@@ -10,7 +10,7 @@ function reserveVideo(event) {
         url: 'https://nino.mhemery.fr/api/videos/reserve',
         data: { title: title, id_users: id_users, video_status: "reserved" },
         success: function(response) {
-            $('#result').html(response);
+            window.location.href = "/nino/add";
         },
         error: function(error) {
             console.error('Erreur de connexion:', error);
