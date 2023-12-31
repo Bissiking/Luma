@@ -1,3 +1,106 @@
+#dashboard {
+    display: flex;
+    justify-content: flex-start;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.dashboard-block {
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 0px 20px 20px 0px;
+    min-width: 10%;
+    min-height: 150px;
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.dashboard-block .monitoring{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    min-width: 100px;
+    height: 100%;
+    margin: 0px 10px;
+    background-color: #3498db;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.dashboard-block .monitoring i{
+    margin: 10px 0px;
+    font-size: 45px;
+}
+
+.dashboard-block:hover {
+    transform: scale(1.02);
+}
+
+.dashboard-block h2 {
+    margin: 5px 0px;
+    color: #333;
+}
+
+.dashboard-menu{
+    width: 310px;
+    height: 210px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 10px;
+}
+
+.menu-link{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    width: 150px;
+    height: 100px;
+    color: #fff;
+    background-color: #3498db;
+    text-decoration: none;
+    padding: 0px;
+    border-radius: 5px;
+    margin: 0px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.menu-link:hover{
+    background-color: #217dbb;
+    transition: background-color 0.3s;
+}
+
+.menu-link i{
+    margin: 10px 0px;
+    font-size: 30px;
+}
+
+#server-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#update-button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#update-button:hover {
+    background-color: #217dbb;
+}
+
 table {
     width: 80%;
     margin: 50px auto;

@@ -20,3 +20,4 @@
 - Création de la page de Nino
 - Création d'un manifest répétoriant toutes les routes disponibles
 - Correction des bogues d'url
+- Affichage du tableau des routes
