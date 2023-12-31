@@ -35,9 +35,9 @@
         <nav>
             <a href="/">Accueil</a>
             <?php if (strpos($url, 'nino') !== false) { ?>
-                <a href="#">Bibliothèque</a>
-                <a href="#">Historique</a>
-                <a href="/nino">Ajouter une vidéo</a>
+                <a  style="color:grey" href="#">Bibliothèque</a>
+                <a  style="color:grey" href="#">Historique</a>
+                <a href="/nino/add">Ajouter une vidéo</a>
             <?php }else{ ?>
                 <a href="/nino">Nino</a>
                 <a style="color:grey" href="#">Serveur</a>
@@ -53,8 +53,8 @@
             <i class="fa-solid fa-sort-up"></i>
             <li><a href="/admin">Administration du site</a></li>
             <?php if (isset($_SESSION['authentification']['user'])) { ?>
-                <li><a href="#">Configurer le Profil</a></li>
-                <li><a href="#">Autres Options</a></li>
+                <li><a style="color:grey" href="#">Configurer le Profil</a></li>
+                <li><a style="color:grey" href="#">Autres Options</a></li>
             <?php }else{ ?>
                 <li><a href="/connexion">Se connecter</a></li>
             <?php } ?>
