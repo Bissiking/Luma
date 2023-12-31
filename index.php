@@ -15,7 +15,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- LINK -->
-    <link rel="stylesheet" href="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/css/style.css">
+    <?php if (strpos($url, 'nino') !== false) { ?>
+        <link rel="stylesheet" href="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/css/nino.css">
+    <?php } else { ?>
+        <link rel="stylesheet" href="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/css/style.css">
+    <?php } ?>
     <link rel="stylesheet" href="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/css/all.min.css">
     <link rel="icon" type="image/png" href="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/images/nexus30.png" />
     <!-- SCRIPTS -->
@@ -30,6 +34,11 @@
 
         <nav>
             <a href="/">Accueil</a>
+            <?php if (strpos($url, 'nino') !== false) { ?>
+                <a href="#">Accueil</a>
+                <a href="#">Bibliothèque</a>
+                <a href="#">Historique</a>
+            <?php } ?>
             <a href="/nino">Nino</a>
             <a style="color:grey" href="#">Serveur</a>
             <a style="color:grey" href="#">A propos</a>
