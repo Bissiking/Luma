@@ -30,7 +30,7 @@
 
         <nav>
             <a href="/">Accueil</a>
-            <a href="#">Nino</a>
+            <a href="/nino">Nino</a>
             <a style="color:grey" href="#">Serveur</a>
             <a style="color:grey" href="#">A propos</a>
         </nav>

@@ -1,3 +1,16 @@
+<?php
+// Charger le contenu du fichier JSON
+$jsonContent = file_get_contents('./version.json');
+$routes = json_decode($jsonContent, true);
+
+if ($routes === null) {
+    $versionSite = "ERR";
+}else {
+    $versionSite = $routes['version'];
+}
+
+?>
+
 <link rel="stylesheet" href="<?= SITE_HTTP."://".SITE_URL ?>/css/admin.css">
 <script>
 	document.title = "Administration - Dashboard";
@@ -22,7 +35,7 @@
 
     <div class="dashboard-block">
         <h2>Version du Site</h2>
-        <p>Version actuelle: 1.0</p>
+        <p>Version actuelle: <?= $versionSite ?></p>
         <button id="update-button">Mise à jour</button>
     </div>
 </div>
