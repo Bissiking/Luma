@@ -28,8 +28,13 @@
         </thead>
         <tbody>
         <?php
+            if (!isset($_SESSION['authentification']['user']['id'])) {
+                $id_users = null;
+            }else{
+                $id_users = $_SESSION['authentification']['user']['id'];
+            }
             // URL de l'API YouTube Data v3 pour récupérer les vidéos de la chaîne
-            $apiUrl = 'https://nino.mhemery.fr/api/videos/list/reserved?id_users='.$_SESSION['authentification']['user']['id'].'&token=d!4v992nsVD!w6GxbrTL389%NjNC@K*8V*7Nz24@82Hu8Zq%oF$m^Jh$MC';
+            $apiUrl = 'https://nino.mhemery.fr/api/videos/list/reserved?id_users='.$id_users.'&token=d!4v992nsVD!w6GxbrTL389%NjNC@K*8V*7Nz24@82Hu8Zq%oF$m^Jh$MC';
 
             // Effectuez la requête vers l'API YouTube
             $response = file_get_contents($apiUrl);
@@ -37,7 +42,7 @@
 
             if ($data == null) {
                 echo "<tr>";
-                echo "<td>###</td>";
+                echo "<td>#001</td>";
                 echo "<td>Aucune vidéo en attente</td>";
                 echo "<td><button>Edition impossible</button></td>";
                 echo "</tr>";
@@ -47,7 +52,7 @@
                     if (isset($data->error)) {
                         if ($data->error == 'Accès refusé') {
                             echo "<tr>";
-                            echo "<td>###</td>";
+                            echo "<td>#002</td>";
                             echo "<td>Aucune vidéo en attente</td>";
                             echo "<td><button>Edition impossible</button></td>";
                             echo "</tr>";
@@ -56,7 +61,7 @@
             
                         if ($data->error == 'Accès refusé') {
                             echo "<tr>";
-                            echo "<td>###</td>";
+                            echo "<td>#003</td>";
                             echo "<td>Aucune vidéo en attente</td>";
                             echo "<td><button>Edition impossible</button></td>";
                             echo "</tr>";
@@ -85,6 +90,7 @@
     function editVideo(videoId) {
         // Vous pouvez rediriger vers la page d'édition avec le videoId, ou effectuer d'autres actions d'édition.
         alert("Édition de la vidéo avec l'ID " + videoId);
+        window.location.href = "/nino/edit?id="+videoId;
     }
 </script>
 

@@ -33,7 +33,7 @@
         </div>
 
         <nav>
-            <a href="/">Accueil</a>
+            <a href="/">Accueil LUMA</a>
             <?php if (strpos($url, 'nino') !== false) { ?>
                 <a  style="color:grey" href="#">Bibliothèque</a>
                 <a  style="color:grey" href="#">Historique</a>

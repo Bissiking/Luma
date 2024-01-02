@@ -28,5 +28,10 @@
         "url_pattern": "/nino/add",
         "controller":"NinoNewVideoController",
         "action":"show"
+    },    
+    "NinoEditVideo" : {
+        "url_pattern": "/nino/edit",
+        "controller":"NinoEditVideoController",
+        "action":"show"
     }
 }

@@ -1,14 +1,14 @@
-function reserveVideo(event) {
+function EditVideo(event) {
     //event.preventDefault();
 
     var title = $('#videoTitle').val();
-    var id_users = $('#btnReserveVideo').data('id_users');
+    var id_users = $('#btnEditVideo').data('id_users');
 
     // Effectuer la requête AJAX
     $.ajax({
         type: 'POST',
-        url: 'https://nino.mhemery.fr/api/videos/reserve',
-        data: { title: title, id_users: id_users, video_status: "reserved" },
+        url: 'https://nino.mhemery.fr/api/videos/edit',
+        data: { title: title, id_users: id_users, video_status: "wait upload" },
         success: function(response) {
             window.location.href = "/nino/add";
         },
@@ -18,6 +18,3 @@ function reserveVideo(event) {
         }
     });
 }
-$query = parse_url($url, PHP_URL_QUERY);
-parse_str($query, $params);
-$id = isset($params['id']) ? $params['id'] : null;
