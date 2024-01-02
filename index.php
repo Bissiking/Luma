@@ -1,7 +1,8 @@
 <?php
     session_start();
+    // Récupération de l'URL
     $url = $_SERVER['REQUEST_URI'];
-
+    
     if (isset($_SERVER['HTTP_X_FORWARDED_SCHEME'])) {
         $uriHttp = 'https://';
     }else{

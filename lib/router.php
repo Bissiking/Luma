@@ -1,4 +1,6 @@
 <?php
+$queryUrl = parse_url($url);
+
 // Récupération du fichier de configuration 
 $ConfigFile = 'base/config.php';
 
@@ -39,7 +41,7 @@ if (!file_exists($ConfigFile)) {
             try {
                 $query = "SELECT * FROM luma_routes WHERE url_pattern = :url";
                 $stmt = $pdo->prepare($query);
-                $stmt->bindParam(':url', $url);
+                $stmt->bindParam(':url', $queryUrl['path']);
                 $stmt->execute();
                 $route = $stmt->fetch(PDO::FETCH_ASSOC);
             } catch (Exception $e) {

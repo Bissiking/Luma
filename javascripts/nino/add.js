@@ -18,6 +18,3 @@ function reserveVideo(event) {
         }
     });
 }
-$query = parse_url($url, PHP_URL_QUERY);
-parse_str($query, $params);
-$id = isset($params['id']) ? $params['id'] : null;

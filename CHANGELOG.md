@@ -35,7 +35,7 @@
 - Création de la page d'ajout de vidéo
 - Réservation de vidéo depuis l'API
 - Affichage des vidéos réservé pour édition ultérieurs
-
+- Création de la page d'édition de vidéo
 
 
 
