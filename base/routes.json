@@ -33,5 +33,10 @@
         "url_pattern": "/nino/edit",
         "controller":"NinoEditVideoController",
         "action":"show"
+    },
+    "NinoPlayerVideo" : {
+        "url_pattern": "/nino/player",
+        "controller":"NinoPlayerVideoController",
+        "action":"show"
     }
 }

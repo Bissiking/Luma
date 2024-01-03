@@ -23,7 +23,7 @@
             $videoThumbnail = "https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/03/web-images.jpg?auto=format&q=60&w=1600&h=824&fit=crop&crop=faces";
             // URL Image
 
-            echo "<div class='video'>";
+            echo "<div class='video' data-idVideo='$videoId'>";
             echo "<img src='{$videoThumbnail}' alt='{$videoTitle}'>";
             echo "<div class='video-info'>";
             echo "<div class='video-title'>{$videoTitle}</div>";
@@ -34,6 +34,8 @@
         echo "Erreur lors de la récupération des vidéos. Soit il n'y a pas de vidéo, soit l'API est en maintenance. Retente plus tard";
     } ?> 
 </div>
+
+<script src="../javascripts/nino/home.js"></script>
 
 
 <!-- <div class="video">

@@ -36,6 +36,9 @@
 - Réservation de vidéo depuis l'API
 - Affichage des vidéos réservé pour édition ultérieurs
 - Création de la page d'édition de vidéo
+- Création du formulaire d'édition des vidéos
+- Création de la page du player
+- 
 
 
 
