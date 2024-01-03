@@ -34,7 +34,7 @@
                 $id_users = $_SESSION['authentification']['user']['id'];
             }
             // URL de l'API YouTube Data v3 pour récupérer les vidéos de la chaîne
-            $apiUrl = 'https://nino.mhemery.fr/api/videos/list/reserved?id_users='.$id_users.'&token=d!4v992nsVD!w6GxbrTL389%NjNC@K*8V*7Nz24@82Hu8Zq%oF$m^Jh$MC';
+            $apiUrl = 'https://nino.mhemery.fr/api/videos/list/reserved?id_users='.$id_users.'&token='.NINO_TOKEN;
 
             // Effectuez la requête vers l'API YouTube
             $response = file_get_contents($apiUrl);
