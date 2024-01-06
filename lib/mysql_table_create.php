@@ -1,5 +1,5 @@
 <?php
-function createTablePDO($servername, $username, $password, $dbname, $tableName, $columns) {
+function createTablePDO($tableName, $columns) {
     try {
         // Connexion à la base de donnée
         require './base/nexus_base.php';
@@ -31,14 +31,14 @@ function createTablePDO($servername, $username, $password, $dbname, $tableName, 
 
 
 // Exemple d'utilisation
-$tableName = "users";
-$columns = [
-    'id' => 'INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
-    'firstname' => 'VARCHAR(30) NOT NULL',
-    'lastname' => 'VARCHAR(30) NOT NULL',
-    'email' => 'VARCHAR(50) NOT NULL',
-    'reg_date' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
-];
+// $tableName = "users";
+// $columns = [
+//     'id' => 'INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
+//     'firstname' => 'VARCHAR(30) NOT NULL',
+//     'lastname' => 'VARCHAR(30) NOT NULL',
+//     'email' => 'VARCHAR(50) NOT NULL',
+//     'reg_date' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+// ];
 
-createTablePDO($servername, $username, $password, $dbname, $tableName, $columns);
+// createTablePDO($tableName, $columns);
 ?>

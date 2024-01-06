@@ -1,38 +1,36 @@
-<link rel="stylesheet" href="<?= SITE_HTTP."://".SITE_URL ?>/css/nino.css">
+<link rel="stylesheet" href="<?= SITE_HTTP . "://" . SITE_URL ?>/css/nino.css">
 <script>
-	document.title = "Nino - Accueil";
+    document.title = "Nino - Accueil";
 </script>
 
 <!-- <h1>Mes Vidéos</h1> -->
 
 <div class="video-bloc">
-    <?php $apiUrl = "https://nino.mhemery.fr/api/videos";
+    <?php
+    require './base/nexus_base.php';
+    $sql = 'SELECT * FROM luma_nino_data';
+    $req = $pdo->prepare($sql);
+    $req->execute();
+    $result = $req->rowCount();
 
-    // Effectuez la requête vers l'API YouTube
-    $response = file_get_contents($apiUrl);
-    $data = json_decode($response);
-
-    // Vérifiez si la requête a réussi
-    if ($data) {
-        // Affichez les vidéos
-        foreach ($data as $video) {
-
-            $videoId = $video->id;
-            $videoTitle = $video->title;
-            $videoDescription = $video->description;
-            $videoThumbnail = "https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/03/web-images.jpg?auto=format&q=60&w=1600&h=824&fit=crop&crop=faces";
-            // URL Image
-
-            echo "<div class='video' data-idVideo='$videoId'>";
-            echo "<img src='{$videoThumbnail}' alt='{$videoTitle}'>";
-            echo "<div class='video-info'>";
-            echo "<div class='video-title'>{$videoTitle}</div>";
-            echo "<div class='video-description'>{$videoDescription}</div>";
-            echo "</div></div>";
-        }
+    if ($result >= 1) {
+        while ($video = $req->fetch()) {
+            if ($video['videoThumbnail'] == '' || $video['videoThumbnail'] == null) {
+                $video['videoThumbnail'] = SITE_HTTP . "://" . SITE_URL . "/images/nino/no_image.jpg";
+            }
+    ?>
+            <div class="video" data-idVideo="<?= $video['id'] ?>">
+                <img src="<?= $video['videoThumbnail'] ?>" alt="Thumbnail Nino">
+                <div class="video-info">
+                    <div class="video-title"><?= $video['titre'] ?></div>
+                    <div class="video-description"><?= $video['description'] ?></div>
+                </div>
+            </div>
+    <?php }
     } else {
-        echo "Erreur lors de la récupération des vidéos. Soit il n'y a pas de vidéo, soit l'API est en maintenance. Retente plus tard";
-    } ?> 
+        echo 'Aucune vidéo trouvé';
+    }
+    ?>
 </div>
 
 <script src="../javascripts/nino/home.js"></script>

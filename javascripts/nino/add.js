@@ -1,16 +1,20 @@
 function reserveVideo(event) {
     //event.preventDefault();
-
-    var title = $('#videoTitle').val();
-    var id_users = $('#btnReserveVideo').data('id_users');
+    var titre = $('#videoTitle').val();
 
     // Effectuer la requête AJAX
     $.ajax({
         type: 'POST',
-        url: 'https://nino.mhemery.fr/api/videos/reserve',
-        data: { title: title, id_users: id_users, video_status: "reserved" },
+        url: '../functions/nino/add.php',
+        data: { titre: titre },
         success: function(response) {
-            window.location.href = "/nino/add";
+            console.log(response);
+            if (response == 'succes') {
+                window.location.href = "/nino/add";
+            }else{
+                showPopup("Le titre n'est pas valide", false);
+            }
+            
         },
         error: function(error) {
             console.error('Erreur de connexion:', error);

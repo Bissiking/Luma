@@ -28,57 +28,31 @@
         </thead>
         <tbody>
         <?php
-            if (!isset($_SESSION['authentification']['user']['id'])) {
-                $id_users = null;
-            }else{
+            if (isset($_SESSION['authentification']['user'])) {
+                require './base/nexus_base.php';
                 $id_users = $_SESSION['authentification']['user']['id'];
-            }
-            // URL de l'API YouTube Data v3 pour récupérer les vidéos de la chaîne
-            $apiUrl = 'https://nino.mhemery.fr/api/videos/list/reserved?id_users='.$id_users.'&token='.NINO_TOKEN;
+                $v = array('id_users' => $id_users);
+                $sql = 'SELECT * FROM luma_nino_data WHERE id_users = :id_users';
+                $req = $pdo->prepare($sql);
+                $req->execute($v);
+                $result = $req->rowCount();
+                print_r($result);
+    
+                if ($result >= 1) {
+                    while ($video = $req->fetch()) { ?>
+                        <tr>
+                            <td><?= $video['id'] ?></td>
+                            <td><?= $video['titre'] ?></td>
+                            <td><button onclick="editVideo(<?= $video['id'] ?>)">Modifier</button></td>
+                        </tr>
+                    <?php } ?>
+                        
 
-            // Effectuez la requête vers l'API YouTube
-            $response = file_get_contents($apiUrl);
-            $data = json_decode($response);
 
-            if ($data == null) {
-                echo "<tr>";
-                echo "<td>#001</td>";
-                echo "<td>Aucune vidéo en attente</td>";
-                echo "<td><button>Edition impossible</button></td>";
-                echo "</tr>";
+
+                <?php }else{ echo 'Aucune vidéo trouvé'; }
             }else{
-                // Vérifiez si la requête a réussi
-                if ($data) {
-                    if (isset($data->error)) {
-                        if ($data->error == 'Accès refusé') {
-                            echo "<tr>";
-                            echo "<td>#002</td>";
-                            echo "<td>Aucune vidéo en attente</td>";
-                            echo "<td><button>Edition impossible</button></td>";
-                            echo "</tr>";
-                            return;
-                        }
-            
-                        if ($data->error == 'Accès refusé') {
-                            echo "<tr>";
-                            echo "<td>#003</td>";
-                            echo "<td>Aucune vidéo en attente</td>";
-                            echo "<td><button>Edition impossible</button></td>";
-                            echo "</tr>";
-                            return;
-                        }
-                    }
-                    // Affichez les vidéos
-                    foreach ($data as $video) {
-                         echo "<tr>";
-                        echo "<td>".$video->id."</td>";
-                        echo "<td>".$video->title."</td>";
-                        echo "<td><button onclick='editVideo(".$video->id.")'>Edité</button></td>";
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "Erreur lors de la récupération des vidéos. Soit il n'y a pas de vidéo, soit l'API est en maintenance. Retente plus tard";
-                }
+                echo '<tr><td></td><td style="text-align: center;">Connexion obligatoire</td><td></td></tr>';
             }
  ?>
         </tbody>
@@ -88,8 +62,6 @@
 
 <script>
     function editVideo(videoId) {
-        // Vous pouvez rediriger vers la page d'édition avec le videoId, ou effectuer d'autres actions d'édition.
-        alert("Édition de la vidéo avec l'ID " + videoId);
         window.location.href = "/nino/edit?id="+videoId;
     }
 </script>

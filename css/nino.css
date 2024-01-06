@@ -183,6 +183,8 @@ button {
 video {
     width: 100%;
     display: block;
+    object-fit: contain;
+    max-height: 400px;
 }
 
 .video-info {
@@ -275,11 +277,15 @@ label {
     margin-bottom: 10px;
 }
 
-input, textarea {
+input, textarea, select {
     width: 100%;
     padding: 8px;
     margin-bottom: 15px;
     box-sizing: border-box;
+}
+
+select option {
+    padding: 10px;
 }
 
 button {
