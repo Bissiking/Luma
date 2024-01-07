@@ -1,23 +1,50 @@
-const express = require('express');
+const fs = require('fs');
 const os = require('os');
+const osu = require('node-os-utils');
 
-const app = express();
-const port = 3000;
+// Fonction pour obtenir la date et l'heure actuelles
+function getCurrentDateTime() {
+    const currentDate = new Date();
+    return currentDate.toISOString(); // Format ISO pour une représentation facilement lisible
+}
 
-app.get('/system-info', (req, res) => {
-  const cpuUsage = os.loadavg()[0].toFixed(2);
-  const totalMemory = os.totalmem();
-  const freeMemory = os.freemem();
-  const usedMemory = totalMemory - freeMemory;
+// Stocke les données dans un objet
+let serverInfo = {
+    dateTime: getCurrentDateTime(),
+    cpuUsage: 0,
+    totalMemory: os.totalmem(),
+    freeMemory: os.freemem(),
+    usedMemory: 0,
+};
 
-  res.json({
-    cpuUsage: cpuUsage,
-    totalMemory: totalMemory,
-    usedMemory: usedMemory,
-    freeMemory: freeMemory,
-  });
-});
+// Met à jour les données toutes les secondes
+setInterval(() => {
+    // Met à jour les informations sur l'utilisation du CPU
+    var cpu = osu.cpu
+    cpu.usage()
+        .then(data => {
+            serverInfo.cpuUsage = data;
+        })
+        .catch(error => {
+            console.error('critical', 'CPU', 'La sonde CPU n\'a pas réussi à récupérer les informations. ERR: ' + error)
+        })
 
-app.listen(port, () => {
-  console.log(`Serveur API en cours d'exécution sur http://localhost:${port}`);
-});
+    // Met à jour les informations sur l'utilisation de la mémoire
+    serverInfo.usedMemory = serverInfo.totalMemory - os.freemem();
+
+    // Met à jour la date et l'heure actuelles
+    serverInfo.dateTime = getCurrentDateTime();
+
+    // Enregistre les données dans un fichier JSON
+    saveServerInfo();
+}, 5000);
+
+
+// Enregistre les données dans un fichier JSON
+function saveServerInfo() {
+    fs.writeFile('serverInfo.json', JSON.stringify(serverInfo), (err) => {
+        if (err) {
+            console.error('Erreur lors de l\'enregistrement des données :', err);
+        }
+    });
+}
