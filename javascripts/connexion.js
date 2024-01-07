@@ -27,3 +27,9 @@ function performLogin() {
         }
     });
 }
+
+$('#identifiant, #password').keydown(function(event) {
+    if (event.key === 'Enter') {
+        performLogin();
+    }
+});
