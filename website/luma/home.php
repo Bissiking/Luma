@@ -15,16 +15,16 @@
             <div class="status" id="status_bdd_luma">Checking ...</div>
         </div>
 
-        <div class="ServerBlock server" id="bdd_nino" data-ip="offline">
-            <div class="server-name">Base de donnée de Nino</div>
+        <div class="ServerBlock server" id="api_nino_dev" data-ip="dev.nino.mhemery.fr/check">
+            <div class="server-name">API Nino (DEV)</div>
                         <div class="status-container">
-                <div class="ping-circle warning" id="ping_bdd_nino">***</div>
+                <div class="ping-circle warning" id="ping_api_nino_dev">***</div>
             </div>
-            <div class="status" id="status_bdd_nino">Checking ...</div>
+            <div class="status" id="status_api_nino_dev">Checking ...</div>
         </div>
 
-        <div class="ServerBlock server" id="api_nino" data-ip="offline">
-            <div class="server-name">API de Nino</div>
+        <div class="ServerBlock server" id="api_nino" data-ip="nino.mhemery.fr/check">
+            <div class="server-name">API Nino</div>
                         <div class="status-container">
                 <div class="ping-circle warning" id="ping_api_nino">***</div>
             </div>

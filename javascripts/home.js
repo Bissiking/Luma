@@ -65,7 +65,7 @@ function CheckServiceLuma(url, idelement) {
 							$('#ping_'+idelement).css('background', 'linear-gradient(45deg, #ff9900, #4caf50)');
 							$('#ping_'+idelement).text(avg+'ms');
 						
-							$('#status_'+idelement).text('En ligne 3');
+							$('#status_'+idelement).text('En ligne');
 							$('#status_'+idelement).addClass('online');
 						} else {
 							$('#ping_'+idelement).css('background', 'linear-gradient(45deg, #ff9900, #dc3545)');
@@ -86,7 +86,7 @@ function CheckServiceLuma(url, idelement) {
 SearchAndPing();
 setInterval(() => {
 	SearchAndPing();
-}, 10000);
+}, 20000);
 
 
 

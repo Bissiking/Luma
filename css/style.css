@@ -57,6 +57,7 @@ nav a {
     margin: 0;
     top: 53px;
     right: 5px;
+    z-index: 99;
 }
 #profileMenu > i {
     position: absolute;

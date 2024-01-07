@@ -36,6 +36,7 @@
         <nav>
             <a href="/">Accueil LUMA</a>
             <?php if (strpos($url, 'nino') !== false) { ?>
+                <a href="/nino">Accueil Nino</a>
                 <a  style="color:grey" href="#">Bibliothèque</a>
                 <a  style="color:grey" href="#">Historique</a>
                 <a href="/nino/add">Ajouter une vidéo</a>

@@ -59,7 +59,7 @@ if (!isset($_GET['video']) || $_GET['video'] == null) {
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
-        let url = "https://nino.mhemery.fr/<?= htmlspecialchars(trim($_GET['video'])) ?>"
+        let url = "https://nino.mhemery.fr/<?= htmlspecialchars(trim($video['id_video_uuid'])) ?>"
         var id = new URL(url).pathname;
         const video = document.getElementById('Player');
         const videoSrc = url + '/nino.m3u8';

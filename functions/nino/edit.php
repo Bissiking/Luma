@@ -3,8 +3,6 @@
 session_start(); // Toujours appeler session_start() au début du script qui utilise des sessions
 extract($_REQUEST); // Extraction des valeurs JS
 
-echo '<pre>' . print_r($_REQUEST) . '</pre>';
-
 // En attente de nettoyage
 $titre = $videoTitle;
 $description = $videoDescription;
@@ -24,10 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 return uniqid('video_', true);
             }
         }
-
         // Exemple d'utilisation
         $videoId = generateUniqueVideoId();
-        echo "ID unique de la vidéo généré : $videoId";
     }else{
         $videoId = $UUID_nino;
     }
@@ -40,9 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Vérifier si le dossier n'existe pas déjà
     if (!is_dir($folderPath)) {
         // Créer le dossier
-        if (mkdir($folderPath, 0755)) {
-            echo 'Dossier créé avec succès : ' . $folderPath;
-        } else {
+        if (!mkdir($folderPath, 0755))  {
             echo 'Erreur lors de la création du dossier.';
         }
     }
@@ -58,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $uploadFile = $uploadDir . basename('Thumbnail_' . $videoId . '_Nino.jpg');
             if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
                 $videoThumbnail = $uploadFile;
-                echo $uploadFile;
             } else {
                 echo 'Erreur lors de l\'upload de l\'image.';
             }
