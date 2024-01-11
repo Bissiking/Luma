@@ -144,6 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$query = "
 		CREATE TABLE IF NOT EXISTS luma_routes (
 			id INT PRIMARY KEY AUTO_INCREMENT,
+			routeName VARCHAR(255) NOT NULL,
 			url_pattern VARCHAR(255) NOT NULL,
 			controller VARCHAR(255) NOT NULL,
 			action VARCHAR(255) NOT NULL,
@@ -165,8 +166,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 		if (!$route) {
 			$insertRoutes1 = "
-			INSERT INTO luma_routes (url_pattern, controller, action, url_domain)
-			VALUES ('/', 'HomeController', 'index', '" . SITE_URL . "')
+			INSERT INTO luma_routes (routeName, url_pattern, controller, action, url_domain, active)
+			VALUES ('Accueil', '/', 'HomeController', 'index', '" . SITE_URL . "', 1)
 		";
 			$pdo->exec($insertRoutes1);
 		}
@@ -182,8 +183,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 		if (!$route) {
 			$insertRoutes2 = "
-        INSERT INTO luma_routes (url_pattern, controller, action, url_domain)
-        VALUES ('/connexion', 'ConnexionController', 'show', '" . SITE_URL . "')
+        INSERT INTO luma_routes (routeName, url_pattern, controller, action, url_domain, active)
+        VALUES ('Connexion', '/connexion', 'ConnexionController', 'show', '" . SITE_URL . "', 1)
     ";
 			$pdo->exec($insertRoutes2);
 		}
@@ -198,8 +199,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 		if (!$route) {
 			$insertRoutes3 = "
-        INSERT INTO luma_routes (url_pattern, controller, action, url_domain)
-        VALUES ('/admin', 'AdminController', 'show', '" . SITE_URL . "')
+        INSERT INTO luma_routes (routeName, url_pattern, controller, action, url_domain, active)
+        VALUES ('Admin', '/admin', 'AdminController', 'show', '" . SITE_URL . "', 1)
     ";
 			$pdo->exec($insertRoutes3);
 		}
@@ -213,11 +214,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$route = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		if (!$route) {
-			$insertRoutes3 = "
-        INSERT INTO luma_routes (url_pattern, controller, action, url_domain)
-        VALUES ('/admin/routes', 'AdminRoutesController', 'show', '" . SITE_URL . "')
+			$insertRoutes4 = "
+        INSERT INTO luma_routes (routeName, url_pattern, controller, action, url_domain, active)
+        VALUES ('AdminRoutes', '/admin/routes', 'AdminRoutesController', 'show', '" . SITE_URL . "', 1)
     ";
-			$pdo->exec($insertRoutes3);
+			$pdo->exec($insertRoutes4);
 		}
 	} catch (PDOException $e) {
 		echo 'configCreateTable01-echec --> ' . $e->getMessage();
@@ -238,6 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			account_administrator TINYINT(4) NOT NULL DEFAULT 0,
 			account_system TINYINT(4) NOT NULL DEFAULT 0,
 			users_domain VARCHAR(255) NOT NULL,
+			nomComplet VARCHAR(255) NULL,
 			account_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     		account_edit TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 		)

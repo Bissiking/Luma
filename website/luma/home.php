@@ -6,7 +6,7 @@
 <section class="server-status">
     <h2>État des Serveurs <span class="betaPops">BETA</span></h2>
     <div class="server-block">
-        <!-- Ajoutez ici des éléments pour afficher l'état du serveur -->
+        <!-- BDD -->
         <div class="ServerBlock server" id="bdd_luma" data-ip="<?php if($_GET['offline'] === true ){ echo 'offline'; }else{ echo SITE_URL; } ?>">
             <div class="server-name">Base de donnée de Luma</div>
             <div class="status-container">
@@ -15,6 +15,7 @@
             <div class="status" id="status_bdd_luma">Checking ...</div>
         </div>
 
+        <!-- API DEV -->
         <div class="ServerBlock server" id="api_nino_dev" data-ip="dev.nino.mhemery.fr/check">
             <div class="server-name">API Nino (DEV)</div>
                         <div class="status-container">
@@ -23,12 +24,22 @@
             <div class="status" id="status_api_nino_dev">Checking ...</div>
         </div>
 
+        <!-- API Principal -->
         <div class="ServerBlock server" id="api_nino" data-ip="nino.mhemery.fr/check">
             <div class="server-name">API Nino</div>
                         <div class="status-container">
                 <div class="ping-circle warning" id="ping_api_nino">***</div>
             </div>
             <div class="status" id="status_api_nino">Checking ...</div>
+        </div>
+
+        <!-- API Enerzein -->
+        <div class="ServerBlock server" id="api_nino_enerzein" data-ip="">
+            <div class="server-name">API Nino (Enerzein)</div>
+                        <div class="status-container">
+                <div class="ping-circle warning" id="ping_api_nino_enerzein">***</div>
+            </div>
+            <div class="status" id="status_api_nino_enerzein">Checking ...</div>
         </div>
     </div>
 </section>

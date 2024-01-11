@@ -25,7 +25,6 @@ function CheckServiceLuma(url, idelement) {
 	$('#status_'+idelement).removeClass('warning');
 	$('#status_'+idelement).text('Checking ...');
 
-
 	if (url == "offline") {
 		$('#ping_'+idelement).css('background', offlineBackground);
 		$('#ping_'+idelement).text('NaN');
@@ -49,6 +48,7 @@ function CheckServiceLuma(url, idelement) {
 			$.ajax({ type: "HEAD",
 				url: "https://"+url,
 				cache:false,
+				timeout: 2000,
 				complete: function(output){ 
 					var ping = $.now() - start;
 					if (ping < 1000) { // useless?
@@ -77,7 +77,10 @@ function CheckServiceLuma(url, idelement) {
 					}
 				},
 				error: function name(output) {
-					$('#status_'+idelement).addClass('EXPIRED');
+					$('#ping_'+idelement).css('background', 'linear-gradient(45deg, #ff0000a1, #9c0505)');
+					$('#ping_'+idelement).text('NaN');
+					$('#status_'+idelement).text('Hors ligne');
+					$('#status_'+idelement).addClass('offline');
 				}
 			});
 		}         

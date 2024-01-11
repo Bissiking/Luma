@@ -1,49 +1,30 @@
 <?php
 
 // Charger le contenu du fichier JSON
-$jsonContent = file_get_contents('./base/routes.json');
-$routes = json_decode($jsonContent, true);
+$routesJSON = json_decode(file_get_contents('./base/routes.json'), true);
 
-if ($routes === null) {
+if ($routesJSON === null) {
     echo 'Erreur lors de la lecture du fichier JSON.';
-}else {
+    exit();
+} else {
     // Connexion à la base de données
-    // require_once './base/nexus_base.php';
+    $pdo = new PDO('mysql:host=' . DB_HOST . ':' . DB_PORT . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASSWORD);
 
-    // Liste pour stocker les routes manquantes en base de données
-    // $routesManquantes = [];
-    
-    // foreach ($routes as $route) {
-        
-    //     print_r($route);
-    //     $urlPattern = $route['url_pattern'];
-    
-    //     $tbl = array("url_pattern" => $urlPattern);
-    //     // Requête pour vérifier si la route est présente en base de données
-    //     $query = "SELECT COUNT(*) FROM luma_routes WHERE url_pattern = :url_pattern";
-    //     $stmt = $pdo->prepare($query);
-    //     $stmt->execute($tbl);
-    //     $count = $stmt->fetchColumn();
-    
-    //     // Si la route n'est pas présente, l'ajouter à la liste des routes manquantes
-    //     if ($count === 0) {
-    //         $routesManquantes[] = $urlPattern;
-    //     }
-    // }
+    // Récupérer les routes depuis la base de données
+    $sql = "SELECT * FROM luma_routes";
+    $req = $pdo->prepare($sql);
+    $req->execute();
+    $routesBDD = $req->fetchAll(PDO::FETCH_ASSOC);
 
-// Afficher les routes manquantes
-// echo "Routes manquantes en base de données :<br>";
-// foreach ($routesManquantes as $routeManquante) {
-//     echo $routeManquante . "<br>";
-// }
-    
+    // Afficher le bouton "Ajouter" si des routes peuvent être ajoutées
+    $afficherBoutonAjouter = !empty($routesToAdd);
 }
 
 ?>
 
-<link rel="stylesheet" href="<?= SITE_HTTP."://".SITE_URL ?>/css/admin.css">
+<link rel="stylesheet" href="<?= SITE_HTTP . "://" . SITE_URL ?>/css/admin.css">
 <script>
-	document.title = "Administration des routes";
+    document.title = "Administration des routes";
 </script>
 
 <h2>Manifest des routes <span class="betaPops">Aucun ajout ou modification disponible</span></h2>
@@ -57,17 +38,26 @@ if ($routes === null) {
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($routes as $route) { ?>
+        <?php foreach ($routesJSON as $route) { ?>
             <tr>
                 <td><?= $route['url_pattern'] ?></td>
                 <td><?= $route['controller'] ?></td>
                 <td><?= $route['action'] ?></td>
-                <td><span class="betaPops">DEV</span></td>
+                <td>
+                    <?php 
+                        // Extraire la colonne 'url_pattern' du tableau de routes en base de données
+                        $urlPatternsBDD = array_column($routesBDD, 'url_pattern');
+                        
+                        // Vérifier si l'url_pattern est présent dans le tableau extrait
+                        if (in_array($route['url_pattern'], $urlPatternsBDD)) : ?>
+                            <button style="background-color: grey;">Option en DEV</button>
+                    <?php else : ?>
+                            <button onclick="routesAdd('<?= $route['routeName'] ?>')">Ajouter le site</button>
+                    <?php endif; ?>
+                </td>
             </tr>
         <?php } ?>
     </tbody>
 </table>
-
-
-
 <!-- SCRIPTS SRV -->
+<script src="../javascripts/admin/routes_add.js"></script>

@@ -34,6 +34,8 @@ if (isset($_SESSION['authentification']['user'])) {
         <option value="nino.enerzein.fr">Nino EXT 2 (Steven)</option>
     </select>
 
+    <label for="UUID_nino">ID de la vidéo</label>
+    <p class="input_text"><?= $video['id_video_uuid']; ?></p>
     <input type="text" id="UUID_nino" name="UUID_nino" value="<?= $video['id_video_uuid']; ?>" hidden>
 
     <label for="videoTitle">Titre de la Vidéo :</label>

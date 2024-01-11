@@ -36,6 +36,11 @@
     font-size: 45px;
 }
 
+.date_moni{
+    display: flex;
+    flex-direction: column;
+}
+
 .dashboard-block:hover {
     transform: scale(1.02);
 }

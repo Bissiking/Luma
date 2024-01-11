@@ -21,7 +21,7 @@
     <table>
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Identifiant de la vidéo</th>
                 <th>Titre de la Vidéo</th>
                 <th>Éditer</th>
             </tr>
@@ -36,12 +36,11 @@
                 $req = $pdo->prepare($sql);
                 $req->execute($v);
                 $result = $req->rowCount();
-                print_r($result);
     
                 if ($result >= 1) {
                     while ($video = $req->fetch()) { ?>
                         <tr>
-                            <td><?= $video['id'] ?></td>
+                            <td><?= $video['id_video_uuid'] ?></td>
                             <td><?= $video['titre'] ?></td>
                             <td><button onclick="editVideo(<?= $video['id'] ?>)">Modifier</button></td>
                         </tr>

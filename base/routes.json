@@ -1,40 +1,54 @@
 {
     "Accueil" : {
+        "routeName": "Accueil",
         "url_pattern": "/",
         "controller":"HomeController",
         "action":"index"
     },
     "Connexion" : {
+        "routeName": "Connexion",
         "url_pattern": "/connexion",
         "controller":"ConnexionController",
         "action":"show"
     },
     "Admin" : {
+        "routeName": "Admin",
         "url_pattern": "/admin",
         "controller":"AdminController",
         "action":"show"
     },
-    "Admin-Routes" : {
+    "AdminRoutes" : {
+        "routeName": "AdminRoutes",
         "url_pattern": "/admin/routes",
         "controller":"AdminRoutesController",
         "action":"show"
     },
+    "AdminUsers" : {
+        "routeName": "AdminUsers",
+        "url_pattern": "/admin/users",
+        "controller":"AdminUsersController",
+        "action":"show"
+    },
     "NinoAccueil" : {
+        "routeName": "NinoAccueil",
         "url_pattern": "/nino",
         "controller":"NinoHomeController",
         "action":"show"
     },
     "NinoNewVideo" : {
+        "routeName": "NinoNewVideo",
         "url_pattern": "/nino/add",
         "controller":"NinoNewVideoController",
         "action":"show"
     },    
     "NinoEditVideo" : {
+        "routeName": "NinoEditVideo",
         "url_pattern": "/nino/edit",
         "controller":"NinoEditVideoController",
         "action":"show"
     },
     "NinoPlayerVideo" : {
+        "routeName": "NinoPlayerVideo",
         "url_pattern": "/nino/player",
         "controller":"NinoPlayerVideoController",
         "action":"show"

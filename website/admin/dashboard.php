@@ -30,7 +30,7 @@ if ($routes === null) {
             <div class="monitoring"><i class="fa-solid fa-microchip"></i><span id="CPU_moni">***</span></div>
             <div class="monitoring"><i class="fa-solid fa-memory"></i><span id="RAM_moni">***</span></div>
         </div>
-        <p>Information indisponible</p>
+        <p class="date_moni">Dernière mise à jour: <span id="last_update_moni">***</span></p>
     </div>
     <script>
         function startSonde() {
@@ -53,7 +53,7 @@ if ($routes === null) {
     <div class="dashboard-block">
         <h2>Version du Site</h2>
         <p>Version actuelle: <?= $versionSite ?></p>
-        <button id="update-button">Mise à jour</button>
+        <button style="background-color: gray;" id="update-button">Mise à jour</button>
     </div>
 </div>
 
