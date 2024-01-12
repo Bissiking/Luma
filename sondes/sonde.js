@@ -2,10 +2,33 @@ const fs = require('fs');
 const os = require('os');
 const osu = require('node-os-utils');
 
+function addOneHourInWinter(dateString) {
+    const date = new Date(dateString);
+
+    // Ajouter une heure si l'heure d'été n'est pas en vigueur
+    if (!isDaylightSavingTime(date)) {
+        date.setHours(date.getHours() + 1);
+    }
+
+    return date;
+}
+
+// Fonction pour vérifier si l'heure d'été est en vigueur
+function isDaylightSavingTime(date) {
+    const january = new Date(date.getFullYear(), 0, 1);
+    const july = new Date(date.getFullYear(), 6, 1);
+
+    // Si la différence de temps entre janvier et juillet est égale à 1 heure,
+    // alors l'heure d'été est en vigueur
+    return january.getTimezoneOffset() !== july.getTimezoneOffset();
+}
+
 // Fonction pour obtenir la date et l'heure actuelles
 function getCurrentDateTime() {
     const currentDate = new Date();
-    return currentDate.toISOString(); // Format ISO pour une représentation facilement lisible
+    // Exemple d'utilisation
+    const newDate = addOneHourInWinter(currentDate);
+    return newDate.toISOString(); // Format ISO pour une représentation facilement lisible
 }
 
 // Stocke les données dans un objet

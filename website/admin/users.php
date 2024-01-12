@@ -3,17 +3,6 @@
     document.title = "Administration - Utilisateurs";
 </script>
 
-<h1>Gestion des Utilisateurs</h1>
-
-<!-- Formulaire pour ajouter un utilisateur -->
-<form action="gestion_utilisateurs.php" method="post">
-    <label for="nom">Nom:</label>
-    
-    <label for="email">Email:</label>
-    
-    <button type="submit" name="ajouterUtilisateur">Ajouter Utilisateur</button>
-</form>
-
 <!-- Liste des utilisateurs -->
 <table>
     <thead>
