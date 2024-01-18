@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if(!empty($_POST)){
         $v = array('identifiant' => $identifiant);
-        $sql = 'SELECT id, identifiant, users_domain, password FROM luma_users WHERE identifiant = :identifiant';
+        $sql = 'SELECT * FROM luma_users WHERE identifiant = :identifiant';
         $req = $pdo->prepare($sql);
         $req->execute($v);
         $result = $req->rowCount();

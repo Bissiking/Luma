@@ -13,8 +13,7 @@
         require_once 'lib/router.php';
         exit;
     }
-    
-
+ 
 ?>
 
 <!DOCTYPE html>
