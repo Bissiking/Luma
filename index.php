@@ -3,7 +3,7 @@
     // Récupération de l'URL
     $url = $_SERVER['REQUEST_URI'];
     
-    if (isset($_SERVER['HTTP_X_FORWARDED_SCHEME'])) {
+    if (isset($_SERVER['HTTP_X_FORWARDED_SCHEME']) || isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] = "on") {
         $uriHttp = 'https://';
     }else{
         $uriHttp = 'http://';
