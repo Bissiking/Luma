@@ -1,9 +1,5 @@
 <?php
-if ($_SESSION['authentification']['user']['account_administrator'] !== 1) {
-    header('Location: /');
-}
-
-print_r($_SESSION);
+if (isset($_SESSION['authentification']['user']['account_administrator']) && $_SESSION['authentification']['user']['account_administrator'] == 1):
 
 // Charger le contenu du fichier JSON
 $jsonContent = file_get_contents('./version.json');
@@ -64,3 +60,5 @@ if ($routes === null) {
 </div>
 
 <script src="javascripts/admin/dashboard.js"></script>
+
+<?php else: header('Location: /'); endif; ?>
