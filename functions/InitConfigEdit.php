@@ -11,10 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	extract($_REQUEST);
 
 	// ETAPE 2 - Vérification si les champs sont vides ou non
-	if (isset($DB_HOST) || $DB_HOST == "") {
+	if (!isset($DB_HOST) || $DB_HOST == "") {
 		$DB_HOST = 'localhost';
 	}
-	if (isset($DB_PORT) || $DB_PORT == "") {
+	if (!isset($DB_PORT) || $DB_PORT == "") {
 		$DB_PORT = '3306';
 	}
 

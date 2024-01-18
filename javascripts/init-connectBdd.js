@@ -63,10 +63,10 @@ function testConnection(event) {
                     '&DB_PORT='+DB_PORT+
                     '&DB_NAME='+DB_NAME+
                     '&DB_USER='+DB_USER+
-                    '&DB_PASSWORD='+DB_PASSWORD+
+                    '&DB_PASSWORD='+encodeURIComponent(DB_PASSWORD)+
                     '&SYS_NAME='+SYS_NAME+
                     '&USER_ADMIN='+USER_ADMIN+
-                    '&USER_ADMIN_MDP='+USER_ADMIN_MDP;
+                    '&USER_ADMIN_MDP='+encodeURIComponent(USER_ADMIN_MDP);
     
             $.ajax({
                 url: 'functions/InitConfigEdit.php',
