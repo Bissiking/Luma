@@ -1,4 +1,10 @@
 <?php
+if ($_SESSION['authentification']['user']['account_administrator'] !== 1) {
+    header('Location: /');
+}
+
+print_r($_SESSION);
+
 // Charger le contenu du fichier JSON
 $jsonContent = file_get_contents('./version.json');
 $routes = json_decode($jsonContent, true);

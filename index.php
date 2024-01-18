@@ -8,6 +8,13 @@
     }else{
         $uriHttp = 'http://';
     }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        require_once 'lib/router.php';
+        exit;
+    }
+    
+
 ?>
 
 <!DOCTYPE html>

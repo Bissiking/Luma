@@ -240,6 +240,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			account_system TINYINT(4) NOT NULL DEFAULT 0,
 			users_domain VARCHAR(255) NOT NULL,
 			nomComplet VARCHAR(255) NULL,
+			email VARCHAR(255) NULL,
+			emailValid TINYINT(4) NULL DEFAULT 0,
+			emailToken VARCHAR(255) NULL,
 			groupeAcces VARCHAR(255) NULL,
 			account_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     		account_edit TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -274,7 +277,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 		if (!$user) {
 			$insertUser1Query = "
-        INSERT INTO luma_users (identifiant, password, users_domain, account_administrator)
+        INSERT INTO luma_users (identifiant, password, users_domain, account_system)
         VALUES ('system', '" . password_hash("" . $motDePasseGenere . "", PASSWORD_BCRYPT) . "', '" . SITE_URL . "', 1)
     ";
 			$pdo->exec($insertUser1Query);

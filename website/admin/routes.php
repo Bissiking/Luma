@@ -1,5 +1,7 @@
 <?php
-
+if ($_SESSION['authentification']['user']['account_administrator'] !== 1) {
+    header('Location: /');
+}
 // Charger le contenu du fichier JSON
 $routesJSON = json_decode(file_get_contents('./base/routes.json'), true);
 

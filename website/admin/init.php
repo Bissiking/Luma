@@ -1,3 +1,9 @@
+<?php
+	if ($_SERVER['REQUEST_URI'] !== '/') {
+		header('Location: /');
+	}
+?>
+
 <link rel="stylesheet" href="css/init.css">
 <script>
 	document.title = "Connexion à une base de donnée";
