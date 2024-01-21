@@ -250,3 +250,29 @@ p.system-warning{
     padding: 10px 0px;
     border-radius: 10px; 
 }
+
+/* USERS */
+
+.domain-list {
+    list-style-type: none;
+    padding: 0;
+}
+.domain-list-item {
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.domains-button {
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.delete-button {
+    background-color: #d9534f;
+}

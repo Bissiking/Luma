@@ -1,4 +1,9 @@
 <?php
+if ($_SESSION['authentification']['user']['account_administrator'] !== 1) {
+    echo 'REFUSED';
+	exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	// Détection du HTTPS
 	if (isset($_SERVER['HTTP_X_FORWARDED_SCHEME'])) {
@@ -60,8 +65,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$configContent .= "define('SITE_HTTP', '" . $uriHttp . "');" . PHP_EOL;
 		$configContent .= PHP_EOL;
 
+		$configContent .= "//VERSION TABLES BDD" . PHP_EOL;
+		$configContent .= "define('DB_LUMA_USERS_VERSION', 'DB01');" . PHP_EOL;
+		$configContent .= "define('DB_LUMA_ROUTES_VERSION', 'DB01');" . PHP_EOL;
+		$configContent .= "define('DB_LUMA_NINO_DATA_VERSION', 'DB01');" . PHP_EOL;
+		$configContent .= PHP_EOL;
 		// Fin du fichier
-		$configContent .= '?>' . PHP_EOL;
 
 		// Écriture du contenu dans le fichier
 		file_put_contents($configFilePath, $configContent);
@@ -240,9 +249,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			account_system TINYINT(4) NOT NULL DEFAULT 0,
 			users_domain VARCHAR(255) NOT NULL,
 			nomComplet VARCHAR(255) NULL,
-			email VARCHAR(255) NULL,
-			emailValid TINYINT(4) NULL DEFAULT 0,
-			emailToken VARCHAR(255) NULL,
 			groupeAcces VARCHAR(255) NULL,
 			account_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     		account_edit TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -302,6 +308,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		exit;
 	}
 
+	// Création de la table NINO
+	try {
+		// Définir le mode d'erreur de PDO sur Exception
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+		// Requête de création de table
+		$query = "
+		CREATE TABLE IF NOT EXISTS luma_nino_data (
+			id INT PRIMARY KEY AUTO_INCREMENT,
+			id_video_uuid VARCHAR(255) NULL,
+			id_users BIGINT(20) NULL,
+			titre VARCHAR(255) NULL,
+			description TEXT NULL,
+			videoThumbnail VARCHAR(255) NULL,
+			tag VARCHAR(255) NULL,
+			server_url VARCHAR(255) NULL,
+			status VARCHAR(255) NULL,
+			`create` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+			edit TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+			publish TIMESTAMP NULL
+		)
+    ";
+		// Exécution de la requête
+		$pdo->exec($query);
+
+		// Création du déclancheur de mise à jour
+		$query = "
+				CREATE TRIGGER IF NOT EXISTS update_edit
+				BEFORE UPDATE ON luma_nino_data
+				FOR EACH ROW
+				SET NEW.edit = CURRENT_TIMESTAMP;
+			";
+
+		// Exécution de la requête
+		$pdo->exec($query);
+	} catch (PDOException $e) {
+		echo 'configCreateTableNino-echec --> ' . $e->getMessage();
+		exit;
+	}
+
+		// Création de la table DOMAINS
+		try {
+			// Définir le mode d'erreur de PDO sur Exception
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	
+			// Requête de création de table
+			$query = "
+			CREATE TABLE IF NOT EXISTS luma_domains (
+				id INT PRIMARY KEY AUTO_INCREMENT,
+				domains VARCHAR(255) NULL,
+				domains_autorized VARCHAR(255) NULL,
+
+			)
+		";
+			// Exécution de la requête
+			$pdo->exec($query);
+		} catch (PDOException $e) {
+			echo 'configCreateTableDomains-echec --> ' . $e->getMessage();
+			exit;
+		}
 	echo "succes";
 }

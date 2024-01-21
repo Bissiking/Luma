@@ -22,8 +22,14 @@ if ($routes === null) {
     <div class="dashboard-block dashboard-menu">
         <a class="menu-link" href="/"><i class="fas fa-home"></i> Accueil de LUMA</a>
         <a class="menu-link" href="/admin/routes"><i class="fa-solid fa-route"></i> Gestion des routes</a>
-        <a class="menu-link" style="background-color: grey;" href="#"><i class="fas fa-cogs"></i> Gestion des BDD</a>
+        <a class="menu-link" href="/admin/bdd"><i class="fas fa-cogs"></i> Gestion des BDD</a>
         <a class="menu-link" href="/admin/users"><i class="fa-solid fa-users"></i> Gestion des utilisateurs</a>
+    </div>
+    <div class="dashboard-block dashboard-menu">
+        <a class="menu-link" href="/admin/domains"><i class="fa-solid fa-globe"></i> Gestion dees domaines</a>
+        <a class="menu-link" href="#"><i class="fa-solid fa-ban"></i> EMPTY</a>
+        <a class="menu-link" href="#"><i class="fa-solid fa-ban"></i> EMPTY</a>
+        <a class="menu-link" href="#"><i class="fa-solid fa-ban"></i> EMPTY</a>
     </div>
 
     <div class="dashboard-block">

@@ -1,0 +1,22 @@
+{
+    "DB_LUMA_USERS_VERSION": {
+        "DB_NAME": "DB_LUMA_USERS_VERSION",
+        "version_dispo": "DB02",
+        "DB_USE": "luma_users"
+    },
+    "DB_LUMA_ROUTES_VERSION": {
+        "DB_NAME": "DB_LUMA_ROUTES_VERSION",
+        "version_dispo": "DB01",
+        "DB_USE": "luma_routes"
+    },
+    "DB_LUMA_NINO_DATA_VERSION": {
+        "DB_NAME": "DB_LUMA_NINO_DATA_VERSION",
+        "version_dispo": "DB01",
+        "DB_USE": "luma_nino_data"
+    },
+    "DB_LUMA_DOMAINS_VERSION": {
+        "DB_NAME": "DB_LUMA_DOMAINS_VERSION",
+        "version_dispo": "DB01",
+        "DB_USE": "luma_domains"
+    }
+}

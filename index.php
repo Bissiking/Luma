@@ -1,71 +1,86 @@
 <?php
-    session_start();
-    // Récupération de l'URL
-    $url = $_SERVER['REQUEST_URI'];
-    
-    if (isset($_SERVER['HTTP_X_FORWARDED_SCHEME']) || isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] = "on") {
-        $uriHttp = 'https://';
-    }else{
-        $uriHttp = 'http://';
-    }
+session_start();
+// Récupération de l'URL
+$url = $_SERVER['REQUEST_URI'];
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        require_once 'lib/router.php';
-        exit;
-    }
- 
+if (isset($_SERVER['HTTP_X_FORWARDED_SCHEME']) || isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] = "on") {
+    $uriHttp = 'https://';
+} else {
+    $uriHttp = 'http://';
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_once 'lib/router.php';
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- LINK -->
     <?php if (strpos($url, 'nino') !== false) { ?>
-        <link rel="stylesheet" href="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/css/nino.css">
+        <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/nino.css">
     <?php } else { ?>
-        <link rel="stylesheet" href="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/css/style.css">
+        <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/style.css">
     <?php } ?>
-    <link rel="stylesheet" href="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/css/all.min.css">
-    <link rel="icon" type="image/png" href="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/images/nexus30.png" />
+    <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/all.min.css">
+    <link rel="icon" type="image/png" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/images/nexus30.png" />
     <!-- SCRIPTS -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <title>Luma Projet</title>
 </head>
+
 <body>
     <header>
         <div>
-            <span id="logo"><?php if (strpos($url, 'nino') !== false) { ?> <img src="/images/nino75.png"> <?php }else{ ?> LUMA <?php } ?></span>
+            <span id="logo"><?php if (strpos($url, 'nino') !== false) { ?> <img src="/images/nino75.png"> <?php } else { ?> LUMA <?php } ?></span>
         </div>
 
         <nav>
-            <a href="/">Accueil LUMA</a>
-            <?php if (strpos($url, 'nino') !== false) { ?>
+            <?php if (strpos($url, 'admin') !== false) : ?>
+                <a href="/admin">Dashboard</a>
+            <?php elseif (strpos($url, 'nino') !== false) : ?>
                 <a href="/nino">Accueil Nino</a>
-                <a  style="color:grey" href="#">Bibliothèque</a>
-                <a  style="color:grey" href="#">Historique</a>
-                <a href="/nino/add">Ajouter une vidéo</a>
-            <?php }else{ ?>
+                <a style="color:grey" href="#">Bibliothèque</a>
+                <a style="color:grey" href="#">Historique</a>
+            <?php else : ?>
+                <a href="/">Accueil LUMA</a>
                 <a href="/nino">Nino</a>
                 <a style="color:grey" href="#">Serveur</a>
                 <a style="color:grey" href="#">A propos</a>
-            <?php } ?>
+            <?php endif; ?>
         </nav>
 
         <!-- Icône représentant un compte non connecté -->
-        <img id="profileIcon" src="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/images/user-offline.png" alt="Icône de Profil">
-        
+        <img id="profileIcon" src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/images/user-offline.png" alt="Icône de Profil">
+
         <!-- Menu déroulant pour le profil -->
         <ul id="profileMenu">
             <i class="fa-solid fa-sort-up"></i>
-            <li><a href="/admin">Administration du site</a></li>
-            <?php if (isset($_SESSION['authentification']['user'])) { ?>
-                <li><a style="color:grey" href="#">Configurer le Profil</a></li>
-                <li><a style="color:grey" href="#">Autres Options</a></li>
-            <?php }else{ ?>
+
+            <?php if (isset($_SESSION['authentification']['user'])) : ?>
+                <?php if (strpos($url, 'nino') !== false) : ?>
+                    <li><a href="/nino/add">Ajouter une vidéo</a></li>
+                <?php elseif (strpos($url, 'admin') !== false) : ?>
+                    <li><a style="color:grey" href="#">Admin Notification</a></li>
+                    <li><a style="color:grey" href="#">Log système</a></li>
+                <?php else: ?>
+                    <li><a href="/admin">Administration du site</a></li>
+                    <li><a style="color:grey" href="#">Configurer le Profil</a></li>
+                <?php endif; ?>
+            <?php else : ?>
                 <li><a href="/connexion">Se connecter</a></li>
-            <?php } ?>
+            <?php endif; ?>
+
+            <!-- NINO MENU -->
+            <?php if (strpos($url, 'nino') !== false) : ?>
+                <li><a href="/">Retour à LUMA</a></li>
+            <?php endif; ?>
         </ul>
 
     </header>
@@ -83,11 +98,12 @@
     </div>
 
     <!-- Vos scripts JavaScript vont ici -->
-    <script src="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/javascripts/popup.js"></script>
-    <script src="<?= $uriHttp.$_SERVER['HTTP_HOST'] ?>/javascripts/all-pages.js"></script>
+    <script src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/javascripts/popup.js"></script>
+    <script src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/javascripts/all-pages.js"></script>
 
     <footer>
         <p>&copy; 2023 HEMERY Mathéo</p>
     </footer>
 </body>
+
 </html>

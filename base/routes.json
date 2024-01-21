@@ -29,6 +29,12 @@
         "controller":"AdminUsersController",
         "action":"show"
     },
+    "AdminBDD" : {
+        "routeName": "AdminBDD",
+        "url_pattern": "/admin/bdd",
+        "controller":"AdminBDDController",
+        "action":"show"
+    },
     "NinoAccueil" : {
         "routeName": "NinoAccueil",
         "url_pattern": "/nino",
@@ -52,5 +58,13 @@
         "url_pattern": "/nino/player",
         "controller":"NinoPlayerVideoController",
         "action":"show"
+    },
+    "DomainController" : {
+        "routeName": "DomainController",
+        "url_pattern": "/admin/domains",
+        "controller":"DomainController",
+        "action":"show"
     }
 }
+
+
