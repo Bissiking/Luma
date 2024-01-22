@@ -7,6 +7,8 @@ extract($_REQUEST); // Extraction des valeurs JS
 $titre = $videoTitle;
 $description = $videoDescription;
 $tag = $videoTags;
+$status = $videoStatus;
+$publish = $videoPublish;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -94,6 +96,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'tag' => $tag,
             'videoThumbnail' => $videoThumbnail,
             'server_url' => $serveurURL,
+            'status' => $status,
+            'publish' => $publish.' 12:00:00',
             'id' => $id
         );
         $sql = 'UPDATE luma_nino_data 
@@ -104,7 +108,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         description = :description, 
         tag = :tag, 
         videoThumbnail = :videoThumbnail, 
-        server_url = :server_url WHERE id = :id';
+        server_url = :server_url, 
+        status = :status, 
+        publish = :publish WHERE id = :id';
         $req = $pdo->prepare($sql);
         $req->execute($v);
         echo 'succes';

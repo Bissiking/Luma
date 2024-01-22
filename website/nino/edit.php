@@ -54,6 +54,20 @@ if (isset($_SESSION['authentification']['user'])) {
     <label for="videoTags">Tags (séparés par des virgules) :</label>
     <input type="text" id="videoTags" name="videoTags" value="<?= $video['tag']; ?>">
 
+    <label for="videoStatus">Status de la vidéo</label>
+    <select name="videoStatus" id="videoStatus" class="custom-select">
+        <option selected hidden value="<?= $video['status']; ?>">Choisir si la vidéo est visible ou non</option>
+        <?php if($video['status'] === "publique"): ?>
+        <option value="hide">Ne plus publier la vidéo</option>
+        <?php else: ?>
+        <option value="publique">Publier la vidéo</option>
+        <?php endif; ?>
+        <option value="reserved">Réservé</option>
+    </select>
+
+    <label for="videoPublish">Date de publication (Heure par default: 12h00) :</label>
+    <input type="date" id="videoPublish" name="videoPublish" value="<?php if(isset($video['publish']) || $video['publish'] != "" || $video['publish'] != null){ echo date('Y-m-d', strtotime($video['publish']));} ?>">
+
     <button type="submit" id="btnEditVideo" data-idvideo="<?= $_GET['id'] ?>">Enregistrer les modifications</button>
 </form>
 
