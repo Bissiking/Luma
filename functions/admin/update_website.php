@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         putenv("PATH=" . getenv("PATH") . ";" . dirname($gitPath));
         // Changer le répertoire de travail
         chdir("../../");
-   
+
         // Exécuter la commande Git
         $output = shell_exec('git stash && git pull 2>&1');
     
