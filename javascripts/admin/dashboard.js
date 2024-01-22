@@ -41,3 +41,4 @@ loadAndDisplayInfo();
 
 // Charger et afficher les informations toutes les 10 secondes
 setInterval(loadAndDisplayInfo, 10000);
+
