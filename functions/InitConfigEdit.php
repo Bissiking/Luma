@@ -14,9 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$DB_PORT = htmlspecialchars(trim($DB_PORT));
 	$DB_NAME = htmlspecialchars(trim($DB_NAME));
 	$DB_USER = htmlspecialchars(trim($DB_USER));
-	$DB_PASSWORD = htmlspecialchars(trim(urldecode($DB_PASSWORD)));
+	$DB_PASSWORD = urldecode($DB_PASSWORD);
 	$USER_ADMIN = htmlspecialchars(trim($USER_ADMIN));
-	$USER_ADMIN_MDP = htmlspecialchars(trim(urldecode($USER_ADMIN_MDP)));
+	$USER_ADMIN_MDP = urldecode($USER_ADMIN_MDP);
 
 	// ETAPE 2 - Vérification si les champs sont vides ou non
 	if (!isset($DB_HOST) || $DB_HOST == "") {
