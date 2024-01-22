@@ -73,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <li><a href="/admin">Administration du site</a></li>
                     <li><a style="color:grey" href="#">Configurer le Profil</a></li>
                 <?php endif; ?>
+                <li><a href="/connexion?logout">Se déconnecter</a></li>
             <?php else : ?>
                 <li><a href="/connexion">Se connecter</a></li>
             <?php endif; ?>

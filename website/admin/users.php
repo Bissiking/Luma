@@ -271,23 +271,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <tr>
                 <th>Nom complet</th>
                 <th>Identifiant</th>
-                <th>Domaine</th>
+                <th>Email</th>
                 <th>Administrateur du Domaine</th>
                 <th>Options</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td><input type="text" name="nom_complet" placeholder="SMITH John" require></td>
-                <td><input type="identifiant" name="identifiant" placeholder="jsmith44" require></td>
-                <td><input type="domain" name="domain" placeholder="<?= SITE_URL ?>"></td>
-                <td><select type="account_administrator" name="account_administrator">
+            <?php if (defined('DB_LUMA_USERS_VERSION') && DB_LUMA_USERS_VERSION >= 'DB02'): ?>
+                <!-- FORMULAIRE D'AJOUT DE COMPTE (FORCED) -->
+                <td><input id="add-nomComplet" type="text" name="nom_complet" placeholder="SMITH John" require></td>
+                <td><input id="add-identifiant" type="identifiant" name="identifiant" placeholder="jsmith44" require></td>
+                <td><input id="add-email" type="email" name="email" placeholder="smith.john@mhemery.fr"></td>
+                <td><select id="add-account_administrator" type="account_administrator" name="account_administrator">
                         <option value="1">Oui</option>
                         <option value="0" selected>Non</option>
                     </select></td>
-                <td><button style="color: grey;">Ajouter</button></td>
+                <td><button id="add-btn" onclick="addUser()">Ajouter</button></td>
             </tr>
-            <?php
+            <?php endif;
             require './base/nexus_base.php';
             $sql = 'SELECT * FROM luma_users';
             $req = $pdo->prepare($sql);
@@ -303,7 +305,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 echo $user['nomComplet'];
                             } ?></td>
                         <td><?= $user['identifiant'] ?></td>
-                        <td><?= $user['users_domain'] ?></td>
+                        <td><?php if (defined('DB_LUMA_USERS_VERSION') && DB_LUMA_USERS_VERSION >= 'DB02') {
+                            if(!isset($user['email']) || $user['email'] == ""){
+                                echo 'Unknown';
+                            }else{
+                                echo $user['email'];
+                            }
+                        }else{ echo "Votre base de donnée n'est pas à jour"; } ?></td>
                         <td><?php if ($user['account_administrator'] == 0) {
                                 echo 'Non';
                             } else {
