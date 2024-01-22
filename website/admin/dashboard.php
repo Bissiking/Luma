@@ -40,28 +40,10 @@ if (isset($_SESSION['authentification']['user']['account_administrator']) && $_S
             </div>
             <p class="date_moni">Dernière mise à jour: <span id="last_update_moni">***</span></p>
         </div>
-        <script>
-            function startSonde() {
-                // Effectuer une requête Ajax vers le script PHP pour démarrer la sonde
-                $.ajax({
-                    url: '/sondes/gestion_sonde.php',
-                    type: 'POST',
-                    success: function(response) {
-                        // Afficher la réponse du serveur (succès ou erreur)
-                        console.log(response);
-                    },
-                    error: function(error) {
-                        // Gérer les erreurs Ajax
-                        console.error('Erreur Ajax:', error);
-                        alert('Erreur Ajax. Veuillez consulter la console pour plus d\'informations.');
-                    }
-                });
-            }
-        </script>
         <div class="dashboard-block">
             <h2>Version du Site</h2>
             <p>Version actuelle: <?= $versionSite ?></p>
-            <button style="background-color: gray;" id="updateButton">Mise à jour</button>
+            <button id="updateButton">Mise à jour</button>
             <script>
                 $(document).ready(function() {
                     $('#updateButton').on('click', function() {
