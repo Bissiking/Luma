@@ -34,7 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($result == 1) {
             foreach($req as $user){}
             // Vérification du bon domaine
-            if($_SERVER['HTTP_HOST'] !== $user['users_domain']){
+            
+
+            $tbldomainUser = explode(',', $user['users_domain']);
+            $DomainValid = in_array($_SERVER['HTTP_HOST'], $tbldomainUser);
+
+            if($DomainValid === false){
                 echo 'error_domain';
                 exit;
             }
@@ -52,4 +57,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Méthode de requête incorrecte
     echo 'Méthode de requête incorrecte.';
 }
-?>
