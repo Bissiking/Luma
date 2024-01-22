@@ -18,14 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         putenv("PATH=" . getenv("PATH") . ";" . dirname($gitPath));
         // Changer le répertoire de travail
         chdir("../../");
-
+   
         // Exécuter la commande Git
-        $output = shell_exec('git stash && git pull 2>&1');
-
+        $output = shell_exec('git stash 2>&1');
+    
         if ($output === null) {
             throw new Exception('La commande git stash n\'a pas retourné de sortie.');
         }
-
         // Afficher la sortie
         echo 'succes';
     } catch (Exception $e) {
