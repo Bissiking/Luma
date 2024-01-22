@@ -6,11 +6,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    require_once '../../base/config.php';
     require_once '../../lib/edit_const.php';
 
     // TEST FUNCTION EDIT CONST
-    $const = ConstEdit('WEB_MAINTENANCE', 'true');
+    // $const = ConstEdit('WEB_MAINTENANCE', 'true', 'false');
     try {
         $gitPath = 'C:/Program Files/Git/bin/git.exe';  // Remplacez par le chemin réel de l'exécutable Git
 
@@ -35,5 +34,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Afficher le résultat
     echo nl2br('OUT: ' . $output);
     sleep(1);
-    ConstEdit('WEB_MAINTENANCE', 'false');
+    // ConstEdit('WEB_MAINTENANCE', 'false', 'true');
 }
