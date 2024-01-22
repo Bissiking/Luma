@@ -35,6 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Afficher le résultat
     echo nl2br('OUT: ' . $output);
+    sleep(1);
+    ConstEdit('WEB_MAINTENANCE', 'true');
 }
-
-$const = ConstEdit('WEB_MAINTENANCE', 'false');
