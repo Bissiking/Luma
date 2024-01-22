@@ -1,9 +1,16 @@
+var TempPing = 0;
+
+function TEST() {
+	value = Math.floor(Math.random() * 5) + 1;
+	return value;
+}
+
 function SearchAndPing() {
 	// On compte le nombre de bloc serveur disponible
 	let CountBlockServer = $('.ServerBlock').length;
 	// On effectue une boucle avec le nombre de bloc disponible
 	for (let i = 0; i < CountBlockServer ; i++) {
-
+		
 		// On selectionne la DIV
 		let deuxiemeServerBlock = $('.ServerBlock')[i];
 		// Puis on cible une DIV
@@ -11,12 +18,14 @@ function SearchAndPing() {
 		// On récupère les information nécessaire
 		let ip = $('#'+idElement).data('ip');
 		// On injecte les informations dans l'autre fonction
-		CheckServiceLuma(ip, idElement);
+		
+		setTimeout(() => {
+			CheckServiceLuma(ip, idElement);
+		}, TEST()*1000);
 	}
 }
 
 function CheckServiceLuma(url, idelement) {
-	timeout = 10000;
 	let offlineBackground = 'linear-gradient(45deg, #dc3545, #dc3545)';
 
 	// Nettoyage des classes

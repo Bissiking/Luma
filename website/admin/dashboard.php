@@ -26,7 +26,7 @@ if (isset($_SESSION['authentification']['user']['account_administrator']) && $_S
             <a class="menu-link" href="/admin/users"><i class="fa-solid fa-users"></i> Gestion des utilisateurs</a>
         </div>
         <div class="dashboard-block dashboard-menu">
-            <a class="menu-link" href="/admin/domains"><i class="fa-solid fa-globe"></i> Gestion dees domaines</a>
+            <a class="menu-link" href="/admin/domains"><i class="fa-solid fa-globe"></i> Gestion des domaines</a>
             <a class="menu-link" href="#"><i class="fa-solid fa-ban"></i> EMPTY</a>
             <a class="menu-link" href="#"><i class="fa-solid fa-ban"></i> EMPTY</a>
             <a class="menu-link" href="#"><i class="fa-solid fa-ban"></i> EMPTY</a>
@@ -53,6 +53,11 @@ if (isset($_SESSION['authentification']['user']['account_administrator']) && $_S
                             type: 'POST',
                             success: function(response) {
                                 console.log(response); // Afficher la réponse du serveur (message de réussite ou d'erreur)
+                                if (response == "succes") {
+                                    window.location.href = window.location.href;
+                                }else{
+                                    console.error('Echec de la mise à jour:', error);
+                                }
                             },
                             error: function(xhr, status, error) {
                                 console.error(xhr.responseText);

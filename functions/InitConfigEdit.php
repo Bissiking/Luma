@@ -10,6 +10,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	// ETAPE 1 - Exctraction
 	extract($_REQUEST);
 
+	$DB_HOST = htmlspecialchars(trim($DB_HOST));
+	$DB_PORT = htmlspecialchars(trim($DB_PORT));
+	$DB_NAME = htmlspecialchars(trim($DB_NAME));
+	$DB_USER = htmlspecialchars(trim($DB_USER));
+	$DB_PASSWORD = htmlspecialchars(trim(urldecode($DB_PASSWORD)));
+	$USER_ADMIN = htmlspecialchars(trim($USER_ADMIN));
+	$USER_ADMIN_MDP = htmlspecialchars(trim(urldecode($USER_ADMIN_MDP)));
+
 	// ETAPE 2 - Vérification si les champs sont vides ou non
 	if (!isset($DB_HOST) || $DB_HOST == "") {
 		$DB_HOST = 'localhost';
@@ -86,15 +94,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	// Récupération de la config
 
 	require_once '../base/config.php';
-
-	// Transformation des POST en variable nettoyé
-	$DB_HOST = htmlspecialchars(trim($DB_HOST));
-	$DB_PORT = htmlspecialchars(trim($DB_PORT));
-	$DB_NAME = htmlspecialchars(trim($DB_NAME));
-	$DB_USER = htmlspecialchars(trim($DB_USER));
-	$DB_PASSWORD = htmlspecialchars(trim($DB_PASSWORD));
-	$USER_ADMIN = htmlspecialchars(trim($USER_ADMIN));
-	$USER_ADMIN_MDP = htmlspecialchars(trim($USER_ADMIN_MDP));
 
 	// Lire le contenu actuel du fichier
 	$configContent = file_get_contents($configFilePath);
@@ -235,8 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		// Requête de création de table
-		$query = "
-		CREATE TABLE IF NOT EXISTS luma_users (
+		$query = "CREATE TABLE IF NOT EXISTS luma_users (
 			id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
 			identifiant VARCHAR(255) NOT NULL,
 			password VARCHAR(255) NOT NULL,
@@ -246,20 +244,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			nomComplet VARCHAR(255) NULL,
 			groupeAcces VARCHAR(255) NULL,
 			account_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    		account_edit TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-		)
-    ";
+    		account_edit TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)";
 
 		// Exécution de la requête
 		$pdo->exec($query);
 
 		// Création du déclancheur de mise à jour
-		$query = "
-		CREATE TRIGGER IF NOT EXISTS update_account_edit
+		$query = "CREATE TRIGGER IF NOT EXISTS update_account_edit
 		BEFORE UPDATE ON luma_users
 		FOR EACH ROW
-		SET NEW.account_edit = CURRENT_TIMESTAMP;
-    ";
+		SET NEW.account_edit = CURRENT_TIMESTAMP;";
 
 		// Exécution de la requête
 		$pdo->exec($query);
@@ -349,14 +343,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	
 			// Requête de création de table
-			$query = "
-			CREATE TABLE IF NOT EXISTS luma_domains (
+			$query = "CREATE TABLE IF NOT EXISTS luma_domains (
 				id INT PRIMARY KEY AUTO_INCREMENT,
 				domains VARCHAR(255) NULL,
-				domains_autorized VARCHAR(255) NULL,
-
-			)
-		";
+				domains_autorized VARCHAR(255) NULL)";
 			// Exécution de la requête
 			$pdo->exec($query);
 		} catch (PDOException $e) {

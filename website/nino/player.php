@@ -13,33 +13,35 @@ if (!isset($_GET['video']) || $_GET['video'] == null) {
 
     require './base/nexus_base.php';
     $id = htmlspecialchars(trim($_GET['video']));
-    $sql = "SELECT * FROM luma_nino_data WHERE id = $id";
+    $sql = "SELECT * FROM luma_nino_data WHERE id = $id  && publish < '".date('Y-m-d 12:00:00')."' && status = 'publique'";
     $req = $pdo->prepare($sql);
     $req->execute();
     $result = $req->rowCount();
-    foreach ($req as $video) {
-    }
 
-    if ($video['videoThumbnail'] == '' || $video['videoThumbnail'] == null) {
-        $video['videoThumbnail'] = SITE_HTTP . "://" . SITE_URL . "/images/nino/no_image.jpg";
-    }
+    if ($result === 1) :
+        foreach ($req as $video) {
+        }
+
+        if ($video['videoThumbnail'] == '' || $video['videoThumbnail'] == null) {
+            $video['videoThumbnail'] = SITE_HTTP . "://" . SITE_URL . "/images/nino/no_image.jpg";
+        }
 ?>
 
-    <div class="video-container">
-        <video id="Player" poster="<?= $video['videoThumbnail']; ?>" controls></video>
+        <div class="video-container">
+            <video id="Player" poster="<?= $video['videoThumbnail']; ?>" controls></video>
 
-        <div class="video-info">
-            <h1><?= $video['titre']; ?></h1>
-            <p><?= $video['description']; ?></p>
+            <div class="video-info">
+                <h1><?= $video['titre']; ?></h1>
+                <p><?= $video['description']; ?></p>
 
-            <div class="like-buttons">
-                <button><i class="far fa-thumbs-up"></i> Like</button>
-                <button><i class="far fa-thumbs-down"></i> Unlike</button>
+                <div class="like-buttons">
+                    <button><i class="far fa-thumbs-up"></i> Like</button>
+                    <button><i class="far fa-thumbs-down"></i> Unlike</button>
+                </div>
             </div>
         </div>
-    </div>
-    <!-- FEATURES -->
-    <!-- <div class="video-list">
+        <!-- FEATURES -->
+        <!-- <div class="video-list">
     <div class="video-list-item">
         <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/03/web-images.jpg?auto=format&q=60&w=1600&h=824&fit=crop&crop=faces" alt="Vidéo 1 Thumbnail">
         <div>
@@ -56,21 +58,31 @@ if (!isset($_GET['video']) || $_GET['video'] == null) {
         </div>
     </div> -->
 
-    <!-- SCRIPTS -->
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <script>
-        let url = "https://nino.mhemery.fr/<?= htmlspecialchars(trim($video['id_video_uuid'])) ?>"
-        var id = new URL(url).pathname;
-        const video = document.getElementById('Player');
-        const videoSrc = url + '/nino.m3u8';
-        if (Hls.isSupported()) {
-            const hls = new Hls();
-            hls.loadSource(videoSrc);
-            hls.attachMedia(video);
-            hls.on(Hls.Events.MANIFEST_PARSED, () => {});
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = videoSrc;
-            video.addEventListener('loadedmetadata', () => {});
-        }
-    </script>
-<?php } ?>
+        <!-- SCRIPTS -->
+        <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+        <script>
+            let url = "https://nino.mhemery.fr/<?= htmlspecialchars(trim($video['id_video_uuid'])) ?>"
+            var id = new URL(url).pathname;
+            const video = document.getElementById('Player');
+            const videoSrc = url + '/nino.m3u8';
+            if (Hls.isSupported()) {
+                const hls = new Hls();
+                hls.loadSource(videoSrc);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => {});
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = videoSrc;
+                video.addEventListener('loadedmetadata', () => {});
+            }
+        </script>
+    <?php else : ?>
+        <div class="video-container">
+            <video id="Player" poster="<?= SITE_HTTP . "://" . SITE_URL . "/images/nino/404.jpg" ?>" controls></video>
+
+            <div class="video-info">
+                <h1>Vidéo non disponible</h1>
+                <p>Aucune vidéo disponible ici. Vous êtes perdu dans les petits tréfond de Nino ?</p>
+            </div>
+        </div>
+<?php endif;
+} ?>

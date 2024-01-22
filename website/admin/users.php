@@ -5,6 +5,12 @@ if ($_SESSION['authentification']['user']['account_administrator'] !== 1) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     extract($_REQUEST);
+
+    if ($user == 'system'){
+        header('Location: /admin/users?edit&user=system&refused');
+        exit;
+    }
+
     switch ($call) {
         case 'edit':
             $nomComplet = htmlspecialchars(trim($nom_complet));
@@ -241,13 +247,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     endif;
                     ?>
                 </ul>
+                <?php if($user['account_system'] !== 1): ?>
                 <button id="editUserInfo">Enregistrer les modifications</button>
+                <?php endif; ?>
             <?php endif; ?>
 
         </form>
     </div>
     <div class="container groupe-container">
         <h3>Groupes actifs/inactifs</h3>
+        <span class="betaPops">Fonctionnalités non disponible</span>
         <?php if ($user['account_system'] == 1) : ?>
             <p class="system-warning">Le compte est un compte système. Les droits, ne peuvent pas être modifié</p>
         <?php else : ?>
