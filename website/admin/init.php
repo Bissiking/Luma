@@ -26,7 +26,7 @@
 
 	<label for="USER_ADMIN_MDP">Mot de passe administrateur:</label>
 	<span id="SPAN-USER_ADMIN_MDP" class="error-popup">Mot de passe administrateur non conforme</span>
-	<input type="USER_ADMIN_MDP" id="USER_ADMIN_MDP" name="USER_ADMIN_MDP">
+	<input type="password" type="USER_ADMIN_MDP" id="USER_ADMIN_MDP" name="USER_ADMIN_MDP">
 
 	<h2>Connexion à la base de donnée</h2>
 	<label for="DB_HOST">IP ou domaine de la BDD:</label>
@@ -44,7 +44,7 @@
 	<input type="DB_USER" id="DB_USER" name="DB_USER" required>
 
 	<label for="DB_PASSWORD">Mot de passe de la BDD:</label>
-	<input type="DB_PASSWORD" id="DB_PASSWORD" name="DB_PASSWORD">
+	<input type="password" type="DB_PASSWORD" id="DB_PASSWORD" name="DB_PASSWORD">
 
 	<button onclick="testConnection(event)" id="testButton">Se Connecter</button>
 </div>
