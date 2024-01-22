@@ -17,7 +17,8 @@ header {
 #logo {
     font-size: 24px;
     font-weight: bold;
-    color: #0059ace3; /* Rouge YouTube */
+    color: #0059ace3;
+    /* Rouge YouTube */
 }
 
 #logo {
@@ -59,7 +60,8 @@ nav a {
     right: 15px;
     z-index: 99;
 }
-#profileMenu > i {
+
+#profileMenu>i {
     position: absolute;
     right: 15px;
     top: -10px;
@@ -80,7 +82,7 @@ main {
     padding: 0px;
 }
 
-.video-bloc{
+.video-bloc {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -91,8 +93,13 @@ main {
     padding: 0px;
 }
 
+.blur {
+    filter: blur(4px);
+}
+
 .video {
     width: 350px;
+    height: 275px;
     background-color: #fff;
     margin: 10px auto 10px auto;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -104,7 +111,24 @@ main {
     transition: 0.3s;
 }
 
-.video:hover{
+/* WAIT NINO */
+.timer-dispo {
+    position: relative;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.timer {
+    color: #0278ff;
+    font-weight: bold;
+}
+
+/* ---------- */
+
+.video:hover {
     transform: scale(1.02);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
     transition: 0.3s;
@@ -112,7 +136,7 @@ main {
 
 .video img {
     width: 100%;
-    height: auto;
+    height: 200px;
 }
 
 .video-info {
@@ -139,6 +163,7 @@ main {
     border-radius: 3px;
     cursor: pointer;
 }
+
 /* NINO ADD */
 
 table {
@@ -151,7 +176,8 @@ table {
     margin-bottom: 20px;
 }
 
-th, td {
+th,
+td {
     border: 1px solid #ddd;
     padding: 12px;
     text-align: left;
@@ -231,7 +257,7 @@ h1 {
 }
 
 /* GENERIQUE */
-h1{
+h1 {
     text-align: center;
 }
 
@@ -242,7 +268,7 @@ h1{
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
 }
@@ -278,7 +304,10 @@ label {
     margin-bottom: 10px;
 }
 
-input, textarea, select, p.input_text {
+input,
+textarea,
+select,
+p.input_text {
     width: 100%;
     padding: 8px;
     margin-bottom: 15px;

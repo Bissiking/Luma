@@ -26,7 +26,7 @@ if (isset($_SESSION['authentification']['user']['account_administrator']) && $_S
             <a class="menu-link" href="/admin/users"><i class="fa-solid fa-users"></i> Gestion des utilisateurs</a>
         </div>
         <div class="dashboard-block dashboard-menu">
-            <a class="menu-link" href="/admin/domains"><i class="fa-solid fa-globe"></i> Gestion dees domaines</a>
+            <a class="menu-link" href="/admin/domains"><i class="fa-solid fa-globe"></i> Gestion des domaines</a>
             <a class="menu-link" href="#"><i class="fa-solid fa-ban"></i> EMPTY</a>
             <a class="menu-link" href="#"><i class="fa-solid fa-ban"></i> EMPTY</a>
             <a class="menu-link" href="#"><i class="fa-solid fa-ban"></i> EMPTY</a>

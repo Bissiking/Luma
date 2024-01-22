@@ -29,7 +29,6 @@ if ($routesJSON === null) {
     document.title = "Administration des routes";
 </script>
 
-<h2>Manifest des routes <span class="betaPops">Aucun ajout ou modification disponible</span></h2>
 <table>
     <thead>
         <tr>
