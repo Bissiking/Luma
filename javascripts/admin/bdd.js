@@ -8,7 +8,10 @@ $('.UPBDDVer').click(function(e) {
             type: 'POST',
             url: window.location.href,
             success: function() {
-                window.location.href = window.location.href;
+                showPopup("Base de donnée à jour", true);
+                setTimeout(() => {
+                    window.location.href = window.location.href;
+                }, 1000);
             },
             error: function(error) {
                 console.error('Erreur de connexion:', error);
