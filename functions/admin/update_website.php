@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // TEST FUNCTION EDIT CONST
     $const = ConstEdit('WEB_MAINTENANCE', 'true');
-
     try {
         $gitPath = 'C:/Program Files/Git/bin/git.exe';  // Remplacez par le chemin réel de l'exécutable Git
 
