@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         chdir("../../");
     
         // Exécuter la commande Git
-        $output = shell_exec('git stash 2>&1');
+        $output = shell_exec('git stash && git pull 2>&1');
     
         if ($output === null) {
             throw new Exception('La commande git stash n\'a pas retourné de sortie.');
