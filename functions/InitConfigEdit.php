@@ -1,9 +1,4 @@
 <?php
-if ($_SESSION['authentification']['user']['account_administrator'] !== 1) {
-    echo 'REFUSED';
-	exit;
-}
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	// Détection du HTTPS
 	if (isset($_SERVER['HTTP_X_FORWARDED_SCHEME'])) {
