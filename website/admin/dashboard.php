@@ -53,6 +53,11 @@ if (isset($_SESSION['authentification']['user']['account_administrator']) && $_S
                             type: 'POST',
                             success: function(response) {
                                 console.log(response); // Afficher la réponse du serveur (message de réussite ou d'erreur)
+                                if (response == "succes") {
+                                    window.location.href = window.location.href;
+                                }else{
+                                    console.error('Echec de la mise à jour:', error);
+                                }
                             },
                             error: function(xhr, status, error) {
                                 console.error(xhr.responseText);
