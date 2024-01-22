@@ -31,10 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Gérer les exceptions
         echo 'Erreur : ' . $e->getMessage();
     }
-    $const = ConstEdit('WEB_MAINTENANCE', 'false');
 
     // Afficher le résultat
     echo nl2br('OUT: ' . $output);
     sleep(1);
-    ConstEdit('WEB_MAINTENANCE', 'true');
+    ConstEdit('WEB_MAINTENANCE', 'false');
 }
