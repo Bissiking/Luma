@@ -17,12 +17,12 @@ function addUser() {
         account_administrator = $("#" + add + "account_administrator");
 
         if (identifiant.val() == ""){
-            showPopup("Identifiant non renseigné", false);
+            showPopup("error", "Y'a une logique ...", "Si tu ne renseigne pas d'identifiant, sa ne fonctionnera pas, et puis comment il va se connecter le gars ou la dame ?");
             return;
         }
 
         if (email.val() == ""){
-            showPopup("Email non renseigné", false);
+            showPopup("warning", "Email non renseigné", "Merci de rensiengné un email valide");
             return;
         }
 
@@ -42,9 +42,9 @@ function addUser() {
                 if (response == "succes") {
                     window.location.href = window.location.href;
                 }else if (response == "user-found") {
-                    showPopup("Utilisateur déjà présent", false);
+                    showPopup("warning", "Doublon évité, on a encore eu de la chance", "L'identifiant existe déjà, et tout le monde sait que deux identifiant va foutre un sacré bordel");
                 }else{
-                    showPopup("Tous les champs ne sont pas valide", false);
+                    showPopup("error", "Petit soucis imprévu ...", "Raison de l'erreur ?? Regarde les log.... si il y'en a");
                 }
                 POST = 0;
             },

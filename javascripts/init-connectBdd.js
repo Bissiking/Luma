@@ -75,32 +75,32 @@ function testConnection(event) {
                 success: function (response) {
                     switch (response) {
                         case "bdd-echec":
-                            showPopup('Connexion à la BDD impossible. Merci de vérifier les informations renseignés', false);
+                            showPopup("error", "Base de donnée ! Tu es ou ?", "Connexion à la BDD impossible. Merci de vérifier les informations renseignés");
                             $('button').text('Se Connecter');
                             break;
 
                             case "configCreate-echec":
-                                showPopup('Echec de la création du fichier de configuration. Merci de vérifier si les droits d\'accès au dossier sont correctes', false);
+                                showPopup("error", "Merde !! J'ai pas les droits !", "Echec de la création du fichier de configuration. Merci de vérifier si les droits d\'accès au dossier sont correctes");
                                 $('button').text('Se Connecter');
                                 break;
 
                                 case "configExiste-echec":
-                                    showPopup('Fichier de configuration non trouvé', false);
+                                    showPopup("error", "Merde !! J'ai perdu un truc", "Le fichier de configuration n'existe pas, propablement une erreur de droit qui empêche la créaction");
                                     $('button').text('Se Connecter');
                                     break;
 
                                     case "configCreateTable01-echec":
-                                        showPopup('Création de la table "route" en echec.', false);
+                                        showPopup("error", "Non ! Pas les routes !", "Création de la table 'routes' en echec.");
                                         $('button').text('Se Connecter');
                                         break;
 
                                         case "configCreateTable02-echec":
-                                            showPopup('Création de la table "users" en echec.', false);
+                                            showPopup("error", "Non ! Pas les users !", "Création de la table 'users' en echec.");
                                             $('button').text('Se Connecter');
                                             break;
 
                         case "succes":
-                            showPopup('Configuration de base terminé, veuillez patientez pendant la finalisation. <br />Vous serez redirigé automatiquement.', true);
+                            showPopup("good", "Encore un peu d'attente", "Configuration de base terminé, veuillez patientez pendant la finalisation. <br />Vous serez redirigé automatiquement.");
                             $('button').hide();
                             setTimeout(() => {
                                 window.location.href = "/";
@@ -108,7 +108,7 @@ function testConnection(event) {
                         break;
 
                         default:
-                            showPopup('Une erreur est survenue, Merci de recommencer ultérieurement.', false);
+                            showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Reéssayer plus tard");
                             $('button').hide();
                             break;
                     }
@@ -116,11 +116,12 @@ function testConnection(event) {
                 },
                 error: function (error) {
                     console.log('Une erreur s\'est produite lors de la requête AJAX.');
+                    showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Reéssayer plus tard");
                 }
             });
         }, 1000);
     }else{
-        showPopup('Des informations sont manquantes ou incorrectes', false);
+        showPopup("error", "Petit soucis imprévu ...", "Des informations sont incorrectes ou manquantes");
         $('button').text('Se Connecter');
     }
 

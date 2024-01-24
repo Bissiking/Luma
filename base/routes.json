@@ -10,6 +10,12 @@
         "url_pattern": "/connexion",
         "controller":"ConnexionController",
         "action":"show"
+    },    
+    "Inscription" : {
+        "routeName": "Inscription",
+        "url_pattern": "/inscription",
+        "controller":"InscriptionController",
+        "action":"show"
     },
     "Admin" : {
         "routeName": "Admin",

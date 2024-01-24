@@ -59,7 +59,8 @@ nav a {
     right: 5px;
     z-index: 99;
 }
-#profileMenu > i {
+
+#profileMenu>i {
     position: absolute;
     right: 15px;
     top: -10px;
@@ -84,11 +85,13 @@ main {
     margin-bottom: 70px;
 }
 
-.server-status, .latest-videos {
+.server-status,
+.latest-videos {
     margin-bottom: 40px;
 }
 
-.server-status h2, .latest-videos h2 {
+.server-status h2,
+.latest-videos h2 {
     display: flex;
     border-bottom: 2px solid #333;
     padding-bottom: 10px;
@@ -106,7 +109,7 @@ footer {
     bottom: 0;
 }
 
-.betaPops{
+.betaPops {
     display: flex;
     width: auto;
     height: 12px;
@@ -117,7 +120,7 @@ footer {
     padding: 1px 5px;
     color: #FFF;
     border-radius: 5px;
-    background: red; 
+    background: red;
 }
 
 .info-popup {
@@ -130,7 +133,7 @@ footer {
     text-align: start;
 }
 
-.error-popup{
+.error-popup {
     display: none;
     background-color: rgba(179, 12, 12, 0.8);
     color: #fff;
@@ -138,10 +141,10 @@ footer {
     font-size: 14px;
     border-radius: 4px 4px 0px 0px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    text-align: start; 
+    text-align: start;
 }
 
-.input-error{
+.input-error {
     border-radius: 0px 0px 4px 4px;
     background-color: rgba(110, 7, 7, 0.8);
     color: #fff;
@@ -155,7 +158,7 @@ footer {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
 }
@@ -175,4 +178,64 @@ footer {
     font-size: 40px;
     cursor: pointer;
     color: #fff;
+}
+
+/* POPUP V2 */
+#popup-container {
+    width: 320px;
+    padding: 10px;
+    position: fixed;
+    top: 35px;
+    right: 0px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.popup-flash {
+    width: 300px;
+    border-radius: 5px !important;
+    background-color: #860000;
+    color: #FFF;
+    font-size: 16px;
+    margin: 10px 0px;
+}
+
+.popup-flash h3 {
+    padding: 5px 0px;
+    margin: 0px 0px 0px 20px;
+    text-decoration: underline;
+}
+
+.popup-flash p {
+    font-size: 14px;
+    padding: 10px 0px;
+    margin: 0px 20px;
+    font-style: italic;
+}
+
+.popup-flash .timer-bar {
+    width: 100%;
+    height: 2.5px;
+    border-radius: 5px;
+    background-color: rgba(244, 246, 255, 0.5);
+    position: relative;
+}
+
+.error {
+    background-color: rgba(182, 2, 29, 0.631372549) !important;
+}
+
+.warning {
+    background-color: rgba(203, 176, 24, 0.813) !important;
+}
+
+.good {
+    background-color: #03942f !important;
+}
+
+.info {
+    background-color: rgba(79, 153, 202, 0.7137254902) !important;
 }

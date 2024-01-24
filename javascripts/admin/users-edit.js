@@ -18,13 +18,13 @@ $('#editUserInfo').click(function (e) {
                 if (response == 'succes') {
                     window.location.href = window.location.href;
                 } else {
-                    showPopup("Echec de l'édition", false);
+                    showPopup("error", "Petit soucis imprévu ...", "L'utilisateur n'a pas pu être modifié");
                 }
 
             },
             error: function (error) {
                 console.error('Erreur de connexion:', error);
-                showPopup("Une erreur inconnu est survenue. Reéssayer plus tard", false);
+                showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Reéssayer plus tard");
             }
         });
     }
@@ -40,8 +40,6 @@ $('.button-domain').on('click', function (e) {
 
     if (call == "add-domain" || call == "delete-domain") {
         let form = 'call=' + call + '&domain=' + val;
-
-        console.log(form);
         if (POST == 0) {
             POST = 1;
             $.ajax({
@@ -49,18 +47,17 @@ $('.button-domain').on('click', function (e) {
                 url: window.location.href,
                 data: form,
                 success: function (response) {
-                    // console.log(response);
                     POST = 0;
                     if (response == 'succes') {
                         window.location.href = window.location.href;
                     } else {
-                        showPopup("Echec de l'édition", false);
+                        showPopup("error", "Petit soucis imprévu ...", "L'utilisateur n'a pas pu être modifié");
                     }
 
                 },
                 error: function (error) {
                     console.error('Erreur de connexion:', error);
-                    showPopup("Une erreur inconnu est survenue. Reéssayer plus tard", false);
+                    showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Reéssayer plus tard");
                 }
             });
         }

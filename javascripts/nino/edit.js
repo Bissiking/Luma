@@ -18,12 +18,12 @@ $('#uploadForm').submit(function(e) {
             if (response == "succes") {
                window.location.href = "/nino/add"; 
             }else{
-                showPopup("Tous les champs ne sont pas valides.", false);
+                showPopup("error", "Nino pas content :(", "Il y'a des soucis avec les champs, vérifie... Formulaire en BETA, donc des bogues peuvent survenir.");
             }
         },
         error: function (error) {
             console.error('Erreur de connexion:', error);
-            showPopup("Une erreur inconnu est survenue. Reéssayer plus tard", false);
+            showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Reéssayer plus tard");
         }
     });
 });

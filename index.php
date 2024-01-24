@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <!-- Vos scripts JavaScript vont ici -->
-    <script src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/javascripts/popup.js"></script>
+    <script src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/javascripts/popupv2.js"></script>
     <script src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/javascripts/all-pages.js"></script>
 
     <footer>
