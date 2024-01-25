@@ -18,7 +18,7 @@ $('#uploadForm').submit(function(e) {
             if (response == "succes") {
                window.location.href = "/nino/add"; 
             }else{
-                showPopup("error", "Nino pas content :(", "Il y'a des soucis avec les champs, vérifie... Formulaire en BETA, donc des bogues peuvent survenir.");
+                showPopup("error", "Nino pas content :(", "Il y'a des soucis avec un ou plusieurs champs, vérifie... Formulaire en BETA, donc des bogues peuvent survenir.");
             }
         },
         error: function (error) {

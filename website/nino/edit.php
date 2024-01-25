@@ -43,13 +43,13 @@ if (isset($_SESSION['authentification']['user'])) {
 
     <label for="videoDescription">Description :</label>
     <textarea id="videoDescription" name="videoDescription" rows="4"><?= $video['description']; ?></textarea>
-    <!-- 
-    <label for="videoThumbnail">Upload miniature :</label>
-    <input type="file" id="videoThumbnail" name="videoThumbnail" accept="image/*"> -->
 
     <label for="imageInput">Sélectionnez une image :</label>
+    <?php if(isset($video['videoThumbnail']) && $video['videoThumbnail'] !== ""): ?>
+        <img width="100%" src="<?= $video['videoThumbnail'] ?>" alt="Thumbnail Nino">
+    <?php endif; ?>
+    
     <input type="file" name="image" id="imageInput" accept="image/*" value="<?= $video['videoThumbnail']; ?>">
-    <!-- <button type="button" id="uploadButton">Uploader l'image</button> -->
 
     <label for="videoTags">Tags (séparés par des virgules) :</label>
     <input type="text" id="videoTags" name="videoTags" value="<?= $video['tag']; ?>">
