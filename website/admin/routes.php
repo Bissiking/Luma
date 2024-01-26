@@ -24,7 +24,6 @@ if ($routesJSON === null) {
 
 ?>
 
-<link rel="stylesheet" href="<?= SITE_HTTP . "://" . SITE_URL ?>/css/admin.css">
 <script>
     document.title = "Administration des routes";
 </script>

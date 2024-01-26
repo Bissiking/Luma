@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= SITE_HTTP . "://" . SITE_URL ?>/css/nino.css">
+<link rel="stylesheet" href="<?= SITE_HTTP . "://" . SITE_URL ?>/css/nino-edit.css?0">
 <script>
     document.title = "Nino - Édition d'une vidéo";
 </script>
@@ -25,10 +25,17 @@ if (isset($_SESSION['authentification']['user'])) {
 }
 ?>
 
-<form id="uploadForm" enctype="multipart/form-data">
+<div class="checkApi" data-UrlAPI="<?= $video['server_url']; ?>" data-idAPI="<?= $video['id_video_uuid']; ?>" data-Video="FALSE" onclick="SendDemCreation()">
+    <div class="loadPopsIco loader"></div>
+    <p class="loadText">
+        Vérification de la présence du dossier dans l'API Nino
+    </p>
+</div>
 
+<form id="uploadForm" enctype="multipart/form-data">
     <label for="serveurURL">Ou se trouve la vidéo ?</label>
     <select name="serveurURL" id="serveurURL" class="custom-select">
+        <option value="<?= $video['server_url']; ?>"><?= $video['server_url']; ?> || Provisoire</option>
         <option value="nino.mhemery.fr">Nino PROD</option>
         <option value="dev.nino.mhemery.fr">Nino DEV</option>
         <option value="nino.enerzein.fr">Nino EXT 2 (Steven)</option>

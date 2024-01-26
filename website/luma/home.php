@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../css/home.css">
+<link rel="stylesheet" href="../css/home.css?0">
 <script>
     document.title = "Accueil";
 </script>

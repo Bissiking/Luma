@@ -19,6 +19,7 @@
     color: #FFF;
     font-size: 16px;
     margin: 10px 0px;
+    position: relative;
 }
 
 .popup-flash h3 {
@@ -56,4 +57,21 @@
 
 .info {
     background-color: rgba(79, 153, 202, 0.7137254902) !important;
+}
+
+/* TXT COLOR */
+.error-txt {
+    color: rgba(182, 2, 29, 0.631372549) !important;
+}
+
+.warning-txt {
+    color: rgba(203, 176, 24, 0.813) !important;
+}
+
+.good-txt {
+    color: #03942f !important;
+}
+
+.info-txt {
+    color: rgba(79, 153, 202, 0.7137254902) !important;
 }
