@@ -23,10 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- LINK -->
+    <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/all-page.css?v=0">
     <?php if (strpos($url, 'nino') !== false) : ?>
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/nino.css?v=0">
     <?php elseif(strpos($url, 'admin') !== false): ?>
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/admin.css?v=0">
+        <!-- PROVISOIR -->
+        <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/style.css?v=0">
     <?php else: ?>
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/style.css?v=0">
     <?php endif; ?>
