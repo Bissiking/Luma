@@ -34,7 +34,7 @@ if (isset($_SESSION['authentification']['user'])) {
 
 <form id="uploadForm" enctype="multipart/form-data">
 
-    <p class="info-popup">L'upload automatiques des vidéos n'est pas encore disponible depuis le site.<br> Vous devez utiliser le module d'encodage pour procéder à l'upload des vidéos.</p>
+    <p class="info-popup">L'upload automatiques des vidéos n'est pas encore disponible depuis le site.<br> Vous devez utiliser le module d'encodage pour procéder à l'upload des vidéos... quand celui-ci sera fonctionnel.</p>
 
     <label for="serveurURL">Ou se trouve la vidéo ?</label>
     <select name="serveurURL" id="serveurURL" class="custom-select">
