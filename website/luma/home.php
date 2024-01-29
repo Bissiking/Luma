@@ -50,7 +50,7 @@
         </div>
 
         <!-- API Enerzein -->
-        <div class="ServerBlock server" id="api_nino_enerzein" data-ip="">
+        <div class="ServerBlock server" id="api_nino_enerzein" data-ip="nino.enerzein.fr/check">
             <div class="server-name">API Nino (Enerzein)</div>
             <div class="status-container">
                 <div class="ping-circle warning" id="ping_api_nino_enerzein">***</div>
