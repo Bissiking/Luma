@@ -9,19 +9,20 @@ function performLogin() {
         data: { identifiant: identifiant, password: password },
         success: function(response) {
             // Afficher le résultat de la connexion
-            $('#loginResult').html(response);
             if (response == "succes") {
-                showPopup("Vous êtes connecté, Redirection dans 3 Secondes", true);
+                showPopup("good", "YOUHOU !!", "Vous êtes connecté, Redirection dans 4 Secondes, pas 3, pas 5, 4 ! ... Ouais je suis précis.");
                 setTimeout(() => {
                     window.location.href = '/';
-                }, 3000);
+                }, 4000);
+            }else if (response == "error_domain"){
+                showPopup("error", "Ah merde !!", "Tu n'es pas autorisé à te connecter sur ce domaine");
             }else{
-                showPopup("Identitifant ou mot de passe incorrect", false)
+                showPopup("error", "Euh ... Petit soucis là", "Identifiant ou mot de passe incorrect.... Je suppose ....");
             }
         },
         error: function(error) {
             console.error('Erreur de connexion:', error);
-            showPopup("Une erreur inconnu est survenue. Reéssayer plus tard", false);
+            showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Reéssayer plus tard");
             $('button').hide();
 
         }

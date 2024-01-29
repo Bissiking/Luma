@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case 'luma_nino_data':
             $columnsToAdd = [
                 "status VARCHAR(255) NULL",
+                "nino_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
             ];
             $BDD_CONST = "DB_LUMA_NINO_DATA_VERSION";
             $BDD_CONST_VAL = DB_LUMA_NINO_DATA_VERSION;
@@ -84,7 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit;
                 }
             } else {
-                echo 'up';
                 $columnsToAdd = [
                     "domains VARCHAR(255) NOT NULL",
                     "domains_autorized TINYINT(4) NULL"

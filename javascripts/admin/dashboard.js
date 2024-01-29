@@ -1,3 +1,5 @@
+let ERRORJSON = 0;
+
 // Fonction pour charger et afficher les informations du fichier JSON
 function loadAndDisplayInfo() {
   $.ajax({
@@ -31,7 +33,16 @@ function loadAndDisplayInfo() {
       }
     },
     error: function (error) {
-      console.error('Erreur lors du chargement du fichier JSON :', error);
+      ERRORJSON = ERRORJSON+1;
+      if (ERRORJSON > 3) {
+        $('.monitoring').css('background-color', 'red');
+        $('#CPU_moni').text('NaN');
+        $('#RAM_moni').text('NaN');
+        $('#last_update_moni').text('Impossible de lire le fichier JSON de la sonde');
+      }else{
+        console.error('Erreur lors du chargement du fichier JSON :', error);
+        showPopup("error", "Petit soucis imprévu ...", "Impossible de lire le fichier JSON de la sonde");
+      }
     }
   });
 }

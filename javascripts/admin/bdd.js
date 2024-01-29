@@ -8,14 +8,14 @@ $('.UPBDDVer').click(function(e) {
             type: 'POST',
             url: window.location.href,
             success: function() {
-                showPopup("Base de donnée à jour", true);
+                showPopup("good", "Mise à jour réussi", "Mise à jour de la base de donnée effectué avec succès. Veuillez patienter ....");
                 setTimeout(() => {
                     window.location.href = window.location.href;
-                }, 1000);
+                }, 4000);
             },
             error: function(error) {
                 console.error('Erreur de connexion:', error);
-                showPopup("Une erreur inconnu est survenue. Reéssayer plus tard", false);
+                showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Reéssayer plus tard");
             }
         });
     }
@@ -31,9 +31,7 @@ $('.update').click(function(e) {
             type: 'POST',
             url: '../functions/admin/update_bdd.php',
             data: forms,
-            success: function(response) {
-            console.log(response);
-                           
+            success: function(response) {                           
                 if (response == 'succes') {
                    window.location.href = window.location.href;
                    POST = 0;
@@ -41,7 +39,7 @@ $('.update').click(function(e) {
             },
             error: function(error) {
                 console.error('Erreur de connexion:', error);
-                showPopup("Une erreur inconnu est survenue. Reéssayer plus tard", false);
+                showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Reéssayer plus tard");
             }
         });
     }

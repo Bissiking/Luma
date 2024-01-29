@@ -14,8 +14,5 @@
     <button type="button" onclick="performLogin()">Connexion</button>
 </div>
 
-<!-- Afficher le résultat de la connexion ici -->
-<div id="loginResult"></div>
-
 <!-- SCRIPTS -->
 <script src="javascripts/connexion.js"></script>

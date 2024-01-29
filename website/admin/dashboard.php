@@ -12,8 +12,6 @@ if (isset($_SESSION['authentification']['user']['account_administrator']) && $_S
     }
 
 ?>
-
-    <link rel="stylesheet" href="<?= SITE_HTTP . "://" . SITE_URL ?>/css/admin.css">
     <script>
         document.title = "Administration - Dashboard";
     </script>

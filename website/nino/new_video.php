@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="<?= SITE_HTTP."://".SITE_URL ?>/css/nino.css">
 <script>
 	document.title = "Nino - Ajouter une vidéo";
 </script>
