@@ -7,7 +7,9 @@ function showPopup(message, isSuccess) {
 
     if (isSuccess) {
         popupContent.style.backgroundColor = '#4CAF50'; // Couleur de réussite
-    } else {
+    } else if (isSuccess == "warning") {
+        popupContent.style.backgroundColor = '#d5a830'; // Couleur warning
+    }else{
         popupContent.style.backgroundColor = '#e44d26'; // Couleur d'erreur
     }
 

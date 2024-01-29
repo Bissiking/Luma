@@ -15,15 +15,15 @@ function addDomain() {
             if (response == 'succes') {
                 window.location.href = window.location.href;
             }else if(response == 'found') {
-                showPopup("Domain déjà existant", false);
+                showPopup("warning", "Tu ne le vois pas ?", "Le domaine existe déjà");
             }else{
-                showPopup("Echec de l'ajout", false);
+                showPopup("error", "Petit soucis imprévu ...", "Echec de l'ajout du domaine");
             }
             
         },
         error: function(error) {
             console.error('Erreur de connexion:', error);
-            showPopup("Une erreur inconnu est survenue. Reéssayer plus tard", false);
+            showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Reéssayer plus tard");
         }
     });
 }
@@ -45,13 +45,13 @@ function delDomain(domain) {
             if (response == 'succes') {
                 window.location.href = window.location.href;
             }else{
-                showPopup("Echec de la suppression", false);
+                showPopup("error", "Petit soucis imprévu ...", "Echec de la suppression du domaine");
             }
             
         },
         error: function(error) {
             console.error('Erreur de connexion:', error);
-            showPopup("Une erreur inconnu est survenue. Reéssayer plus tard", false);
+            showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Reéssayer plus tard");
         }
     });
 }

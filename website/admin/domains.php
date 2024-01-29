@@ -79,7 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 ?>
-<link rel="stylesheet" href="<?= SITE_HTTP . "://" . SITE_URL ?>/css/admin.css">
 <script>
     document.title = "Administration des domaines";
 </script>

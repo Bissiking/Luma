@@ -48,8 +48,6 @@ if ($DB_VERS_JSON === null) {
 }
 
 ?>
-
-<link rel="stylesheet" href="<?= SITE_HTTP . "://" . SITE_URL ?>/css/admin.css">
 <script>
     document.title = "Administration - Base de donnée";
 </script>

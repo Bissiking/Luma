@@ -12,13 +12,13 @@ function reserveVideo(event) {
             if (response == 'succes') {
                 window.location.href = "/nino/add";
             }else{
-                showPopup("Le titre n'est pas valide", false);
+                showPopup("warning", "Nino !!", "Un champs ... Et tu as réussi à foiré");
             }
             
         },
         error: function(error) {
             console.error('Erreur de connexion:', error);
-            showPopup("Une erreur inconnu est survenue. Reéssayer plus tard", false);
+            showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Reéssayer plus tard");
         }
     });
 }

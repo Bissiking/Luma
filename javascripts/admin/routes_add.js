@@ -9,13 +9,13 @@ function routesAdd(url_pattern) {
             if (response == 'succes') {
                 window.location.href = "/admin/routes";
             }else{
-                showPopup("Echec de l'ajout", false);
+                showPopup("error", "Petit soucis imprévu ...", "Ajout de la route en erreur");
             }
             
         },
         error: function(error) {
             console.error('Erreur de connexion:', error);
-            showPopup("Une erreur inconnu est survenue. Reéssayer plus tard", false);
+            showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Recommance plus tard");
         }
     });
 }

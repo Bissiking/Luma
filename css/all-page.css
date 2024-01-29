@@ -1,0 +1,9 @@
+.info-popup {
+    display: flex;
+    background-color: rgb(68, 186, 255);
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 4px 4px 0px 0px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: start;
+}
