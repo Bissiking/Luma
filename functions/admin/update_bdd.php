@@ -58,6 +58,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ];
             $BDD_CONST = "DB_LUMA_NINO_DATA_VERSION";
             $BDD_CONST_VAL = DB_LUMA_NINO_DATA_VERSION;
+
+            // Modification de la table de Nino
+            if (DB_LUMA_NINO_DATA_VERSION <= "DB02") {
+                // Création de la table DOMAINS
+                try {
+                    // Définir le mode d'erreur de PDO sur Exception
+                    $sql = "ALTER TABLE luma_nino_data MODIFY COLUMN tag VARCHAR(255)";
+                    if ($pdo->query($sql) !== TRUE){
+                        $pdo->errorInfo();
+                    };
+                } catch (PDOException $e) {
+                    echo 'configCreateTableNino-echec --> ' . $e->getMessage();
+                }
+            }
             break;
 
         case 'luma_domains':
@@ -93,7 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $BDD_CONST = "DB_LUMA_DOMAINS_VERSION";
                 $BDD_CONST_VAL = DB_LUMA_DOMAINS_VERSION;
                 ConstEdit($BDD_CONST, $BDD_CONST_VAL);
-
             };
 
             break;
