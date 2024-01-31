@@ -60,6 +60,9 @@ function UpdateWebsite() {
     return;
   }
   $('#updateButton').on('click', function () {
+
+    // Retrait du bouton
+    $('#updateButton').hide();
     // Effectuer une requête AJAX pour déclencher la mise à jour
     $.ajax({
       url: './functions/admin/update_website.php', // Remplacez par le chemin vers votre script de mise à jour côté serveur
@@ -67,8 +70,11 @@ function UpdateWebsite() {
       success: function (response) {
         console.log(response); // Afficher la réponse du serveur (message de réussite ou d'erreur)
         if (response == "succes") {
-          UPDATE_WEBSITE = 0;
-          window.location.href = window.location.href;
+          showPopup("good", "Mise à jour réussi", "Mise à jour de LUMA effectué avec succès. Veuillez patienter ....");
+          setTimeout(() => {
+            window.location.href = window.location.href;
+          }, 4000);
+          
         } else {
           console.error('Echec de la mise à jour:', error);
           showPopup("error", "Echec de la mise à jour", "La commande STASH n'a retourné aucune information. Vérifie les droits du dossier");
@@ -98,6 +104,7 @@ function VerifUpdate() {
         BtnUpdate.text('Pas de mise à jour');
       }else{
         UPDATE_WEBSITE = 1;
+        showPopup("warning", "Mise en jour en attente", "Une mise à jour de LUMA est en attente");
         TextUpdate.text('Nouvelle version: '+response.version);
         BtnUpdate.text('Mettre à jour');
       }
