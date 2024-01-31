@@ -72,8 +72,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     echo 'configCreateTableNino-echec --> ' . $e->getMessage();
                 }
             }
-            break;
 
+            if (DB_LUMA_NINO_DATA_VERSION <= "DB03") {
+                // Création de la table DOMAINS
+                try {
+                    // Définir le mode d'erreur de PDO sur Exception
+                    $sql = "ALTER TABLE luma_nino_data MODIFY COLUMN description TEXT";
+                    if ($pdo->query($sql) !== TRUE){
+                        $pdo->errorInfo();
+                    };
+                } catch (PDOException $e) {
+                    echo 'configEditTableNino-echec --> ' . $e->getMessage();
+                }
+            }
+            break;
+            
         case 'luma_domains':
             if (DB_LUMA_DOMAINS_VERSION == "DB00") {
                 // Création de la table DOMAINS

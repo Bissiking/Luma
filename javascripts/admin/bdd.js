@@ -33,7 +33,10 @@ $('.update').click(function(e) {
             data: forms,
             success: function(response) {                           
                 if (response == 'succes') {
-                   window.location.href = window.location.href;
+                    showPopup("good", "UPDATE", "Mise à jour réussi, veuillez patienter");
+                    setTimeout(() => {
+                        window.location.href = window.location.href;
+                    }, 4000);
                    POST = 0;
                 }   
             },
