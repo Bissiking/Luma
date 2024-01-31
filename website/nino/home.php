@@ -13,7 +13,9 @@
     $result = $req->rowCount();
     if ($result >= 1) {
         while ($video = $req->fetch()) {
-            if ($video['publish'] >= date('Y-m-d 12:00:00')) {
+            $PublishVid = $video['publish'];
+            $HeureLocal = date('Y-m-d H:i:s');
+            if ($HeureLocal <= $PublishVid) {
                 $publish = 0;
             } else {
                 $publish = 1;
