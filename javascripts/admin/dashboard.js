@@ -91,6 +91,12 @@ function VerifUpdate() {
     url: urlGitHub,
     type: 'GET',
     dataType: 'json',
+    cache: false, // Désactive le cache dans jQuery
+    headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+    },
     success: function (response) {
       console.log(response);
       console.log(LocalVersion);
