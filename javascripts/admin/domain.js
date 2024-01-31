@@ -11,7 +11,6 @@ function addDomain() {
         url: '/admin/domains',
         data: 'call=add&domain='+domain,
         success: function(response) {
-            console.log(response);
             if (response == 'succes') {
                 window.location.href = window.location.href;
             }else if(response == 'found') {
@@ -30,7 +29,6 @@ function addDomain() {
 
 function delDomain(domain) {
     // Effectuer la requête AJAX
-    console.log(domain);
     if (domain == "") {
         showPopup("Domaine non valide", false);
         return;

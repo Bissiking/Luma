@@ -28,3 +28,31 @@ function formatReadableDate(dateString) {
 
     return formattedDate;
 }
+
+var menuMobile = $('#MenuMobile'),
+    btnMenumobile = $('#btnMenuMobile');
+
+function OpenMenuMobile() {
+    menuMobile.data('open', 'open');
+    menuMobile.css('display', 'flex');
+    btnMenumobile.addClass('ferme');
+}
+
+function CloseMenuMobile() {
+    menuMobile.data('open', 'close');
+    menuMobile.hide();
+    btnMenumobile.removeClass('ferme');
+}
+
+function BtnMenuMobile() {
+    // Détection du status du menu
+    if (menuMobile.data('open') === "open") {
+        console.log('open');
+        CloseMenuMobile();
+    } else {
+        console.log('close');
+        OpenMenuMobile();
+    }
+}
+
+// BTN
