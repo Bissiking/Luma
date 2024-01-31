@@ -14,7 +14,7 @@ function compte_a_rebours(date, text_Pref, text_Pref_after, attr)
     if (total_secondes > 0)
     {
         prefixe = text_Pref_after; // On modifie le préfixe si la différence est négatif
-        total_secondes = Math.abs(total_secondes); // On ne garde que la valeur absolue
+        total_secondes = Math.abs(total_secondes) + 30; // On ne garde que la valeur absolue
         var jours = Math.floor(total_secondes / (60 * 60 * 24));
         var heures = Math.floor((total_secondes - (jours * 60 * 60 * 24)) / (60 * 60));
         minutes = Math.floor((total_secondes - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
@@ -86,6 +86,6 @@ function compte_a_rebours(date, text_Pref, text_Pref_after, attr)
     }
     else
     {
-        compte_a_rebours.innerHTML = 'Vidéo disponible';
+        compte_a_rebours.innerHTML = 'Encore un peu de patience';
     }
 }
