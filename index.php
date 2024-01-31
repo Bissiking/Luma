@@ -23,14 +23,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- LINK -->
-    <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/all-page.css?v=0">
+    <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/all-page.css?v=2">
     <?php if (strpos($url, 'nino') !== false) : ?>
-        <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/nino.css?v=0">
-    <?php elseif(strpos($url, 'admin') !== false): ?>
+        <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/nino.css?v=1">
+        <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/mobile/nino.css?v=0">
+    <?php elseif (strpos($url, 'admin') !== false) : ?>
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/admin.css?v=0">
         <!-- PROVISOIR -->
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/style.css?v=0">
-    <?php else: ?>
+    <?php else : ?>
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/style.css?v=0">
     <?php endif; ?>
     <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/popupv2.css?v=0">
@@ -44,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <header>
+    <header id="desktop-header">
         <div>
             <span id="logo"><?php if (strpos($url, 'nino') !== false) { ?> <img src="/images/nino75.png"> <?php } else { ?> LUMA <?php } ?></span>
         </div>
@@ -77,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php elseif (strpos($url, 'admin') !== false) : ?>
                     <li><a style="color:grey" href="#">Admin Notification</a></li>
                     <li><a style="color:grey" href="#">Log système</a></li>
-                <?php else: ?>
+                <?php else : ?>
                     <li><a href="/admin">Administration du site</a></li>
                     <li><a style="color:grey" href="#">Configurer le Profil</a></li>
                 <?php endif; ?>
@@ -91,7 +92,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <li><a href="/">Retour à LUMA</a></li>
             <?php endif; ?>
         </ul>
+    </header>
 
+    <!-- MOBILE MENU -->
+    <header id="mobile-header">
+        <nav>
+            <a href="/nino"><i class="fa-solid fa-house"></i></a>
+            <a style="color: grey"><i class="fa-solid fa-bookmark"></i></a>
+            <a style="color: grey"><i class="fa-solid fa-clock-rotate-left"></i></a>
+            <!-- <a id="btnMenuMobile" onclick="BtnMenuMobile()"><i class="fa-solid fa-bars"></i></a> -->
+            <div id="btnMenuMobile" onclick="BtnMenuMobile()">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+        <div id="MenuMobile" data-open="close">
+            <?php if (strpos($url, 'nino') !== false) { ?> <img src="/images/nino75.png"> <?php } ?>
+            <?php if (isset($_SESSION['authentification']['user'])) : ?>
+            <a href="/nino/add">Ajouter une vidéo</a>
+            <a href="/connexion?logout">Se déconnecter</a>
+            <?php else: ?>
+            <a href="/connexion">Se connecter</a>
+            <?php endif; ?>
+            <a href="/">Retour à LUMA</a>
+        </div>
     </header>
 
     <main>
@@ -108,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Vos scripts JavaScript vont ici -->
     <script src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/javascripts/popupv2.js"></script>
-    <script src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/javascripts/all-pages.js"></script>
+    <script src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/javascripts/all-pages.js?0"></script>
 
     <footer>
         <p>&copy; 2023 HEMERY Mathéo</p>

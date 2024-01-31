@@ -5,7 +5,6 @@ function routesAdd(url_pattern) {
         url: '../functions/admin/routes_add.php',
         data: 'url_pattern='+url_pattern,
         success: function(response) {
-            console.log(response);
             if (response == 'succes') {
                 window.location.href = "/admin/routes";
             }else{

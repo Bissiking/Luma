@@ -93,8 +93,6 @@ function VerifUpdate() {
     dataType: 'json',
     cache: false, // Désactive le cache dans jQuery
     success: function (response) {
-      console.log(response);
-      console.log(LocalVersion);
       if (response.version === LocalVersion) {
         TextUpdate.hide();
         BtnUpdate.text('Pas de mise à jour');
