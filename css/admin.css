@@ -145,7 +145,7 @@ tr:hover {
 }
 
 main{
-    flex-direction: row;
+    flex-direction: row !important;
 }
 
 .container {
