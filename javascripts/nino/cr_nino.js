@@ -9,16 +9,12 @@ function compte_a_rebours(date, text_Pref, text_Pref_after, attr)
     var date_actuelle = new Date();
     var date_evenement = new Date(date);
     var total_secondes = (date_evenement - date_actuelle) / 1000;
-
     var prefixe = text_Pref;
-    if (total_secondes < 0)
-    {
-        prefixe = text_Pref_after; // On modifie le préfixe si la différence est négatif
-        total_secondes = Math.abs(total_secondes); // On ne garde que la valeur absolue
-    }
 
     if (total_secondes > 0)
     {
+        prefixe = text_Pref_after; // On modifie le préfixe si la différence est négatif
+        total_secondes = Math.abs(total_secondes); // On ne garde que la valeur absolue
         var jours = Math.floor(total_secondes / (60 * 60 * 24));
         var heures = Math.floor((total_secondes - (jours * 60 * 60 * 24)) / (60 * 60));
         minutes = Math.floor((total_secondes - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
@@ -80,7 +76,7 @@ function compte_a_rebours(date, text_Pref, text_Pref_after, attr)
         if(jours != 0){
             compte_a_rebours.innerHTML = jours + " jours";
         } else if(heures != 0){
-            compte_a_rebours.innerHTML = heures + " heures";
+            compte_a_rebours.innerHTML = heures + " heures / "+secondes;
         }else if(minutes != 0){
             compte_a_rebours.innerHTML = minutes + " minutes";
         }else if(secondes != 0){
@@ -90,6 +86,6 @@ function compte_a_rebours(date, text_Pref, text_Pref_after, attr)
     }
     else
     {
-        compte_a_rebours.innerHTML = 'Compte à rebours terminé.';
+        compte_a_rebours.innerHTML = 'Vidéo disponible';
     }
 }
