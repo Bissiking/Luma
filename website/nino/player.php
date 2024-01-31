@@ -12,7 +12,7 @@ if (!isset($_GET['video']) || $_GET['video'] == null) {
 
     require './base/nexus_base.php';
     $id = htmlspecialchars(trim($_GET['video']));
-    $sql = "SELECT * FROM luma_nino_data WHERE id = $id  && publish < '".date('Y-m-d 12:00:00')."' && status = 'publique'";
+    $sql = "SELECT * FROM luma_nino_data WHERE id = $id  && publish < '".date('Y-m-d H:i:s')."' && status = 'publique'";
     $req = $pdo->prepare($sql);
     $req->execute();
     $result = $req->rowCount();
