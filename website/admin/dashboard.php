@@ -46,7 +46,7 @@ if (isset($_SESSION['authentification']['user']['account_administrator']) && $_S
         </div>
     </div>
 
-    <script src="javascripts/admin/dashboard.js?1"></script>
+    <script src="javascripts/admin/dashboard.js?2"></script>
 
 <?php else : header('Location: /');
 endif; ?>
