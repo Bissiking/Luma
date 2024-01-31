@@ -40,34 +40,13 @@ if (isset($_SESSION['authentification']['user']['account_administrator']) && $_S
         </div>
         <div class="dashboard-block">
             <h2>Version du Site</h2>
-            <p>Version actuelle: <?= $versionSite ?></p>
-            <button id="updateButton">Mise à jour</button>
-            <script>
-                $(document).ready(function() {
-                    $('#updateButton').on('click', function() {
-                        // Effectuer une requête AJAX pour déclencher la mise à jour
-                        $.ajax({
-                            url: './functions/admin/update_website.php', // Remplacez par le chemin vers votre script de mise à jour côté serveur
-                            type: 'POST',
-                            success: function(response) {
-                                console.log(response); // Afficher la réponse du serveur (message de réussite ou d'erreur)
-                                if (response == "succes") {
-                                    window.location.href = window.location.href;
-                                }else{
-                                    console.error('Echec de la mise à jour:', error);
-                                }
-                            },
-                            error: function(xhr, status, error) {
-                                console.error(xhr.responseText);
-                            }
-                        });
-                    });
-                });
-            </script>
+            <p>Version actuelle: <span id="Ver_Actuelle"><?= $versionSite ?></span></p>
+            <p id="updateText">Recherche en cours</p>
+            <button onclick="UpdateWebsite()" id="updateButton">***</button>
         </div>
     </div>
 
-    <script src="javascripts/admin/dashboard.js"></script>
+    <script src="javascripts/admin/dashboard.js?1"></script>
 
 <?php else : header('Location: /');
 endif; ?>
