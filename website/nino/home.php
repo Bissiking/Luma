@@ -48,7 +48,7 @@
     ?>
 </div>
 
-<script src="../javascripts/nino/cr_nino.js"></script>
+<script src="../javascripts/nino/cr_nino.js?0"></script>
 <script type="text/javascript">
     document.querySelectorAll(".Cr-Video-Home").forEach((el, idx) => {
         setInterval(function() {
