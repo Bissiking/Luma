@@ -13,6 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    if (!isset($APIselect) || $APIselect == "") {
+        echo 'empty';
+        exit;
+    }
     try {
         // Définir le mode d'erreur de PDO sur Exception
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -33,7 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $id_users = $_SESSION['authentification']['user']['id'];
         $v = array(
-            'titre' => $titre, 
+            'titre' => htmlspecialchars(trim($titre)), 
+            'server_url' => htmlspecialchars(trim($APIselect)),
             'id_users' => $id_users,
             'id_video_uuid' => $videoId,
             'status' => 'reserved'

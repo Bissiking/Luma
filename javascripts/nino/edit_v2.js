@@ -1,5 +1,6 @@
 var isProcessing = false;
 var isThumbnailUpload = false;
+SearchImage('https://dev.nino.mhemery.fr/Thumbnail/1');
 
 $('#uploadForm').submit(function (e) {
     e.preventDefault();
@@ -130,6 +131,9 @@ tagInput.on('keydown', function (event) {
         // Ajouter le tag à la liste
         addTag(tagInput.val().trim());
 
+        // Ajout du tag en BDD
+        doneTyping();
+
         // Effacer le champ de saisie
         tagInput.val('');
 
@@ -153,6 +157,7 @@ $('#imageInput').change(function () {
         const reader = new FileReader();
         reader.onload = function (e) {
             $('#imagePreview').attr('src', e.target.result).show();
+            uploadingThumbnail();
             isProcessing = false;
         };
         reader.readAsDataURL(fileInput);
@@ -172,54 +177,51 @@ function uploadingThumbnail() {
 }
 
 function SearchImage(url) {
-
     $.ajax({
         url: url,  // Mettez le chemin correct vers votre script de téléchargement
         type: 'GET',
-        data: {checkImage: true},
-        success: function(response) {
-            console.log(response);
+        data: { checkImage: true },
+        success: function (response) {
             if (response.success === true) {
-               $('#imagePreview').attr('src', url);
-               $('#imagePreview').show();
+                $('#imagePreview').attr('src', url);
+                $('#imagePreview').show();
             }
         },
-        error: function(error) {
+        error: function (error) {
             console.error('Error search image:', error);
         }
-    }); 
+    });
 }
 
-// TEST
-SearchImage('https://dev.nino.mhemery.fr/Thumbnail/1');
-
+// URL A CHANGER
 function UploadThumbnailAjax(thisThumbnail) {
-    console.log('check');
     var fileInput = $('#imageInput')[0].files[0];
     if (fileInput) {
-        console.log('check2');
-        // Créer un objet FormData
         var formData = new FormData();
         formData.append('image', fileInput);
-
-        // Envoyer la requête AJAX
         $.ajax({
-            url: 'https://dev.nino.mhemery.fr/upload/1',  // Mettez le chemin correct vers votre script de téléchargement
+            url: 'https://dev.nino.mhemery.fr/upload/1',
             type: 'POST',
             data: formData,
-            processData: false,  // Empêcher jQuery de traiter les données
-            contentType: false,  // Empêcher jQuery de définir le type de contenu
-            success: function(response) {
-                console.log(response.success);
+            processData: false,
+            contentType: false,
+            success: function (response) {
                 if (response.success) {
-                    console.log(response.message);
-                    thisThumbnail.toggleClass('valid-Thumbnail', true);  
-                    thisThumbnail.removeClass('uploading-Thumbnail', true);  
-                    isThumbnailUpload = false;
+                    thisThumbnail.addClass('valid-Thumbnail');
+                    if (thisThumbnail.hasClass('uploading-Thumbnail')) {
+                        thisThumbnail.removeClass('uploading-Thumbnail', true);
+                    }
+                    showPopup("good", "Oh mon image ...", "Upload de l'image réussi");
+                    setTimeout(() => {
+                        if (thisThumbnail.hasClass('valid-Thumbnail')) {
+                            thisThumbnail.removeClass('valid-Thumbnail', true);
+                        }
+                        isThumbnailUpload = false;
+                    }, 1000);
                 }
-                $('#imagePreview').html('<img src="' + response.url + '" alt="Uploaded Image">');
+                // $('#imagePreview').html('<img src="' + response.url + '" alt="Uploaded Image">');
             },
-            error: function(error) {
+            error: function (error) {
                 // Gérer les erreurs ici
                 console.error('Error uploading image:', error);
                 isThumbnailUpload = false;
@@ -233,7 +235,16 @@ function UploadThumbnailAjax(thisThumbnail) {
     }
 }
 
-// ---------------------
+$('.tag').on('click', function () {
+    var clickedTag = $(this).text();
+    console.log(clickedTag);
+
+    // Supprimer l'élément du DOM
+    $(this).remove();
+    doneTyping();
+    // Vous pouvez maintenant utiliser la variable 'clickedTag' pour effectuer d'autres opérations si nécessaire
+});
+
 function addTag(tagText) {
     const tag = $('<div>').addClass('tag').text(tagText);
     // Supprimer le tag lorsque l'utilisateur clique dessus
@@ -241,4 +252,55 @@ function addTag(tagText) {
         $(this).remove();
     });
     tagContainer.append(tag);
+}
+
+
+// ADD TO BDD
+var typingTimer;
+var doneTypingInterval = 1000; // 1 seconde de délai après la fin de la saisie
+
+// Fonction pour détecter la fin de la saisie
+$('#videoTitle, #videoDescription, #datetimepicker, #videoStatus').on('input, change', function () {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(doneTyping, doneTypingInterval);
+});
+
+function getTagsFromContainer() {
+    const tags = [];
+    $('#tag-container .tag').each(function () {
+        tags.push($(this).text().trim());
+    });
+    return tags;
+}
+
+function doneTyping() {
+    // Récupérer les valeurs des champs
+    var id = getParameterByName('id'),
+        titre = $('#videoTitle').val(),
+        description = $('#videoDescription').val(),
+        datetimepicker = $('#datetimepicker').val(),
+        tags = getTagsFromContainer();
+        videoStatus = $('#videoStatus').val();
+
+    // Envoyer une requête AJAX pour mettre à jour en base de données
+    $.ajax({
+        type: 'POST',
+        url: '../functions/nino/edit_v2.php?id=' + id, // Remplacez par l'URL de votre script serveur
+        data: { 
+            titre: titre, 
+            description: description, 
+            datetimepicker: datetimepicker,
+            tags: tags,
+            videoStatus: videoStatus
+        },
+        success: function (response) {
+            console.log('Données mises à jour avec succès:', response);
+            showPopup("good", "The save is saving ...", "Changements sauvegardés");
+
+        },
+        error: function (error) {
+            console.error('Erreur lors de la mise à jour des données:', error);
+            showPopup("error", "Echec de la sauvegarde", "Une erreur esu survenue pendant la sauvegarde, vérifie ta connexion .... on sait jamais ...");
+        }
+    });
 }
