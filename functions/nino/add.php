@@ -17,9 +17,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Définir le mode d'erreur de PDO sur Exception
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+        // Création de l'ID de la vidéo
+        function generateUniqueVideoId()
+        {
+            if (function_exists('uuid_create')) {
+                $uuid = uuid_create(UUID_TYPE_RANDOM);
+                return uuid_parse($uuid);
+            } else {
+                // Génération d'UUID alternative si l'extension uuid n'est pas disponible
+                return uniqid('video_', true);
+            }
+        }
+        // Exemple d'utilisation
+        $videoId = generateUniqueVideoId();
+
         $id_users = $_SESSION['authentification']['user']['id'];
-        $v = array('titre' => $titre, 'id_users' => $id_users, 'status' => 'reserved');
-        $sql = 'INSERT INTO luma_nino_data (titre, id_users, status)VALUES(:titre, :id_users, :status)';
+        $v = array(
+            'titre' => $titre, 
+            'id_users' => $id_users,
+            'id_video_uuid' => $videoId,
+            'status' => 'reserved'
+        );
+        $sql = 'INSERT INTO luma_nino_data (
+            titre, id_users, id_video_uuid, status)VALUES(
+            :titre, :id_users, :id_video_uuid, :status)';
         $req = $pdo->prepare($sql);
         $req->execute($v);
         echo 'succes';

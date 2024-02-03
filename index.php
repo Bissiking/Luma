@@ -1,7 +1,17 @@
 <?php
 session_start();
+header('Content-Type: text/html; charset=utf-8');
 // Récupération de l'URL
 $url = $_SERVER['REQUEST_URI'];
+
+if (strpos($url, 'api') !== false) {
+    // Autoriser toutes les origines
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+    header('Access-Control-Allow-Headers: Content-Type');
+    require_once 'lib/router.php';
+    exit;
+}
 
 if (isset($_SERVER['HTTP_X_FORWARDED_SCHEME']) || isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] = "on") {
     $uriHttp = 'https://';
@@ -100,7 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="/nino"><i class="fa-solid fa-house"></i></a>
             <a style="color: grey"><i class="fa-solid fa-bookmark"></i></a>
             <a style="color: grey"><i class="fa-solid fa-clock-rotate-left"></i></a>
-            <!-- <a id="btnMenuMobile" onclick="BtnMenuMobile()"><i class="fa-solid fa-bars"></i></a> -->
             <div id="btnMenuMobile" onclick="BtnMenuMobile()">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -110,30 +119,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div id="MenuMobile" data-open="close">
             <?php if (strpos($url, 'nino') !== false) { ?> <img src="/images/nino75.png"> <?php } ?>
             <?php if (isset($_SESSION['authentification']['user'])) : ?>
-            <a href="/nino/add">Ajouter une vidéo</a>
-            <a href="/connexion?logout">Se déconnecter</a>
-            <?php else: ?>
-            <a href="/connexion">Se connecter</a>
+                <a href="/nino/add">Ajouter une vidéo</a>
+                <a href="/connexion?logout">Se déconnecter</a>
+            <?php else : ?>
+                <a href="/connexion">Se connecter</a>
             <?php endif; ?>
             <a href="/">Retour à LUMA</a>
         </div>
     </header>
 
-    <main>
+    <main id="main">
         <?php require_once 'lib/router.php'; ?>
     </main>
 
-    <!-- Popup d'erreur ou de réussite -->
-    <div id="popup" class="popup">
-        <div id="popup-content" class="popup-content">
-            <span class="close-btn" onclick="closePopup()">&times;</span>
-            <p id="popup-message"></p>
-        </div>
-    </div>
-
     <!-- Vos scripts JavaScript vont ici -->
     <script src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/javascripts/popupv2.js"></script>
-    <script src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/javascripts/all-pages.js?0"></script>
+    <script src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/javascripts/all-pages.js?1"></script>
 
     <footer>
         <p>&copy; 2023 HEMERY Mathéo</p>
