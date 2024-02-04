@@ -34,7 +34,7 @@ if (isset($_SESSION['authentification']['user'])) {
 
 <form id="uploadForm" enctype="multipart/form-data">
 
-    <a href="/nino/edit?page=new&id=<?= $_GET['id'] ?>"><p class="info-popup">Une nouvelle interface d'edition est disponible, cliquant ici.</p></a>
+    <a href="/nino/edit?page=new&id=<?= $video['id_video_uuid']; ?>"><p class="info-popup">Une nouvelle interface d'edition est disponible, cliquant ici.</p></a>
 
     <p class="info-popup">L'upload automatiques des vidéos n'est pas encore disponible depuis le site.<br> Vous devez utiliser le module d'encodage pour procéder à l'upload des vidéos... quand celui-ci sera fonctionnel.</p>
 

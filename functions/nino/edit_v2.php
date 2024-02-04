@@ -5,16 +5,15 @@ extract($_REQUEST); // Extraction des valeurs JS
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // En attente de nettoyage
-    $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-    if ($id <= 0) {
-        echo json_encode(['success' => false, 'message' => 'ID invalide']);
+    if(!isset($_GET['id'])){
+        $id = null;
         exit;
-    }
+    };
+    $id_video_uuid = htmlspecialchars(trim($_GET['id']));
     $titre = htmlspecialchars(trim($titre));
     $description = htmlspecialchars(trim($description));
-    $description = htmlspecialchars(trim($videoStatus));
+    $videoStatus = htmlspecialchars(trim($videoStatus));
     $publishFull = isset($datetimepicker) ? date('Y-m-d H:i:00', strtotime($datetimepicker)) : null;
-
     $tags = isset($tags) ? json_encode($tags) : null;
 
     if ($publishFull < date('Y-m-d H:i:s')) {
@@ -34,14 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         publish = ?,
         tag = ?,
         status = ?
-        WHERE id = ?");
-        $stmt->execute([$titre, $description, $publishFull, $tags, $videoStatus,  $id]);
+        WHERE id_video_uuid = ?");
+        $stmt->execute([$titre, $description, $publishFull, $tags, $videoStatus,  $id_video_uuid]);
 
         // Réponse JSON pour indiquer le succès
         echo json_encode(['success' => true, 'message' => 'Données mises à jour avec succès']);
     } catch (PDOException $e) {
         // Réponse JSON en cas d'erreur
-        echo json_encode(['success' => false, 'message' => 'Erreur lors de la mise à jour des données: ' . $e->getMessage()]);
+        echo json_encode(['success' => false, 'message' => 'Erreur lors de la mise à jour des données: ' . $e->getMessage(), 'TEST' => $stmt]);
     }
 } else {
     // Réponse JSON pour une méthode non autorisée

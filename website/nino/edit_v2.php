@@ -8,8 +8,8 @@ if (isset($_SESSION['authentification']['user'])) {
     require './base/nexus_base.php';
     $id_users = $_SESSION['authentification']['user']['id'];
     $id = $_GET['id'];
-    $v = array('id_users' => $id_users, 'id' => $id);
-    $sql = 'SELECT * FROM luma_nino_data WHERE id_users = :id_users AND id = :id';
+    $v = array('id_users' => $id_users, 'id_video_uuid' => $id);
+    $sql = 'SELECT * FROM luma_nino_data WHERE id_users = :id_users AND id_video_uuid = :id_video_uuid';
     $req = $pdo->prepare($sql);
     $req->execute($v);
     $result = $req->rowCount();
@@ -45,22 +45,23 @@ if (isset($_SESSION['authentification']['user'])) {
 ?>
 
 <form id="uploadForm" enctype="multipart/form-data">
-
-    <p class="info-popup">La plupart des champs, sont en enregistrement automatiques.</p>
+    <p class="pops-api-use"><span id="apiuse"><?= $video['server_url']; ?></span></p>
+    <p class="info-popup">La plupart des champs, sont en enregistrement automatiques. Vous avez juste à cliquer en dehors du champs</p>
 
     <input id="videoTitle" type="text" name="videoTitle" placeholder="Titre de la vidéo" value="<?= $video['titre']; ?>"></input>
 
     <div class="player-thumbnail">
         <div id="no-video">
-            <p>L'API n'a détecté aucune vidéo. Vous pouvez uploader votre vidéo ici maintenant !</p>
+            <p>L'API n'a détecté aucune vidéo. <!-- Vous pouvez uploader votre vidéo ici maintenant ! --></p>
             <div class="btn-upload-video">
-                <span class="upload" data-encoded="false">
+                <span id="upload-video-btn-1" class="upload" data-encoded="false">
                     <i class="fa-solid fa-upload"></i>
-                    Vidéo encodé
+                    <input type="file" id="videoUP01" name="videoUP01" accept="video/*" style="display: none;">
+                    Vidéo non encodé
                 </span>
                 <span class="upload" data-encoded="true">
                     <i class="fa-solid fa-upload"></i>
-                    Vidéo non encodé
+                    Vidéo encodé (Non disponible)
                 </span>
             </div>
         </div>
@@ -88,7 +89,6 @@ if (isset($_SESSION['authentification']['user'])) {
             if ($tags === null && json_last_error() !== JSON_ERROR_NONE) :
                 // La conversion a échoué, gérer l'erreur ici
                 echo 'Récupération des tag impossible';
-                exit;
             else :
                 foreach ($tags as $tag) { ?>
                     <div class="tag"><?php if ($tag != "") {
@@ -122,4 +122,4 @@ if (isset($_SESSION['authentification']['user'])) {
 
 
 <!-- SCRIPTS SRV -->
-<script src="../javascripts/nino/edit_v2.js?0"></script>
+<script defer src="../javascripts/nino/edit_v2.js?0"></script>

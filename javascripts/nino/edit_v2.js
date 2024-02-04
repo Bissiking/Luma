@@ -1,94 +1,31 @@
-var isProcessing = false;
-var isThumbnailUpload = false;
-SearchImage('https://dev.nino.mhemery.fr/Thumbnail/1');
-
-$('#uploadForm').submit(function (e) {
-    e.preventDefault();
-    var id = $('#btnEditVideo').data('idvideo');
-
-    // UPLOAD FORM
-    var formData = new FormData($('#uploadForm')[0]);
-    formData.append('id', id);
-
-    // Effectuer la requête AJAX
-    $.ajax({
-        type: 'POST',
-        url: '../functions/nino/edit.php',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-            console.log(response);
-            if (response == "succes") {
-                window.location.href = "/nino/add";
-            } else {
-                showPopup("error", "Nino pas content :(", "Il y'a des soucis avec un ou plusieurs champs, vérifie... Formulaire en BETA, donc des bogues peuvent survenir.");
-            }
-        },
-        error: function (error) {
-            console.error('Erreur de connexion:', error);
-            showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Reéssayer plus tard");
-        }
-    });
-});
+var isProcessing = false,
+    isProcessing1 = false,
+    isThumbnailUpload = false,
+    idVid = getParameterByName('id'),
+    APIURL = 'https://'+$('#apiuse').text();
+SearchImage(APIURL+'/Thumbnail/' + idVid);
 
 
 function CheckVideoAPI() {
-    let loadPops = $('.loadPopsIco');
-    let loadPopsTxt = $('.loadText');
-    let divApi = $('.checkApi');
     $.ajax({
         type: 'GET',
-        url: 'https://' + divApi.attr('data-UrlAPI') + '/video/' + divApi.attr('data-idAPI'),
+        url: APIURL+'/video/check/'+idVid,
         success: function (response) {
             console.log(response);
-            loadPops.removeClass('loader');
             if (response == "exist") {
-                loadPops.html('<i class="fa-regular fa-circle-check good-txt"></i>');
-                loadPopsTxt.text('Dossier trouvé, upload de la vidéo possible');
-            } else if (response == "no-exist") {
-                $('.checkApi').addClass('pointerClick');
-                loadPopsTxt.text('Dossier non trouvé, vous pouvez cliquer sur la popup pour déclancher la création');
-                loadPops.html('<i class="fa-solid fa-triangle-exclamation warning-txt"></i>');
+                $('#no-video').hide();
+                showPopup("error", "Ok ...", "Une vidéo à été trouvé. Focntionnalité supplémentaire indisponible pour l'instant");
             } else {
-                loadPops.html('<i class="fa-solid fa-xmark error-txt"></i>');
-                loadPopsTxt.text('Une erreur est survenu');
-                showPopup("error", "l'API parle chelou", "L'API a renvoyé aucune valeur, ou une valeur incorrecte. Il se peut que votre site ne soit pas à jour");
+                showPopup("error", "l'API parle chelou", "Fichier non trouver, ou ton API pète un câble. Toi qui choisi ...");
             }
         },
         error: function (error) {
-            loadPops.removeClass('loader');
-            console.error('Erreur de connexion:', error);
-            loadPopsTxt.text('Echec de la vérification');
             showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Reéssayer plus tard");
         }
     });
 }
-
-function SendDemCreation() {
-    let divApi = $('.checkApi');
-    if (divApi.hasClass('pointerClick')) {
-        $.ajax({
-            type: 'POST',
-            url: 'https://' + divApi.attr('data-UrlAPI') + '/createVideo/' + divApi.attr('data-idAPI'),
-            success: function (response) {
-                console.log(response);
-                if (response == "succes") {
-                    location.reload();
-                } else {
-                    showPopup("error", "l'API a des petits raté parfois", "La création du dossier à échoué. Réactualise pour vérifier, sinon recommence dans 5 minutes");
-                }
-            },
-            error: function (error) {
-                console.error('Erreur de connexion:', error);
-                showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Reéssayer plus tard");
-            }
-        });
-    }
-}
-
+CheckVideoAPI();
 // NEW CODE
-
 function ResizePopupNoVideo() {
     const videoPlayer = $('video');
     const width = videoPlayer.width();
@@ -200,7 +137,7 @@ function UploadThumbnailAjax(thisThumbnail) {
         var formData = new FormData();
         formData.append('image', fileInput);
         $.ajax({
-            url: 'https://dev.nino.mhemery.fr/upload/1',
+            url: APIURL+'/upload/' + idVid,
             type: 'POST',
             data: formData,
             processData: false,
@@ -275,32 +212,89 @@ function getTagsFromContainer() {
 
 function doneTyping() {
     // Récupérer les valeurs des champs
-    var id = getParameterByName('id'),
-        titre = $('#videoTitle').val(),
+    var titre = $('#videoTitle').val(),
         description = $('#videoDescription').val(),
         datetimepicker = $('#datetimepicker').val(),
         tags = getTagsFromContainer();
-        videoStatus = $('#videoStatus').val();
+    videoStatus = $('#videoStatus').val();
 
     // Envoyer une requête AJAX pour mettre à jour en base de données
     $.ajax({
         type: 'POST',
-        url: '../functions/nino/edit_v2.php?id=' + id, // Remplacez par l'URL de votre script serveur
-        data: { 
-            titre: titre, 
-            description: description, 
+        url: '../functions/nino/edit_v2.php?id=' + idVid, // Remplacez par l'URL de votre script serveur
+        data: {
+            titre: titre,
+            description: description,
             datetimepicker: datetimepicker,
             tags: tags,
             videoStatus: videoStatus
         },
         success: function (response) {
             console.log('Données mises à jour avec succès:', response);
-            showPopup("good", "The save is saving ...", "Changements sauvegardés");
-
+            if (response.success == true) {
+               showPopup("good", "The save is saving ...", "Changements sauvegardés"); 
+            }else{
+                showPopup("error", "Echec de la sauvegarde", "Une erreur esu survenue pendant la sauvegarde, vérifie ta connexion .... on sait jamais ...");
+            }
         },
         error: function (error) {
             console.error('Erreur lors de la mise à jour des données:', error);
             showPopup("error", "Echec de la sauvegarde", "Une erreur esu survenue pendant la sauvegarde, vérifie ta connexion .... on sait jamais ...");
         }
     });
+}
+
+// UPLOAD VIDEO - SINGLE
+
+$('#upload-video-btn-1').click(function () {
+    if (!isProcessing1) {
+        isProcessing1 = true;
+        $('#videoUP01').click();
+    }
+});
+
+$('#videoUP01').change(function () {
+    isProcessing = true;
+    const fileInput = this.files[0];
+    if (fileInput) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            // $('#imagePreview').attr('src', e.target.result).show();
+            uploadVideo();
+            isProcessing = false;
+        };
+        reader.readAsDataURL(fileInput);
+    }
+});
+
+function uploadVideo() {
+    var fileInput = $('#videoUP01')[0].files[0];
+    if (fileInput) {
+        var formDataVideo = new FormData();
+        formDataVideo.append('video', fileInput);
+        console.log(fileInput);
+
+        // const allowedExtensions = ['mp4', 'mkv'];
+        // const fileExtension = fileInput.split('.').pop().toLowerCase();
+        // if (!allowedExtensions.includes(fileExtension)) {
+        //     alert('Seuls les fichiers MP4 et MKV sont autorisés.');
+        //     return;
+        // }
+
+        // Modifie l'URL de la requête Axios
+        const uploadUrl = APIURL+`/upload/video/${idVid}`;
+        axios.post(uploadUrl, formDataVideo, {
+            params: { encoded: false },
+          })
+            .then(response => {
+                console.log(response.data);
+                alert('Vidéo envoyée avec succès!');
+            })
+            .catch(error => {
+                console.error('Erreur lors de l\'envoi de la vidéo:', error);
+                alert('Une erreur est survenue lors de l\'envoi de la vidéo.');
+            });
+    } else {
+        console.log('ERROR');
+    }
 }
