@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $publishFull = null;
     }
 
-    echo json_encode(['success' => 'TEST', 'message' => $tags]);
+    // echo json_encode(['success' => 'TEST', 'message' => $tags]);
     // Utilisez ces valeurs pour mettre à jour la base de données
     // Exemple avec PDO :
     try {
