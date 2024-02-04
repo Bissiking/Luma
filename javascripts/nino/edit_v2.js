@@ -230,7 +230,7 @@ function doneTyping() {
             videoStatus: videoStatus
         },
         success: function (response) {
-            console.log('Données mises à jour avec succès:', response);
+            response = JSON.parse(response);
             if (response.success == true) {
                showPopup("good", "The save is saving ...", "Changements sauvegardés"); 
             }else{

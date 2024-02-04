@@ -120,6 +120,5 @@ if (isset($_SESSION['authentification']['user'])) {
     </div>
 </form>
 
-
 <!-- SCRIPTS SRV -->
-<script defer src="../javascripts/nino/edit_v2.js?0"></script>
+<script defer src="../javascripts/nino/edit_v2.js?1"></script>
