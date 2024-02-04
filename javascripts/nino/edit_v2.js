@@ -234,12 +234,12 @@ function doneTyping() {
             if (response.success == true) {
                showPopup("good", "The save is saving ...", "Changements sauvegardés"); 
             }else{
-                showPopup("error", "Echec de la sauvegarde", "Une erreur esu survenue pendant la sauvegarde, vérifie ta connexion .... on sait jamais ...");
+                showPopup("error", "Echec de la sauvegarde", "Une erreur est survenue pendant la sauvegarde, vérifie ta connexion .... on sait jamais ... #0001");
             }
         },
         error: function (error) {
             console.error('Erreur lors de la mise à jour des données:', error);
-            showPopup("error", "Echec de la sauvegarde", "Une erreur esu survenue pendant la sauvegarde, vérifie ta connexion .... on sait jamais ...");
+            showPopup("error", "Echec de la sauvegarde", "Une erreur est survenue pendant la sauvegarde, vérifie ta connexion .... on sait jamais ... #0002");
         }
     });
 }
