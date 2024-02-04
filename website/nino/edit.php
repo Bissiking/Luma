@@ -21,7 +21,7 @@ if (isset($_SESSION['authentification']['user'])) {
         echo 'Aucune vidéo trouvé';
     }
 } else {
-    echo 'Connexion obligatoire';
+    header('Location: /');
 }
 ?>
 
@@ -33,6 +33,8 @@ if (isset($_SESSION['authentification']['user'])) {
 </div>
 
 <form id="uploadForm" enctype="multipart/form-data">
+
+    <a href="/nino/edit?page=new&id=<?= $video['id_video_uuid']; ?>"><p class="info-popup">Une nouvelle interface d'edition est disponible, cliquant ici.</p></a>
 
     <p class="info-popup">L'upload automatiques des vidéos n'est pas encore disponible depuis le site.<br> Vous devez utiliser le module d'encodage pour procéder à l'upload des vidéos... quand celui-ci sera fonctionnel.</p>
 
@@ -55,10 +57,10 @@ if (isset($_SESSION['authentification']['user'])) {
     <textarea id="videoDescription" name="videoDescription" rows="4"><?= $video['description']; ?></textarea>
 
     <label for="imageInput">Sélectionnez une image :</label>
-    <?php if(isset($video['videoThumbnail']) && $video['videoThumbnail'] !== ""): ?>
+    <?php if (isset($video['videoThumbnail']) && $video['videoThumbnail'] !== "") : ?>
         <img width="100%" src="<?= $video['videoThumbnail'] ?>" alt="Thumbnail Nino">
     <?php endif; ?>
-    
+
     <input type="file" name="image" id="imageInput" accept="image/*" value="<?= $video['videoThumbnail']; ?>">
 
     <label for="videoTags">Tags (séparés par des virgules) :</label>
@@ -67,16 +69,18 @@ if (isset($_SESSION['authentification']['user'])) {
     <label for="videoStatus">Status de la vidéo</label>
     <select name="videoStatus" id="videoStatus" class="custom-select">
         <option selected hidden value="<?= $video['status']; ?>">Choisir si la vidéo est visible ou non</option>
-        <?php if($video['status'] === "publique"): ?>
-        <option value="hide">Ne plus publier la vidéo</option>
-        <?php else: ?>
-        <option value="publique">Publier la vidéo</option>
+        <?php if ($video['status'] === "publique") : ?>
+            <option value="hide">Ne plus publier la vidéo</option>
+        <?php else : ?>
+            <option value="publique">Publier la vidéo</option>
         <?php endif; ?>
         <option value="reserved">Réservé</option>
     </select>
 
     <label for="videoPublish">Date de publication (Heure par default: 12h00) :</label>
-    <input type="date" id="videoPublish" name="videoPublish" value="<?php if(isset($video['publish']) || $video['publish'] != "" || $video['publish'] != null){ echo date('Y-m-d', strtotime($video['publish']));} ?>">
+    <input type="date" id="videoPublish" name="videoPublish" value="<?php if (isset($video['publish']) || $video['publish'] != "" || $video['publish'] != null) {
+                                                                        echo date('Y-m-d', strtotime($video['publish']));
+                                                                    } ?>">
 
     <button type="submit" id="btnEditVideo" data-idvideo="<?= $_GET['id'] ?>">Enregistrer les modifications</button>
 </form>

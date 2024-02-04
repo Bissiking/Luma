@@ -70,6 +70,18 @@
         "url_pattern": "/admin/domains",
         "controller":"DomainController",
         "action":"show"
+    },
+    "APINinoController" : {
+        "routeName": "APINinoController",
+        "url_pattern": "/api/nino",
+        "controller":"APINinoController",
+        "action":"show"
+    },
+    "APINinoPosterController" : {
+        "routeName": "APINinoPosterController",
+        "url_pattern": "/api/nino/poster",
+        "controller":"APINinoPosterController",
+        "action":"show"
     }
 }
 
