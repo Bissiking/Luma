@@ -20,13 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $publishFull = null;
     }
 
-    // echo json_encode(['success' => 'TEST', 'message' => $tags]);
-    // Utilisez ces valeurs pour mettre à jour la base de données
-    // Exemple avec PDO :
     try {
         require '../../base/nexus_base.php';
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
         $stmt = $pdo->prepare("UPDATE luma_nino_data SET 
         titre = ?,
         description = ?,
@@ -35,12 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         status = ?
         WHERE id_video_uuid = ?");
         $stmt->execute([$titre, $description, $publishFull, $tags, $videoStatus,  $id_video_uuid]);
-
         // Réponse JSON pour indiquer le succès
         echo json_encode(['success' => true, 'message' => 'Données mises à jour avec succès']);
     } catch (PDOException $e) {
         // Réponse JSON en cas d'erreur
-        echo json_encode(['success' => false, 'message' => 'Erreur lors de la mise à jour des données: ' . $e->getMessage(), 'TEST' => $stmt]);
+        echo json_encode(['success' => false, 'message' => 'Erreur lors de la mise à jour des données: ' . $e->getMessage()]);
     }
 } else {
     // Réponse JSON pour une méthode non autorisée
