@@ -28,7 +28,7 @@
             <div class="video" data-idVideo="<?= $video['id'] ?>" data-status="<?= $publish ?>">
                 <img <?php if ($publish != 1) {
                             echo 'class="blur"';
-                        } ?> src="<?= $video['videoThumbnail'] ?>" alt="Thumbnail Nino">
+                        } ?> src="<?= 'https://'.$video['server_url'].'/Thumbnail/'.$video['id_video_uuid'] ?>" alt="Thumbnail Nino">
                 <div class="video-info">
                     <?php if ($publish != 1) : ?>
                         <div class="timer-dispo">
