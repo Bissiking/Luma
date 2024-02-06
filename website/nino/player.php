@@ -12,7 +12,7 @@ if (!isset($_GET['video']) || $_GET['video'] == null) {
 
     require './base/nexus_base.php';
     $id = htmlspecialchars(trim($_GET['video']));
-    $sql = "SELECT * FROM luma_nino_data WHERE id = $id  && publish < '".date('Y-m-d H:i:s')."' && status = 'publique'";
+    $sql = 'SELECT * FROM luma_nino_data WHERE id = '.$id.' && publish < "'.date('Y-m-d H:i:s').'" && status = "publique" ORDER BY publish DESC LIMIT 1';
     $req = $pdo->prepare($sql);
     $req->execute();
     $result = $req->rowCount();
@@ -20,14 +20,10 @@ if (!isset($_GET['video']) || $_GET['video'] == null) {
     if ($result === 1) :
         foreach ($req as $video) {
         }
-
-        if ($video['videoThumbnail'] == '' || $video['videoThumbnail'] == null) {
-            $video['videoThumbnail'] = SITE_HTTP . "://" . SITE_URL . "/images/nino/no_image.jpg";
-        }
 ?>
 
         <div class="video-container">
-            <video id="Player" poster="<?= $video['videoThumbnail']; ?>" controls></video>
+            <video id="Player" poster="https://<?= htmlspecialchars(trim($video['server_url'])) ?>/Thumbnail/<?= htmlspecialchars(trim($video['id_video_uuid'])) ?>" controls></video>
 
             <div class="video-info">
                 <h1><?= $video['titre']; ?></h1>
@@ -60,7 +56,7 @@ if (!isset($_GET['video']) || $_GET['video'] == null) {
         <!-- SCRIPTS -->
         <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
         <script>
-            let url = "https://nino.mhemery.fr/<?= htmlspecialchars(trim($video['id_video_uuid'])) ?>"
+            let url = "https://<?= htmlspecialchars(trim($video['server_url'])) ?>/<?= htmlspecialchars(trim($video['id_video_uuid'])) ?>"
             var id = new URL(url).pathname;
             const video = document.getElementById('Player');
             const videoSrc = url + '/nino.m3u8';
