@@ -276,3 +276,7 @@ p.system-warning{
 .delete-button {
     background-color: #d9534f;
 }
+
+.version_Update_Menu{
+    padding: 5px 10px;
+}

@@ -15,6 +15,21 @@ function CheckVideoAPI() {
             if (response == "exist") {
                 $('#no-video').hide();
                 showPopup("error", "Ok ...", "Une vidéo à été trouvé. Focntionnalité supplémentaire indisponible pour l'instant");
+
+                // Ajout de la vidéo dans le player
+                let url = APIURL+'/'+idVid
+                var id = new URL(url).pathname;
+                const video = document.getElementById('Player');
+                const videoSrc = url + '/nino.m3u8';
+                if (Hls.isSupported()) {
+                    const hls = new Hls();
+                    hls.loadSource(videoSrc);
+                    hls.attachMedia(video);
+                    hls.on(Hls.Events.MANIFEST_PARSED, () => {});
+                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    video.src = videoSrc;
+                    video.addEventListener('loadedmetadata', () => {});
+                }
             } else {
                 showPopup("error", "l'API parle chelou", "Fichier non trouver, ou ton API pète un câble. Toi qui choisi ...");
             }

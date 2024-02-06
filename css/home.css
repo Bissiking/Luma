@@ -6,7 +6,6 @@
 
 .server-block{
     display: flex;
-
 }
 
 .server {
@@ -54,7 +53,7 @@ span.ping{
 }
 
 .offline {
-    color: #dc3545;
+    color: #bd0012;
 }
 
 /* TEST */
