@@ -7,14 +7,14 @@ function TEST() {
 
 function SearchAndPing() {
 	// On compte le nombre de bloc serveur disponible
-	let CountBlockServer = $('.ServerBlock').length;
+	let CountBlockapi = $('.apiBlock').length;
 	// On effectue une boucle avec le nombre de bloc disponible
-	for (let i = 0; i < CountBlockServer; i++) {
+	for (let i = 0; i < CountBlockapi; i++) {
 
 		// On selectionne la DIV
-		let deuxiemeServerBlock = $('.ServerBlock')[i];
+		let deuxiemeapiBlock = $('.apiBlock')[i];
 		// Puis on cible une DIV
-		let idElement = deuxiemeServerBlock.id;
+		let idElement = deuxiemeapiBlock.id;
 		// On récupère les information nécessaire
 		let ip = $('#' + idElement).data('ip');
 		// On injecte les informations dans l'autre fonction

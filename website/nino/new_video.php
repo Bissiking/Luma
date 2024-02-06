@@ -63,7 +63,7 @@
                         <tr>
                             <td><?= $video['id_video_uuid'] ?></td>
                             <td><?= $video['titre'] ?></td>
-                            <td><button onclick="editVideo(<?= $video['id'] ?>)">Modifier</button></td>
+                            <td><button onclick="editVideo('<?= $video['id_video_uuid']; ?>')">Modifier</button></td>
                         </tr>
                     <?php } ?>
 
