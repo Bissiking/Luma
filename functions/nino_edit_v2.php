@@ -1,6 +1,4 @@
 <?php
-// login.php
-session_start(); // Toujours appeler session_start() au début du script qui utilise des sessions
 extract($_REQUEST); // Extraction des valeurs JS
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -21,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        require '../../base/nexus_base.php';
+        require 'base/nexus_base.php';
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $stmt = $pdo->prepare("UPDATE luma_nino_data SET 
         titre = ?,

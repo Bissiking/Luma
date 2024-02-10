@@ -2,7 +2,7 @@ function routesAdd(url_pattern) {
     // Effectuer la requête AJAX
     $.ajax({
         type: 'POST',
-        url: '../functions/admin/routes_add.php',
+        url: './functions/routes_add',
         data: 'url_pattern='+url_pattern,
         success: function(response) {
             if (response == 'succes') {

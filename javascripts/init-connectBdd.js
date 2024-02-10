@@ -69,7 +69,7 @@ function testConnection(event) {
                     '&USER_ADMIN_MDP='+encodeURIComponent(USER_ADMIN_MDP);
     
             $.ajax({
-                url: 'functions/InitConfigEdit.php',
+                url: 'functions/InitConfigEdit',
                 type: 'POST',
                 data: data,
                 success: function (response) {

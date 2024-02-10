@@ -3,17 +3,20 @@
 </script>
 
 <?php
+$url = $_SERVER['REQUEST_URI'];
+$parts = explode('/', $url);
+$id = end($parts);
 
-if (!isset($_GET['video']) || $_GET['video'] == null) {
+if (!isset($id) || $id == null) {
     echo '<h3>Vidéo non trouvé</h3>';
     echo '<img src="' . SITE_HTTP . '://' . SITE_URL . '/images/nino/404.jpg" style="width: 100%; height:40%">';
     // exit;
 } else {
-
     require './base/nexus_base.php';
-    $id = htmlspecialchars(trim($_GET['video']));
-    $sql = 'SELECT * FROM luma_nino_data WHERE id = '.$id.' && publish < "'.date('Y-m-d H:i:s').'" && status = "publique" ORDER BY publish DESC LIMIT 1';
+    $id = htmlspecialchars(trim($id));
+    $sql = 'SELECT * FROM luma_nino_data WHERE id_video_uuid = :id_video_uuid && publish < "'.date('Y-m-d H:i:s').'" && status = "publique" ORDER BY publish DESC LIMIT 1';
     $req = $pdo->prepare($sql);
+    $req->bindParam(':id_video_uuid', $id);
     $req->execute();
     $result = $req->rowCount();
 

@@ -5,22 +5,23 @@ function performLogin() {
     // Effectuer la requête AJAX
     $.ajax({
         type: 'POST',
-        url: 'functions/login.php', // Remplacez ceci par le chemin de votre script côté serveur
+        url: 'functions/login', // Remplacez ceci par le chemin de votre script côté serveur
         data: { identifiant: identifiant, password: password },
-        success: function(response) {
+        success: function (response) {
+            console.log(response);
             // Afficher le résultat de la connexion
             if (response == "succes") {
                 showPopup("good", "YOUHOU !!", "Vous êtes connecté, Redirection dans 4 Secondes, pas 3, pas 5, 4 ! ... Ouais je suis précis.");
                 setTimeout(() => {
                     window.location.href = '/';
                 }, 4000);
-            }else if (response == "error_domain"){
+            } else if (response == "error_domain") {
                 showPopup("error", "Ah merde !!", "Tu n'es pas autorisé à te connecter sur ce domaine");
-            }else{
+            } else {
                 showPopup("error", "Euh ... Petit soucis là", "Identifiant ou mot de passe incorrect.... Je suppose ....");
             }
         },
-        error: function(error) {
+        error: function (error) {
             console.error('Erreur de connexion:', error);
             showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Reéssayer plus tard");
             $('button').hide();
@@ -29,7 +30,7 @@ function performLogin() {
     });
 }
 
-$('#identifiant, #password').keydown(function(event) {
+$('#identifiant, #password').keydown(function (event) {
     if (event.key === 'Enter') {
         performLogin();
     }

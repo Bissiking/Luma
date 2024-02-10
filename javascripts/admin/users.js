@@ -30,7 +30,7 @@ function addUser() {
         POST = 1;
         // Effectuer une requête AJAX
         $.ajax({
-            url: '../functions/admin/user_add.php', // Remplacez par votre script côté serveur qui gère l'ajout
+            url: './functions/admin/user_add', // Remplacez par votre script côté serveur qui gère l'ajout
             type: 'POST',
             data: {
                 nomComplet: nomComplet.val(),
@@ -39,6 +39,7 @@ function addUser() {
                 account_administrator: account_administrator.val()
         },
             success: function (response) {
+                console.log(response);
                 if (response == "succes") {
                     window.location.href = window.location.href;
                 }else if (response == "user-found") {

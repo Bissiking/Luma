@@ -119,4 +119,4 @@ if ($DB_VERS_JSON === null) {
         ?>
     </tbody>
 </table>
-<script src="/javascripts/admin/bdd.js?0"></script>
+<script src="/javascripts/admin/bdd.js?1"></script>

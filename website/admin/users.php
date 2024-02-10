@@ -342,4 +342,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </tbody>
     </table>
 <?php endif;  ?>
-<script src="/javascripts/admin/users.js"></script>
+<script src="/javascripts/admin/users.js?v0"></script>
