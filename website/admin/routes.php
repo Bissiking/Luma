@@ -60,4 +60,4 @@ if ($routesJSON === null) {
     </tbody>
 </table>
 <!-- SCRIPTS SRV -->
-<script src="../javascripts/admin/routes_add.js"></script>
+<script src="../javascripts/admin/routes_add.js?0"></script>

@@ -1,3 +1,6 @@
+<?php
+    require_once ('./lib/truncateText.php');
+?>
 <script>
     document.title = "Nino - Accueil";
 </script>
@@ -25,7 +28,7 @@
                 $video['videoThumbnail'] = SITE_HTTP . "://" . SITE_URL . "/images/nino/no_image.jpg";
             }
     ?>
-            <div class="video" data-idVideo="<?= $video['id'] ?>" data-status="<?= $publish ?>">
+            <div class="video" data-idVideo="<?= $video['id_video_uuid'] ?>" data-status="<?= $publish ?>">
                 <img <?php if ($publish != 1) {
                             echo 'class="blur"';
                         } ?> src="<?= 'https://'.$video['server_url'].'/Thumbnail/'.$video['id_video_uuid'] ?>" alt="Thumbnail Nino">
@@ -36,8 +39,8 @@
                             <span class="timer bold Cr-Video-Home" id="cr-<?= $video['id'] ?>" data-dateSortie="<?= $video['publish'] ?>" data-idVid="<?= $video['id'] ?>">*****</span>
                         </div>
                     <?php else : ?>
-                        <div class="video-title"><?= $video['titre'] ?></div>
-                        <div class="video-description"><?= $video['description'] ?></div>
+                        <div class="video-title"><?= truncateText($video['titre'], 30) ?></div>
+                        <div class="video-description"><?= truncateText($video['description'], 50) ?></div>
                     <?php endif; ?>
                 </div>
             </div>
@@ -57,14 +60,4 @@
         }, 1000);
     });
 </script>
-<script src="../javascripts/nino/home.js"></script>
-
-
-<!-- <div class="video">
-    <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/03/web-images.jpg?auto=format&q=60&w=1600&h=824&fit=crop&crop=faces" alt="Vidéo 1 Thumbnail">
-    <div class="video-info">
-        <div class="video-title">Titre de la Vidéo 1</div>
-        <div class="video-description">Description de la vidéo 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-        <button class="subscribe-button">Regarder la vidéo</button>
-    </div>
-</div> -->
+<script src="../javascripts/nino/home.js?0"></script>

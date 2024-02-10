@@ -82,6 +82,12 @@
         "url_pattern": "/api/nino/poster",
         "controller":"APINinoPosterController",
         "action":"show"
+    },
+    "AgentDashboardController" : {
+        "routeName": "AgentDashboardController",
+        "url_pattern": "/agent",
+        "controller":"AgentDashboardController",
+        "action":"show"
     }
 }
 

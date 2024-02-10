@@ -29,16 +29,19 @@ $('.update').click(function(e) {
         POST = 1;
         $.ajax({
             type: 'POST',
-            url: '../functions/admin/update_bdd.php',
+            url: 'functions/update_bdd',
             data: forms,
-            success: function(response) {                           
+            success: function(response) { 
+                console.log(response);                         
                 if (response == 'succes') {
                     showPopup("good", "UPDATE", "Mise à jour réussi, veuillez patienter");
                     setTimeout(() => {
                         window.location.href = window.location.href;
                     }, 4000);
                    POST = 0;
-                }   
+                }else{
+                    showPopup("error", "BDD triste ...", "La base de donnée n'a pas été mise à jour. Consulter d'éventuelles logs.");
+                }  
             },
             error: function(error) {
                 console.error('Erreur de connexion:', error);

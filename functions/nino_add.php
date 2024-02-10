@@ -1,20 +1,18 @@
 <?php 
-// login.php
-session_start(); // Toujours appeler session_start() au début du script qui utilise des sessions
 extract($_REQUEST); // Extraction des valeurs JS
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    require '../../base/nexus_base.php';
+    require 'base/nexus_base.php';
 
     // Vérification si les champs sont vides
     if (!isset($titre) || $titre == "") {
-        echo 'empty';
+        echo 'empty_title';
         exit;
     }
 
     if (!isset($APIselect) || $APIselect == "") {
-        echo 'empty';
+        echo 'empty_api';
         exit;
     }
     try {
@@ -44,8 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'status' => 'reserved'
         );
         $sql = 'INSERT INTO luma_nino_data (
-            titre, id_users, id_video_uuid, status)VALUES(
-            :titre, :id_users, :id_video_uuid, :status)';
+            titre, server_url, id_users, id_video_uuid, status
+            )VALUES(
+            :titre, :server_url, :id_users, :id_video_uuid, :status)';
         $req = $pdo->prepare($sql);
         $req->execute($v);
         echo 'succes';

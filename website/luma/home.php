@@ -89,7 +89,7 @@
                 $video['videoThumbnail'] = SITE_HTTP . "://" . SITE_URL . "/images/nino/no_image.jpg";
             }
     ?>
-            <div class="video" data-idVideo="<?= $video['id'] ?>" data-status="<?= $publish ?>">
+            <div class="video" data-idVideo="<?= $video['id_video_uuid'] ?>">
                 <img <?php if ($publish != 1) {
                             echo 'class="blur"';
                         } ?> src="<?= 'https://'.$video['server_url'].'/Thumbnail/'.$video['id_video_uuid'] ?>" alt="Thumbnail Nino">
@@ -106,4 +106,4 @@
     </section>
 </div>
 <!-- SCRIPTS SRV -->
-<script src="../javascripts/home.js?0"></script>
+<script src="../javascripts/home.js?1"></script>

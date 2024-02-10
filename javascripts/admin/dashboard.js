@@ -65,7 +65,7 @@ function UpdateWebsite() {
     $('#updateButton').hide();
     // Effectuer une requête AJAX pour déclencher la mise à jour
     $.ajax({
-      url: './functions/admin/update_website.php', // Remplacez par le chemin vers votre script de mise à jour côté serveur
+      url: 'functions/admin/update_website', // Remplacez par le chemin vers votre script de mise à jour côté serveur
       type: 'POST',
       success: function (response) {
         console.log(response); // Afficher la réponse du serveur (message de réussite ou d'erreur)

@@ -124,4 +124,4 @@ if (isset($_SESSION['authentification']['user'])) {
     <h1>Aucune vidéo trouvé</h1>
 <?php endif; ?>
 <!-- SCRIPTS SRV -->
-<script defer src="../javascripts/nino/edit_v2.js?2"></script>
+<script defer src="../javascripts/nino/edit_v2.js?3"></script>

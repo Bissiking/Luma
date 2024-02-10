@@ -2,7 +2,7 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Exctraction
 	extract($_REQUEST);
-    $routesJSON = json_decode(file_get_contents('../../base/routes.json'), true);
+    $routesJSON = json_decode(file_get_contents('./base/routes.json'), true);
     // TEST ENTREE
     $url_pattern = htmlspecialchars(trim($url_pattern));
 
@@ -11,8 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Récupérer les données de l'entrée spécifiée
         $selectedEntry = $routesJSON[$url_pattern];
 
-        require_once('../../base/nexus_base.php');
-        require_once('../../base/config.php');
+        require_once('base/nexus_base.php');
+        require_once('base/config.php');
 
         $urlToCheck = $url_pattern;
         $query = "SELECT * FROM luma_routes WHERE url_pattern = :url";

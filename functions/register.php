@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Connexion à MySQL
-    require_once '../base/nexus_base.php';
+    require_once 'base/nexus_base.php';
 
     // Valider et traiter les données (exemple simple de validation)
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {

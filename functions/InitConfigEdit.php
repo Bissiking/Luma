@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	}
 
 	// ETAPE 4 - Création du fichier de config
-	$configFilePath = '../base/config.php';
+	$configFilePath = './base/config.php';
 
 	try {
 		// Paramètres de configuration à inclure dans le fichier
@@ -51,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$configContent .= "define('DB_PASSWORD', '');" . PHP_EOL;
 		$configContent .= "define('DB_VERSION', 'DB01');" . PHP_EOL;
 		$configContent .= "define('SYS_NAME', 'SYSTEM');" . PHP_EOL;
-		$configContent .= "define('STAT_INSTALL', 'false');" . PHP_EOL;
 		$configContent .= "define('WEB_MAINTENANCE', 'false');" . PHP_EOL;
 		$configContent .= PHP_EOL;
 
@@ -93,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	// Récupération de la config
 
-	require_once '../base/config.php';
+	require_once './base/config.php';
 
 	// Lire le contenu actuel du fichier
 	$configContent = file_get_contents($configFilePath);
@@ -126,12 +125,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$configContent = str_replace(
 		"define('DB_PASSWORD', '" . DB_PASSWORD . "');",
 		"define('DB_PASSWORD', '$DB_PASSWORD');",
-		$configContent
-	);
-
-	$configContent = str_replace(
-		"define('STAT_INSTALL', '" . STAT_INSTALL . "');",
-		"define('STAT_INSTALL', true);",
 		$configContent
 	);
 
@@ -259,7 +252,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$pdo->exec($query);
 
 		// Chargement de la LIB (password_generate)
-		require_once '../lib/password_generate.php';
+		require_once './lib/password_generate.php';
 		$motDePasseGenere = genererMotDePasse(24);
 
 		//Création de l'utilisateur SYSTEM
