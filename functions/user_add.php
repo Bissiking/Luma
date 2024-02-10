@@ -1,5 +1,4 @@
 <?php
-session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($_SESSION['authentification']['user']['account_administrator'] !== 1) {
@@ -7,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    require_once '../../base/config.php';
+    require_once 'base/config.php';
     extract($_REQUEST);
     // ADD USER
     
@@ -15,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // USERS DOMAIN EN AUTO (PREDEFINI)
     try {
         // Connexion à la base de données avec PDO
-        require_once '../../base/nexus_base.php';
+        require_once 'base/nexus_base.php';
         
         // Définir l'attribut PDO pour générer des exceptions en cas d'erreur
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

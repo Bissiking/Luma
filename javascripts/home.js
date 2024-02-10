@@ -103,7 +103,11 @@ setInterval(() => {
 	SearchAndPing();
 }, 20000);
 
-
+// Nino vidéo
+$('.video').click(function(e) {
+    let BtnIDdiv = $(this).attr('data-idVideo');
+	window.location.href = "/nino/player/"+BtnIDdiv;
+})
 
 
 

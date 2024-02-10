@@ -9,17 +9,12 @@ if (!file_exists($ConfigFile)) {
         'controller' => 'InitController',
         'action' => 'show'
     ];
+    // print_r($route);
+    // exit();
 }else{
     require_once($ConfigFile);
 
-    if (STAT_INSTALL != 'true'){
-        // Si le système d'installation est active
-        $route = [
-            'controller' => 'InitController',
-            'action' => 'show'
-        ];
-    
-    }else if (WEB_MAINTENANCE == 'true'){
+    if (WEB_MAINTENANCE == 'true'){
         // Si le système de maintenace est actif
         $route = [
             'controller' => 'MaintenanceController',
@@ -39,6 +34,10 @@ if (!file_exists($ConfigFile)) {
         }else{
             // Requête SQL pour récupérer les informations de routage
             try {
+                if (strpos($url, 'nino/player') !== false){
+                    $queryUrl['path'] = '/nino/player';
+                }
+
                 $query = "SELECT * FROM luma_routes WHERE url_pattern = :url";
                 $stmt = $pdo->prepare($query);
                 $stmt->bindParam(':url', $queryUrl['path']);
@@ -51,6 +50,25 @@ if (!file_exists($ConfigFile)) {
         }
     }
 }
+
+if (strpos($url, 'functions') !== false){
+
+    // Séparation de l'URL
+    $parts = explode('/', $url);
+    $functions = end($parts);
+
+    // On vérifie si il y'a un paramètre
+    if (strpos($url, '?') !== false){
+       $query = explode('?', $functions);
+       // On réécrit la variable avec la nouvelle valeur
+       $functions = $query[0];
+    }
+    // On appel la function
+    require_once("functions/$functions.php");
+    exit;
+    
+}
+
 
 // Vérifiez si une route correspond à l'URL demandée
 if ($route) {
@@ -65,5 +83,5 @@ if ($route) {
     $controller->$actionName();
 } else {
     // Gérer les routes non trouvées (par exemple, afficher une page d'erreur)
-    echo "Route not found";
+    echo "Route not found = #0001";
 }

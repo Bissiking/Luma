@@ -12,13 +12,13 @@ if (isset($_SESSION['authentification']['user']['account_administrator']) && $_S
     }
 
     // Vérification mise à jour BDD
-    $DB_VERS_JSON = json_decode(file_get_contents('./base/DB_VERSION.json'), true);
+    $DB_VERS_JSON = json_decode(file_get_contents('base/DB_VERSION.json'), true);
 
     if ($DB_VERS_JSON === null) {
         echo 'Récupération du Manifest des BDD impossible.';
         exit();
     } else {
-        require './base/nexus_base.php';
+        require 'base/nexus_base.php';
         // Configuration pour afficher les erreurs de PDO
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         // Requête SQL pour récupérer la liste des tables
@@ -75,7 +75,7 @@ if (isset($_SESSION['authentification']['user']['account_administrator']) && $_S
         </div>
     </div>
 
-    <script src="javascripts/admin/dashboard.js?2"></script>
+    <script src="javascripts/admin/dashboard.js?3"></script>
 
 <?php else : header('Location: /');
 endif; ?>

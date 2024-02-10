@@ -236,7 +236,7 @@ function doneTyping() {
     // Envoyer une requête AJAX pour mettre à jour en base de données
     $.ajax({
         type: 'POST',
-        url: '../functions/nino/edit_v2.php?id=' + idVid, // Remplacez par l'URL de votre script serveur
+        url: 'functions/nino_edit_v2?id=' + idVid, // Remplacez par l'URL de votre script serveur
         data: {
             titre: titre,
             description: description,

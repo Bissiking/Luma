@@ -9,7 +9,7 @@ if (strpos($url, 'api') !== false) {
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
     header('Access-Control-Allow-Headers: Content-Type');
-    require_once 'lib/router.php';
+    require_once 'lib/router';
     exit;
 }
 
@@ -37,9 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if (strpos($url, 'nino') !== false) : ?>
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/nino.css?v=1">
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/mobile/nino.css?v=0">
+    <?php elseif (strpos($url, 'agent') !== false) : ?>
+        <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/agent.css?v=1">
     <?php elseif (strpos($url, 'admin') !== false) : ?>
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/admin.css?v=1">
-        <!-- PROVISOIR -->
+        <!-- PROVISOIRE -->
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/style.css?v=1">
     <?php else : ?>
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/style.css?v=1">
@@ -91,6 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <li><a style="color:grey" href="#">Log système</a></li>
                 <?php else : ?>
                     <li><a href="/admin">Administration du site</a></li>
+                    <li><a href="/agent">Gestions des agents</a></li>
                     <li><a style="color:grey" href="#">Configurer le Profil</a></li>
                 <?php endif; ?>
                 <li><a href="/connexion?logout">Se déconnecter</a></li>

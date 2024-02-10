@@ -2,21 +2,21 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Exctraction
     extract($_REQUEST);
-    require_once '../../base/nexus_base.php';
-    require_once '../../base/config.php';
+    require_once 'base/nexus_base.php';
+    require_once 'base/config.php';
 
     // FUNCTIONS
     function ConstEdit($BDD_CONST, $BDD_CONST_VAL)
     {
         // Charger le contenu du fichier JSON
-        $DB_VERS_JSON = json_decode(file_get_contents('../../base/DB_VERSION.json'), true);
+        $DB_VERS_JSON = json_decode(file_get_contents('base/DB_VERSION.json'), true);
 
         if ($DB_VERS_JSON === null) {
             echo 'Récupération du Manifest des BDD impossible.';
             exit();
         }
         // Le nom du fichier à modifier
-        $nomFichier = '../../base/config.php';
+        $nomFichier = 'base/config.php';
         // Lire le contenu du fichier
         $contenuFichier = file_get_contents($nomFichier);
         // Effectuer la modification souhaitée

@@ -1,6 +1,6 @@
 <?php
 // login.php
-session_start(); // Toujours appeler session_start() au début du script qui utilise des sessions
+// session_start(); // Toujours appeler session_start() au début du script qui utilise des sessions
 extract($_REQUEST); // Extraction des valeurs JS
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Connexion à MySQL
-    require_once '../base/nexus_base.php';
+    require_once 'base/nexus_base.php';
 
     // Requête pour récupérer le mot de passe hashé depuis la base de données
     extract($_REQUEST);

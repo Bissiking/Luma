@@ -1,6 +1,4 @@
 <?php
-// login.php
-session_start(); // Toujours appeler session_start() au début du script qui utilise des sessions
 extract($_REQUEST); // Extraction des valeurs JS
 
 // En attente de nettoyage
@@ -31,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 
-    require '../../base/nexus_base.php';
+    require 'base/nexus_base.php';
 
     $folderPath = '../../images/nino/Thumbnail';
 
