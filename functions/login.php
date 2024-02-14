@@ -49,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // INTEGRATION DES SESSIONS
                 $_SESSION['authentification']['user'] = $user;
                 echo 'succes';    
-            } else { echo 'error'; }
-        }else{ echo 'error'; }
+            } else { echo 'error #001'; }
+        }else{ echo 'error #002'; }
     }else{ echo 'empty'; }
 
 } else {
