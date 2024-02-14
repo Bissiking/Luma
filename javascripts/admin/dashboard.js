@@ -1,5 +1,5 @@
 var ERRORJSON = 0,
-    UPDATE_WEBSITE = 0;
+  UPDATE_WEBSITE = 0;
 
 // Fonction pour charger et afficher les informations du fichier JSON
 function loadAndDisplayInfo() {
@@ -54,45 +54,43 @@ loadAndDisplayInfo();
 // Charger et afficher les informations toutes les 10 secondes
 setInterval(loadAndDisplayInfo, 10000);
 
-
-function UpdateWebsite() {
+$('#updateButton').on('click', function () {
   if (UPDATE_WEBSITE !== 1) {
     return;
   }
-  $('#updateButton').on('click', function () {
+  // Retrait du bouton
+  $('#updateButton').hide();
+  // Effectuer une requête AJAX pour déclencher la mise à jour
+  $.ajax({
+    url: 'functions/admin/update_website', // Remplacez par le chemin vers votre script de mise à jour côté serveur
+    timeout: 2000,
+    type: 'POST',
+    success: function (response) {
+      console.log(response); // Afficher la réponse du serveur (message de réussite ou d'erreur)
+      if (response == "succes") {
+        showPopup("good", "Mise à jour réussi", "Mise à jour de LUMA effectué avec succès. Veuillez patienter ....");
+        setTimeout(() => {
+          window.location.href = window.location.href;
+        }, 4000);
 
-    // Retrait du bouton
-    $('#updateButton').hide();
-    // Effectuer une requête AJAX pour déclencher la mise à jour
-    $.ajax({
-      url: 'functions/admin/update_website', // Remplacez par le chemin vers votre script de mise à jour côté serveur
-      type: 'POST',
-      success: function (response) {
-        console.log(response); // Afficher la réponse du serveur (message de réussite ou d'erreur)
-        if (response == "succes") {
-          showPopup("good", "Mise à jour réussi", "Mise à jour de LUMA effectué avec succès. Veuillez patienter ....");
-          setTimeout(() => {
-            window.location.href = window.location.href;
-          }, 4000);
-          
-        } else {
-          console.error('Echec de la mise à jour:', error);
-          showPopup("error", "Echec de la mise à jour", "La commande STASH n'a retourné aucune information. Vérifie les droits du dossier");
+      } else {
+        console.error('Echec de la mise à jour:', error);
+        showPopup("error", "Echec de la mise à jour", "La commande STASH n'a retourné aucune information. Vérifie les droits du dossier");
 
-        }
-      },
-      error: function (xhr, status, error) {
-        console.error(xhr.responseText);
       }
-    });
+    },
+    error: function (xhr, status, error) {
+      console.error(xhr.responseText + ' - ' + error);
+      showPopup("error", "Echec de la mise à jour", "Une erreur inconnu est survenu -> ERROR:" + error);
+    }
   });
-}
+});
 
 function VerifUpdate() {
   let urlGitHub = 'https://raw.githubusercontent.com/Bissiking/Luma/main/version.json',
-      LocalVersion = $('#Ver_Actuelle').text(),
-      BtnUpdate = $('#updateButton'),
-      TextUpdate = $('#updateText');
+    LocalVersion = $('#Ver_Actuelle').text(),
+    BtnUpdate = $('#updateButton'),
+    TextUpdate = $('#updateText');
   $.ajax({
     url: urlGitHub,
     type: 'GET',
@@ -102,10 +100,10 @@ function VerifUpdate() {
       if (response.version === LocalVersion) {
         TextUpdate.hide();
         BtnUpdate.text('Pas de mise à jour');
-      }else{
+      } else {
         UPDATE_WEBSITE = 1;
         showPopup("warning", "Mise en jour en attente", "Une mise à jour de LUMA est en attente");
-        TextUpdate.text('Nouvelle version: '+response.version);
+        TextUpdate.text('Nouvelle version: ' + response.version);
         BtnUpdate.text('Mettre à jour');
       }
     },

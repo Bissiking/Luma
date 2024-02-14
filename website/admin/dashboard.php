@@ -71,11 +71,11 @@ if (isset($_SESSION['authentification']['user']['account_administrator']) && $_S
             <h2>Version du Site</h2>
             <p>Version actuelle: <span id="Ver_Actuelle"><?= $versionSite ?></span></p>
             <p id="updateText">Recherche en cours</p>
-            <button onclick="UpdateWebsite()" id="updateButton">***</button>
+            <button id="updateButton">***</button>
         </div>
     </div>
 
-    <script src="javascripts/admin/dashboard.js?3"></script>
+    <script src="javascripts/admin/dashboard.js?4"></script>
 
 <?php else : header('Location: /');
 endif; ?>
