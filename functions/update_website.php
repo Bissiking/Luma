@@ -1,15 +1,12 @@
 <?php
-session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_SESSION['authentification']['user']['account_administrator'] !== 1) {
         echo 'not-autorized';
         exit;
     }
 
-    require_once '../../lib/edit_const.php';
+    require_once 'lib/edit_const.php';
 
-    // TEST FUNCTION EDIT CONST
-    // $const = ConstEdit('WEB_MAINTENANCE', 'true', 'false');
     try {
         $gitPath = 'C:/Program Files/Git/bin/git.exe';  // Remplacez par le chemin réel de l'exécutable Git
 
