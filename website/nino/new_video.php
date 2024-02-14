@@ -27,23 +27,41 @@
     }
 
     if ($apiUrl !== null) :
-        // Effectuer la requête API avec file_get_contents
-        $response = file_get_contents($apiUrl);
 
-        // Vérifier si la requête a réussi
-        if ($response === false) {
-            // Gérer les erreurs, par exemple :
-            die('API en erreur. Vérifier si celle-ci répond');
+        $options = [
+            'http' => [
+                'timeout' => 1, // Timeout en secondes
+            ],
+        ];
+
+        // Création du contexte
+        $context = stream_context_create($options);
+
+        // Récupération du contenu avec gestion du timeout
+        $content = @file_get_contents($apiUrl, false, $context);
+
+        if ($content === false) {
+            // Gérer les erreurs en fonction de la raison de l'échec
+            $error = error_get_last();
+            if ($error !== null && strpos($error['message'], 'timed out') !== false) {
+                // Gérer le timeout
+                $message_Error = "L\'API à mis trop de temps à répondre.\n";
+            } else {
+                // Gérer d'autres erreurs
+                $message_Error = "Une erreur s'est produite lors de la récupération de la version de l'API = " . $apiUrl;
+            }
+            $data['version'] = '0.0.0';
+        } else {
+            // Utiliser le contenu récupéré
+            $data = json_decode($content, true);
         }
-
-        // Convertir la réponse JSON en tableau associatif
-        $data = json_decode($response, true);
     else :
         $data['version'] == '0.0.0';
+        $message_Error = 'Ajout de vidéo impossible, version de l\'API requis "1.0.0"';
     endif;
 
     if ($data['version'] < '1.0.0') : ?>
-        <p class="info-popup" style="justify-content: center;">Ajout de vidéo impossible, version de l'API requis "1.0.0"</p>
+        <p class="info-popup error" style="justify-content: center;"><?= $message_Error ?></p>
     <?php else : ?>
         <form action="#" method="POST">
             <label for="APIselect">Choix de l'API</label>
@@ -89,10 +107,11 @@
                             <td><button onclick="editVideo('<?= $video['id_video_uuid']; ?>')">Modifier</button></td>
                         </tr>
                     <?php } ?>
-            <?php } else {
-                    echo 'Aucune vidéo trouvé';
-                }
-            } else {
+                <?php }else{ ?>
+                <tr>
+                    <tr><td>***</td><td style="text-align: center;">Aucune vidéo trouvé</td><td>***</td></tr>
+                </tr>
+            <?php }} else {
                 echo '<tr><td></td><td style="text-align: center;">Connexion obligatoire</td><td></td></tr>';
             }
             ?>
