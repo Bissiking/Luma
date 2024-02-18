@@ -23,7 +23,6 @@
             } else {
                 $publish = 1;
             }
-
             if ($video['videoThumbnail'] == '' || $video['videoThumbnail'] == null) {
                 $video['videoThumbnail'] = SITE_HTTP . "://" . SITE_URL . "/images/nino/no_image.jpg";
             }

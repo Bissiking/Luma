@@ -1,5 +1,6 @@
 <?php
     require_once ('./lib/truncateText.php');
+    require ('./base/nexus_base.php');
 ?>
 <!-- <link rel="stylesheet" href="../css/home.css?0"> -->
 <link rel="stylesheet" href="../css/home_V2.css?0">
@@ -70,7 +71,6 @@
         <h2>3 Dernières Vidéos <span class="betaPops">BETA</span></h2>
         <div class="video-bloc">
     <?php
-    require './base/nexus_base.php';
     $sql = 'SELECT * FROM luma_nino_data WHERE publish < "'.date('Y-m-d H:i:s').'" && status = "publique" ORDER BY publish DESC LIMIT 3';
     $req = $pdo->prepare($sql);
     $req->execute();
