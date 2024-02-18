@@ -1,5 +1,6 @@
 <?php
 require_once 'config.php';
+echo 'test';
 
 try {
     $ERROR = 0;
