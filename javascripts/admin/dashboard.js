@@ -87,7 +87,15 @@ $('#updateButton').on('click', function () {
 });
 
 function VerifUpdate() {
-  let urlGitHub = 'https://raw.githubusercontent.com/Bissiking/Luma/main/version.json',
+  var urlcourante = window.location.hostname;
+  let repo = "main"
+  if (urlcourante == 'dev.mhemery.fr') {
+    repo = 'dev';
+  }else if (urlcourante == 'pre-prod.mhemery.fr') {
+    repo = 'pre-prod';
+  }
+
+  let urlGitHub = 'https://raw.githubusercontent.com/Bissiking/Luma/'+repo+'/version.json',
     LocalVersion = $('#Ver_Actuelle').text(),
     BtnUpdate = $('#updateButton'),
     TextUpdate = $('#updateText');

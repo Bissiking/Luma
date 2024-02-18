@@ -9,7 +9,6 @@ function compte_a_rebours(date, text_Pref, text_Pref_after, attr)
     var date_actuelle = new Date();
     var date_evenement = new Date(date);
     var total_secondes = (date_evenement - date_actuelle) / 1000;
-    var prefixe = text_Pref;
 
     if (total_secondes > 0)
     {

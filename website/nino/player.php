@@ -14,11 +14,17 @@ if (!isset($id) || $id == null) {
 } else {
     require './base/nexus_base.php';
     $id = htmlspecialchars(trim($id));
-    $sql = 'SELECT * FROM luma_nino_data WHERE id_video_uuid = :id_video_uuid && publish < "'.date('Y-m-d H:i:s').'" && status = "publique" ORDER BY publish DESC LIMIT 1';
+    $date = date('Y-m-d H:i:s');
+    $status = 'publique';
+    $sql = 'SELECT * FROM luma_nino_data WHERE id_video_uuid = :id_video_uuid && publish < :publish && status = :status ORDER BY publish DESC LIMIT 1';
     $req = $pdo->prepare($sql);
     $req->bindParam(':id_video_uuid', $id);
+    $req->bindParam(':publish', $date);
+    $req->bindParam(':status', $status);
     $req->execute();
     $result = $req->rowCount();
+
+    echo $result;
 
     if ($result === 1) :
         foreach ($req as $video) {
