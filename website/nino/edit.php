@@ -83,9 +83,7 @@ if (isset($_SESSION['authentification']['user'])) {
                     </span>
                 </div>
             </div>
-            <video id="Player" src="" controls>
-
-            </video>
+            <video id="Player" src="" poster="https://<?= $video['server_url']; ?>/Thumbnail/<?= $video['id_video_uuid']; ?>" controls></video>
             <div class="thumbnail-video">
                 <img class="upload-image-select" id="imagePreview" style="display: none; max-width: 100%; max-height: 200px;">
                 <!-- BTN UPLOAD miniature -->

@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php else : ?>
                 <a href="/">Accueil LUMA</a>
                 <a href="/nino">Nino</a>
-                <a style="color:grey" href="#">Serveur</a>
+                <a href="/status" style="color:grey" href="#">Status</a>
                 <a style="color:grey" href="#">A propos</a>
             <?php endif; ?>
         </nav>

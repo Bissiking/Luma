@@ -88,6 +88,12 @@
         "url_pattern": "/agent",
         "controller":"AgentDashboardController",
         "action":"show"
+    },
+    "StatusController" : {
+        "routeName": "StatusController",
+        "url_pattern": "/status",
+        "controller":"StatusController",
+        "action":"show"
     }
 }
 
