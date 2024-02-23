@@ -15,6 +15,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Exécuter la commande Git
         $output = shell_exec('git stash && git pull 2>&1');
     
+        if (PHP_OS === 'Linux') {
+            // Exécuter le chmod 777
+            chmod('/', 0777);
+        }
+
         if ($output === null) {
             throw new Exception('La commande git stash n\'a pas retourné de sortie.');
         }

@@ -1,3 +1,7 @@
+### 4.7.7
+- Ajout de la miniature sur la preview (BETA)
+- Ajout d'un CHMOD 777 pour la mise à jour du site pour linux
+
 ### 4.7.2
 - Patch du système de mise à jour
 
