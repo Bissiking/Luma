@@ -1,18 +1,18 @@
-// Récupérer les éléments du DOM
-var profileIcon = document.getElementById('profileIcon');
-var profileMenu = document.getElementById('profileMenu');
+// // Récupérer les éléments du DOM
+// var profileIcon = document.getElementById('menu-luma');
+// var profileMenu = document.getElementById('MenuLUMA');
 
-// Ajouter un écouteur d'événement pour le clic sur l'icône de profil
-profileIcon.addEventListener('click', function () {
-    // Basculer la visibilité du menu
-    profileMenu.style.display = (profileMenu.style.display === 'none' || profileMenu.style.display === '') ? 'block' : 'none';
-});
+// // Ajouter un écouteur d'événement pour le clic sur l'icône de profil
+// profileIcon.addEventListener('click', function () {
+//     // Basculer la visibilité du menu
+//     profileMenu.style.display = (profileMenu.style.display === 'none' || profileMenu.style.display === '') ? 'block' : 'none';
+// });
 
-document.addEventListener('click', function (event) {
-    if (event.target !== profileMenu && event.target !== profileIcon && !profileMenu.contains(event.target)) {
-        profileMenu.style.display = 'none';
-    }
-});
+// document.addEventListener('click', function (event) {
+//     if (event.target !== profileMenu && event.target !== profileIcon && !profileMenu.contains(event.target)) {
+//         profileMenu.style.display = 'none';
+//     }
+// });
 
 function formatReadableDate(dateString) {
     const date = new Date(dateString);
@@ -29,29 +29,25 @@ function formatReadableDate(dateString) {
     return formattedDate;
 }
 
-var menuMobile = $('#MenuMobile'),
-    btnMenumobile = $('#btnMenuMobile');
-
-function OpenMenuMobile() {
-    menuMobile.data('open', 'open');
-    menuMobile.css('display', 'flex');
-    btnMenumobile.addClass('ferme');
+function OpenMenuMobile(OpenMenuBtn, OpenMenu) {
+    $('#'+OpenMenuBtn).data('open', 'open');
+    $('#'+OpenMenu).css('display', 'flex');
+    $('#'+OpenMenuBtn).addClass('ferme');
 }
 
-function CloseMenuMobile() {
-    menuMobile.data('open', 'close');
-    menuMobile.hide();
-    btnMenumobile.removeClass('ferme');
+function CloseMenuMobile(OpenMenuBtn, OpenMenu) {
+    $('#'+OpenMenuBtn).data('open', 'close');
+    $('#'+OpenMenu).hide();
+    $('#'+OpenMenuBtn).removeClass('ferme');
 }
 
-function BtnMenuMobile() {
+function BtnMenu(id) {
+    let OpenMenu = $('#'+id).data('windows');
     // Détection du status du menu
-    if (menuMobile.data('open') === "open") {
-        console.log('open');
-        CloseMenuMobile();
+    if ($('#'+id).data('open') === "open") {
+        CloseMenuMobile(id,OpenMenu);
     } else {
-        console.log('close');
-        OpenMenuMobile();
+        OpenMenuMobile(id,OpenMenu);
     }
 }
 

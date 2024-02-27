@@ -1,50 +1,181 @@
-main{
-    align-items: center;
-    justify-content: center;
+.container {
+    display: flex;
+    flex-direction: column;
 }
 
-/* NEW FORMS */
-.login-container {
-    width: 400px;
+.steps {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+}
+
+.steps > i{
+    display: flex;
+    align-items: center;
+}
+
+.step {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #bdbdbd;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.step.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.content {
+    margin: 5px;
+}
+
+.step-content {
+    display: none;
+}
+
+.step-content.active {
+    display: flex;
     flex-direction: column;
     background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px 15px;
+    box-shadow: 0px 0px 10px 1px #9d9d9d;
 }
 
-h2 {
-    text-align: center;
-    color: #333;
-}
 
-label {
-    margin-bottom: 8px;
+/* INPUT */
+.input-container {
+    position: relative;
+    margin: 15px 0px;
 }
 
 input {
-    padding: 8px;
-    margin-bottom: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    outline: none;
+    background-color: transparent;
 }
 
-button {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
+input:focus {
+    border-bottom: 2px solid #007bff;
+}
+
+label {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    color: #777;
+    transition: top 0.3s, font-size 0.3s, color 0.3s;
+}
+
+input:focus + label, input:not(:placeholder-shown) + label {
+    top: -10px;
+    font-size: 12px;
+    color: #007bff;
+}
+
+.underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #007bff;
+    transform: scaleX(0);
+    transition: transform 0.3s;
+}
+
+input:focus ~ .underline {
+    transform: scaleX(1);
+}
+
+/* Button */
+.button-block{
+    display: flex;
+    justify-content: space-between;
+}
+
+.custom-button {
+    padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-button:hover {
-    background-color: #555;
+.custom-button:hover {
+    background-color: #0056b3;
 }
 
-#SYS_NAME{
-    border-radius: 0px 0px 4px 4px;
+.cancel{
+    background-color: rgb(202, 0, 0);
+}
+
+.disable{
+    background-color: rgb(109, 109, 109);
+}
+
+
+/* TBL */
+.action-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.action-table th, .action-table td {
+    border: 1px solid #ddd;
+    padding: 5px 10px;;
+}
+
+.action-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.action-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.action-table tbody tr:hover {
+    background-color: #ddd;
+}
+
+.statut-site{
+    width: 230px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: inset 0px 0px 0px 0px rgba(202, 131, 0, 0.6);
+    transition: 0.3s;
+}
+
+.fa-spinner{
+    animation: rotate 2s linear infinite;
+}
+
+.fa-triangle-exclamation{
+    color: rgb(255, 102, 0);
+}
+
+.fa-circle-exclamation{
+    color: red;
+}
+
+/* KEYFRAME */
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }

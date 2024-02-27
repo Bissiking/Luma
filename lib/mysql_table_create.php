@@ -41,4 +41,3 @@ function createTablePDO($tableName, $columns) {
 // ];
 
 // createTablePDO($tableName, $columns);
-?>

@@ -1,88 +1,28 @@
-.server-status {
+body{
+    background: rgb(0, 71, 107);
+    color: #FFF;
+}
+
+.home{
+    width: 100%;
+}
+
+.block-img-text{
     display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
+    align-items: flex-start;
 }
 
-.server-block{
+.block-img-text > p{
+    width: 80%;
     display: flex;
+    padding: 0px 10px ;
+    margin: 0px;
 }
 
-.server {
-    width: 150px;
-    height: 150px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
-    margin: 0px 10px 10px 0px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+.block-left-img{
+    flex-direction: row;
 }
 
-.server-name {
-    width: 90%;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-span.ping{
-    width: 70px;
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    background-color: rgb(68, 186, 255);
-
-    border-radius: 50%;
-}
-
-.status {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.online {
-    color: #28a745;
-}
-
-.warning {
-    color: #ff9900;
-}
-
-.offline {
-    color: #bd0012;
-}
-
-/* TEST */
-.status-container {
-    position: relative;
-}
-
-.ping-circle {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    transition: background 0.3s ease-in-out;
-    animation: waveAnimation 5s linear infinite;
-    padding: 8px;
-}
-
-.offline .ping-circle {
-    background: linear-gradient(45deg, #dc3545, #ff8c94);
-}
-
-.warning .ping-circle {
-    background: linear-gradient(45deg, #ff9900, #fffb00);
+.block-right-img{
+    flex-direction: row-reverse;
 }
