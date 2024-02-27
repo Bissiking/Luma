@@ -69,6 +69,24 @@ if (strpos($url, 'functions') !== false){
     
 }
 
+if (strpos($url, 'init') !== false){
+
+    // Séparation de l'URL
+    $parts = explode('/', $url);
+    $functions = end($parts);
+
+    // On vérifie si il y'a un paramètre
+    if (strpos($url, '?') !== false){
+       $query = explode('?', $functions);
+       // On réécrit la variable avec la nouvelle valeur
+       $functions = $query[0];
+    }
+    // On appel la function
+    require_once("functions/init/$functions.php");
+    exit;
+    
+}
+
 
 // Vérifiez si une route correspond à l'URL demandée
 if ($route) {
