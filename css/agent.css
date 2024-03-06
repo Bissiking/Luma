@@ -6,6 +6,10 @@ body {
     color: #333;
 }
 
+main{
+    display: flex;
+    flex-wrap: wrap;
+}
 /* HEADER  */
 
 header {
@@ -77,12 +81,13 @@ nav a {
 
 /* MAIN */
 
-h3{
+h3 {
     width: 100%;
+    padding: 0px 10px;
     border-bottom: solid 2px rgb(136, 136, 136);
 }
 
-section{
+section {
     width: 40%;
     display: flex;
     flex-direction: column;
@@ -94,19 +99,20 @@ section{
     transition: transform 0.3s;
 }
 
-section > h2{
+section>h2 {
     width: 100%;
     padding-left: 10px;
 }
-/* AGENT */
 
-.agent-status{
+/* DASHBOARD */
+
+.agent-status {
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
 
-.agent-stats-global{
+.agent-stats-global {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -115,27 +121,103 @@ section > h2{
     height: 200px;
     margin: 10px;
     background-color: #333;
+    border-radius: 5px;
 }
 
-#agent-up{ background-color: green; }
-#agent-down{ background-color: rgb(183, 0, 0); }
-#agent-maintenance{ background-color: rgb(222, 145, 0); }
+#agent-up {
+    background-color: green;
+}
 
-.agent-stats-global > p.stats-label{
+#agent-down {
+    background-color: rgb(183, 0, 0);
+}
+
+#agent-maintenance {
+    background-color: rgb(222, 145, 0);
+}
+
+.agent-stats-global>p.stats-label {
     margin: 10px 0px;
     font-size: 50px;
     color: #fff;
     text-align: center;
 }
 
-.stats-label-little{
+.stats-label-little {
     font-size: 15px;
     color: rgba(255, 255, 255, 0.8);
     text-align: center;
 }
 
+.agent-list{
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+    padding: 5px 0px;
+}
+
+.modern-box {
+    min-width: 100px;
+    height: 150px;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin: 5px 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.modern-box:hover {
+    transition: 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.modern-box h2 {
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.modern-box p {
+    color: #666;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.agent-data{
+    display: flex;
+}
+
+p{
+    margin: 3px 0px;
+}
+
+p.data-agent{
+    padding: 0px 5px;
+    font-weight: bold;
+}
+/* BOUTON */
+button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    margin: 5px 0px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.delete {
+    background-color: #d9534f;
+}
 
 /* FOOTER */
-footer{
+footer {
     display: none;
 }

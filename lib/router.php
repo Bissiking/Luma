@@ -38,6 +38,10 @@ if (!file_exists($ConfigFile)) {
                     $queryUrl['path'] = '/nino/player';
                 }
 
+                if (strpos($url, 'agent/uuid') !== false){
+                    $queryUrl['path'] = '/agent';
+                }
+
                 $query = "SELECT * FROM luma_routes WHERE url_pattern = :url";
                 $stmt = $pdo->prepare($query);
                 $stmt->bindParam(':url', $queryUrl['path']);

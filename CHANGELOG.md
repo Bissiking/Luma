@@ -22,8 +22,16 @@
 - Bouton du mode cinéma
 - Activation du FullScreen (Commande de base du navigateur)
 - Bouton de supression d'une route
-
-
+- Réorganisation des menus
+- API de reception des données agent
+- Création des agents
+- Nouvelle fonction de création uuid
+- Affichage de la liste des agents disponible
+- Ajout d'une condition au routeur
+- Modification du controlleur de l'agent pour éviter une nouvelle route
+- Création du dashboard "View" de l'agent
+- Affichage des informations "Informations Agent, Configuration Système, Mémoire système, Disque système (Non disponible), Services"
+- 
 
 ========== ### V4  ==========
 

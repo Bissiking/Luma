@@ -10,7 +10,7 @@ if (strpos($url, 'api') !== false) {
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
     header('Access-Control-Allow-Headers: Content-Type');
-    require_once 'lib/router';
+    require 'lib/router.php';
     exit;
 }
 
@@ -34,12 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- LINK -->
-    <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/all-page.css?v=3">
+    <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/all-page.css?v=4">
     <?php if (strpos($url, 'nino') !== false) : ?>
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/nino.css?v=1">
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/mobile/nino.css?v=0">
     <?php elseif (strpos($url, 'agent') !== false) : ?>
-        <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/agent.css?v=1">
+        <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/agent.css?v=2">
     <?php elseif (strpos($url, 'admin') !== false) : ?>
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/admin.css?v=2">
         <!-- PROVISOIRE -->
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </ul>
 
         <div id="MenuLUMA" data-open="close">
-            <h3>Nouveau menu !!</h3>
+            <h4>Nouveau menu !!</h4>
             <a href="/" class="block-url">
                 <img src="/images/luma/luma75.png">
                 <p>LUMA</p>
@@ -92,43 +92,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p>Nino</p>
             </a>
 
-            <h3>Options</h3>
-            <?php if (strpos($url, 'nino') !== false) : ?>
-                <a href="/nino/add" class="block-url">
-                    <i class="fa-solid fa-square-plus"></i>
-                    <p>Ajouter une vidéo</p>
-                </a>
-            <?php elseif (strpos($url, 'admin') !== false) : ?>
-                <a href="#" class="block-url">
-                    <i style="color:grey" class="fa-solid fa-bell"></i>
-                    <p>Admin Notification</p>
-                </a>
-                <a href="#" class="block-url">
-                    <i style="color:grey" class="fa-regular fa-file-lines"></i>
-                    <p>Log système</p>
-                </a>
-            <?php else : ?>
-                <a href="/agent" class="block-url">
-                    <i class="fa-solid fa-jug-detergent"></i>
-                    <p>Gestion des agents</p>
-                </a>
-                <a href="#" class="block-url">
-                    <i style="color:grey" class="fa-regular fa-address-card"></i>
-                    <p>Configurer le Profil</p>
-                </a>
-            <?php endif; ?>
             <?php if (isset($_SESSION['authentification']['user'])) : ?>
+                <h4>Options</h4>
+                <?php if (strpos($url, 'nino') !== false) : ?>
+                    <a href="/nino/add" class="block-url">
+                        <i class="fa-solid fa-square-plus"></i>
+                        <p>Ajouter une vidéo</p>
+                    </a>
+                <?php elseif (strpos($url, 'admin') !== false) : ?>
+                    <a href="#" class="block-url">
+                        <i style="color:grey" class="fa-solid fa-bell"></i>
+                        <p>Admin Notification</p>
+                    </a>
+                    <a href="#" class="block-url">
+                        <i style="color:grey" class="fa-regular fa-file-lines"></i>
+                        <p>Log système</p>
+                    </a>
+                <?php else : ?>
+                    <!-- Si connecté et url n'est pas 'NINO' -->
+                    <a href="/agent" class="block-url">
+                        <i class="fa-solid fa-jug-detergent"></i>
+                        <p>Gestion des agents</p>
+                    </a>
+
+                    <a href="#" class="block-url">
+                        <i style="color:grey" class="fa-regular fa-address-card"></i>
+                        <p>Configurer le Profil</p>
+                    </a>
+                <?php endif; ?>
                 <?php if ($_SESSION['authentification']['user']['account_administrator'] === 1) : ?>
+                    <!-- Si Administrateur -->
                     <a href="/admin" class="block-url">
                         <i class="fa-solid fa-toolbox"></i>
                         <p>LUMA Administration</p>
                     </a>
                 <?php endif; ?>
+                <h4>Déconnexion</h4>
                 <a href="/connexion?logout" class="block-url">
                     <i class="fa-solid fa-door-open"></i>
                     <p>Se déconnecter</p>
                 </a>
             <?php else : ?>
+                <h4>Connexion</h4>
                 <a href="/connexion" class="block-url">
                     <i class="fa-solid fa-right-to-bracket"></i>
                     <p>Se connecter</p>

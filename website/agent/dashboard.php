@@ -1,5 +1,23 @@
 <?php
 if (isset($_SESSION['authentification']['user'])) :
+
+
+    function ListAgent()
+    {
+        require './base/nexus_base.php';
+        $id_users = $_SESSION['authentification']['user']['id'];
+        $v = array('id_users' => $id_users);
+        $sql = 'SELECT * FROM luma_agent WHERE id_users = :id_users';
+        $req = $pdo->prepare($sql);
+        $req->execute($v);
+        $result = $req->rowCount();
+        if ($result == 0) {
+            return null;
+        } else {
+            return $req;
+        }
+    }
+
 ?>
     <script>
         document.title = "Agent - Dashboard";
@@ -25,8 +43,35 @@ if (isset($_SESSION['authentification']['user'])) :
         </div>
     </section>
 
+    <section>
+        <h2>Création d'un agent</h2>
+        <input type="text" id="agent_name" placeholder="Nom de l'agent">
+        <button onclick="agent_add()">Création de l'agent</button>
+    </section>
 
-    <!-- <script src="javascripts/agent/dashboard.js?0"></script> -->
+    <section>
+        <h2>Liste des agents</h2>
+        <div class="agent-list">
+
+            <?php
+            $ListFunc = ListAgent();
+            if ($ListFunc == null) {
+                echo '<h2>Aucun agent enregistré</h2>';
+            } else {
+                while ($agent = $ListFunc->fetch()) {
+            ?>
+                    <div class="modern-box" onclick="DashAgent('<?= $agent['uuid_agent'] ?>')">
+                        <h2><?= $agent['agent_name'] ?></h2>
+                        <p>[VERSION]</p>
+                        <p>[Statut]</p>
+                    </div>
+            <?php }
+            } ?>
+
+        </div>
+    </section>
+
+    <script src="javascripts/agent/dashboard.js?0"></script>
 
 <?php else : header('Location: /');
 endif; ?>

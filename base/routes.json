@@ -94,6 +94,12 @@
         "url_pattern": "/status",
         "controller":"StatusController",
         "action":"show"
+    },
+    "APIAgentStatutController" : {
+        "routeName": "APIAgentStatutController",
+        "url_pattern": "/api/agent/statut",
+        "controller":"APIAgentStatutController",
+        "action":"show"
     }
 }
 

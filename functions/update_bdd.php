@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 try {
                     // Définir le mode d'erreur de PDO sur Exception
                     $sql = "ALTER TABLE luma_nino_data MODIFY COLUMN tag VARCHAR(255)";
-                    if ($pdo->query($sql) !== TRUE){
+                    if ($pdo->query($sql) !== TRUE) {
                         $pdo->errorInfo();
                     };
                 } catch (PDOException $e) {
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 try {
                     // Définir le mode d'erreur de PDO sur Exception
                     $sql = "ALTER TABLE luma_nino_data MODIFY COLUMN description TEXT";
-                    if ($pdo->query($sql) !== TRUE){
+                    if ($pdo->query($sql) !== TRUE) {
                         $pdo->errorInfo();
                     };
                 } catch (PDOException $e) {
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 try {
                     // Définir le mode d'erreur de PDO sur Exception
                     $sql = "ALTER TABLE luma_nino_data MODIFY COLUMN tag TEXT";
-                    if ($pdo->query($sql) !== TRUE){
+                    if ($pdo->query($sql) !== TRUE) {
                         $pdo->errorInfo();
                     };
                 } catch (PDOException $e) {
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            if(DB_LUMA_NINO_DATA_VERSION <= "DB05"){
+            if (DB_LUMA_NINO_DATA_VERSION <= "DB05") {
                 $columnsToAdd = [
                     "publish TIMESTAMP NULL",
                     "`create` TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $BDD_CONST_VAL = DB_LUMA_NINO_DATA_VERSION;
             }
             break;
-            
+
         case 'luma_domains':
             if (DB_LUMA_DOMAINS_VERSION == "DB00") {
                 // Création de la table DOMAINS
@@ -140,6 +140,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $BDD_CONST = "DB_LUMA_DOMAINS_VERSION";
                 $BDD_CONST_VAL = DB_LUMA_DOMAINS_VERSION;
                 ConstEdit($BDD_CONST, $BDD_CONST_VAL);
+            };
+
+            break;
+
+        case 'luma_agent':
+            if (DB_LUMA_AGENT_VERSION == "DB00") {
+                // Création de la table AGENT
+                try {
+                    require './lib/mysql_table_create.php';
+
+                    $tableName = "luma_agent";
+                    $columns = [
+                        'id' => 'INT PRIMARY KEY AUTO_INCREMENT',
+                        'id_users' => 'BIGINT(20) NOT NULL',
+                        'uuid_agent' => 'VARCHAR(255) NOT NULL',
+                        'agent_name' => 'VARCHAR(255) NULL',
+                        'agent_etat' => 'TINYINT(4) NOT NULL DEFAULT 0',
+                        'token' => 'VARCHAR(255) NULL',
+                        'users_autorized' => 'VARCHAR(255) NULL',
+                        'agent_create' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+                        'agent_edit' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+                    ];
+                    $result_PDO = createTablePDO($tableName, $columns, $pdo);
+
+                    // Requête de UPDATE auto
+                    $query = "CREATE TRIGGER IF NOT EXISTS update_agent_edit
+                                BEFORE UPDATE ON luma_agent
+                                FOR EACH ROW
+                                SET NEW.agent_edit = CURRENT_TIMESTAMP;";
+
+                    // Exécution de la requête
+                    $pdo->exec($query);
+
+                    $BDD_CONST = "DB_LUMA_AGENT_VERSION";
+                    $BDD_CONST_VAL = DB_LUMA_AGENT_VERSION;
+                    ConstEdit($BDD_CONST, $BDD_CONST_VAL);
+
+                    echo $result_PDO;
+                    exit;
+                } catch (PDOException $e) {
+                    echo 'configCreateTableAgent-echec --> ' . $e->getMessage();
+                    exit;
+                }
             };
 
             break;

@@ -18,5 +18,10 @@
         "DB_NAME": "DB_LUMA_DOMAINS_VERSION",
         "version_dispo": "DB01",
         "DB_USE": "luma_domains"
+    },
+    "DB_LUMA_AGENT_VERSION": {
+        "DB_NAME": "DB_LUMA_AGENT_VERSION",
+        "version_dispo": "DB01",
+        "DB_USE": "luma_agent"
     }
 }
