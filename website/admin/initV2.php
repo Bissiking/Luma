@@ -17,11 +17,11 @@ if ($_SERVER['REQUEST_URI'] !== '/') {
 		<i class="fa-solid fa-angles-right"></i>
 		<div id="menu-step3" class="step">Étape 3: Création des tables essentielles</div>
 		<i class="fa-solid fa-angles-right"></i>
-		<div id="menu-step4" class="step">Étape 4: Création du fichier de configuration</div>
+		<div id="menu-step4" class="step">Étape 4: Finalisation</div>
 	</div>
 	<div class="content">
 		<!-- STEP 1 -->
-		<div class="step-content " id="step1">
+		<div class="step-content active" id="step1">
 			<h2>Vérification du domaine</h2>
 			<!-- NEW INPUT -->
 			<span id="SPAN-URL_HOST" class="info-popup">Le domaine détecté permet de voir sur qu'elle domain, le site va renseigné s'initialisé. Ceci permet au routeur de plus facilement attribué les pages essentielles au bon fonctionnement.</span>
@@ -69,13 +69,13 @@ if ($_SERVER['REQUEST_URI'] !== '/') {
 			</div>
 
 			<div class="input-container">
-				<input type="text" id="DB_NAME" name="DB_NAME" placeholder="">
+				<input type="text" id="DB_NAME" name="DB_NAME" placeholder="" value="nexus">
 				<label for="DB_NAME">Nom de la BDD:</label>
 				<span class="underline"></span>
 			</div>
 
 			<div class="input-container">
-				<input type="text" id="DB_USER" name="DB_USER" placeholder="">
+				<input type="text" id="DB_USER" name="DB_USER" placeholder="" value="root">
 				<label for="DB_USER">Utilisateur de la BDD:</label>
 				<span class="underline"></span>
 			</div>
@@ -94,17 +94,19 @@ if ($_SERVER['REQUEST_URI'] !== '/') {
 		</div>
 
 		<!-- STEP 3 -->
-		<div class="step-content active" id="step3">
+		<div class="step-content" id="step3">
 			<h2>Création des tables</h2>
 			<table class="action-table">
 				<thead>
 					<tr>
+						<th>#</th>
 						<th>Action</th>
 						<th width="230px">Statut</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
+						<td>1</td>
 						<td>Test de connexion à la base de donnée</td>
 						<td class="statut-site" id="step3-etp1">
 							<i class="fa-solid fa-hourglass-start"></i>
@@ -112,53 +114,73 @@ if ($_SERVER['REQUEST_URI'] !== '/') {
 						</td>
 					</tr>
 					<tr>
+						<td>2</td>
 						<td>Création de la table du routeur</td>
 						<td class="statut-site" id="step3-etp2">
-							<i class="fa-solid fa-circle-check"></i><span>En attente</span>
+							<i class="fa-solid fa-hourglass-start"></i>
+							<span>En attente</span>
 						</td>
 					</tr>
 					<tr>
+						<td>3</td>
 						<td>Ajout des routes principales</td>
 						<td class="statut-site" id="step3-etp3">
-							<i class="fa-solid fa-hourglass-start"></i><span>En attente</span>
+							<i class="fa-solid fa-hourglass-start"></i>
+							<span>En attente</span>
 						</td>
 					</tr>
 					<tr>
+						<td>4</td>
 						<td>Création de la table des utilisateurs</td>
 						<td class="statut-site" id="step3-etp4">
-							<i class="fa-solid fa-hourglass-start"></i><span>En attente</span>
+							<i class="fa-solid fa-hourglass-start"></i>
+							<span>En attente</span>
 						</td>
 					</tr>
 					<tr>
-						<td>Création du compte système</td>
+						<td>5</td>
+						<td>Création du compte système et administrateur</td>
 						<td class="statut-site" id="step3-etp5">
-							<i class="fa-solid fa-hourglass-start"></i><span>En attente</span>
+							<i class="fa-solid fa-hourglass-start"></i>
+							<span>En attente</span>
 						</td>
 					</tr>
 					<tr>
-						<td>Création du compte administrateur</td>
-						<td class="statut-site" id="step3-etp6">
-							<i class="fa-solid fa-hourglass-start"></i><span>En attente</span>
-						</td>
-					</tr>
-					<tr>
+						<td>6</td>
 						<td>Création de la table de Nino</td>
-						<td class="statut-site" id="step3-etp7">
-							<i class="fa-solid fa-hourglass-start"></i><span>En attente</span>
+						<td class="statut-site" id="step3-etp6">
+							<i class="fa-solid fa-hourglass-start"></i>
+							<span>En attente</span>
 						</td>
 					</tr>
 					<tr>
-						<td>Création de la table des domaines</td>
+						<td>7</td>
+						<td>Créaton de la table des domaines</td>
+						<td class="statut-site" id="step3-etp7">
+							<i class="fa-solid fa-hourglass-start"></i>
+							<span>En attente</span>
+						</td>
+					</tr>
+					<tr>
+						<td>8</td>
+						<td>Créaton du fichier de configuration</td>
 						<td class="statut-site" id="step3-etp8">
-							<i class="fa-solid fa-hourglass-start"></i><span>En attente</span>
+							<i class="fa-solid fa-hourglass-start"></i>
+							<span>En attente</span>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 			<div class="button-block">
-				<button class="custom-button cancel disable" data-step="1">Précédent</button>
+				<button class="custom-button cancel disable" data-step="2">Précédent</button>
 				<button id="start-check" class="custom-button" onclick="StartConfig()">Lancement</button>
 			</div>
+		</div>
+
+		<!-- STEP 4 -->
+		<div class="step-content" id="step4">
+			<h2>Finalisation</h2>
+			<p>Merci de patientez ....</p>
 		</div>
 	</div>
 </div>

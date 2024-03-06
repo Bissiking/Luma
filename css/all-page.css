@@ -1,5 +1,13 @@
 img{
-    z-index: -1;
+    z-index: 0;
+}
+
+header{
+    z-index: 10;
+}
+
+footer{
+    z-index: 10;
 }
 
 .info-popup {

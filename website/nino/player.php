@@ -1,7 +1,3 @@
-<script>
-    document.title = "Nino - Player";
-</script>
-
 <?php
 $url = $_SERVER['REQUEST_URI'];
 $parts = explode('/', $url);
@@ -24,45 +20,50 @@ if (!isset($id) || $id == null) {
     $req->execute();
     $result = $req->rowCount();
 
-    echo $result;
-
     if ($result === 1) :
         foreach ($req as $video) {
         }
 ?>
-
-        <div class="video-container">
-            <video id="Player" poster="https://<?= htmlspecialchars(trim($video['server_url'])) ?>/Thumbnail/<?= htmlspecialchars(trim($video['id_video_uuid'])) ?>" controls></video>
-
-            <div class="video-info">
-                <h1><?= $video['titre']; ?></h1>
-                <p><?= $video['description']; ?></p>
-
-                <div class="like-buttons">
-                    <button><i class="far fa-thumbs-up"></i> Like</button>
-                    <button><i class="far fa-thumbs-down"></i> Unlike</button>
+        <link rel="stylesheet" href="<?= SITE_HTTP . SITE_URL ?>/css/player.css?V0">
+        <div class="video-container-player">
+            <p class="info-popup">Fonction cinéma en ALPHA !! Des soucis d'affichages peuvent survenirs</p>
+            <video class="video-player" id="Player" poster="https://<?= htmlspecialchars(trim($video['server_url'])) ?>/Thumbnail/<?= htmlspecialchars(trim($video['id_video_uuid'])) ?>">
+            </video>
+            <div id="customControls">
+                <span id="progressBar" class="progress-bar progress-bar-fill-player"></span>
+                <span id="progressBarLoader" class="progress-bar progress-bar-fill-loader"></span>
+                <div class="controls-btn controls-left">
+                    <i id="volume-low" class="fa-solid fa-volume-low disable"></i>
                 </div>
+                <div class="controls-btn controls-center">
+                    <i id="back10SecBtn" class="fa-solid fa-clock-rotate-left"></i>
+                    <i id="playPauseBtn" class="fas fa-play"></i>
+                    <i id="skip10SecBtn" class="fa-solid fa-clock-rotate-left"></i>
+                </div>
+                <div class="controls-btn controls-right">
+                    <i id="movies-screen" class="fa-solid fa-tv"></i>
+                    <i id="fullscreenBtn" class="fas fa-expand disable" onclick="toggleFullScreen()"></i>
+                </div>
+
+
             </div>
         </div>
-        <!-- FEATURES -->
-        <!-- <div class="video-list">
-    <div class="video-list-item">
-        <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/03/web-images.jpg?auto=format&q=60&w=1600&h=824&fit=crop&crop=faces" alt="Vidéo 1 Thumbnail">
-        <div>
-            <h3>Titre de la Vidéo 1</h3>
-            <p>Description de la vidéo 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-    </div>
+   
+        <div class="video-info">
+            <h1><?= $video['titre']; ?></h1>
+            <p class="description"><?= nl2br($video['description']); ?></p>
 
-    <div class="video-list-item">
-        <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/03/web-images.jpg?auto=format&q=60&w=1600&h=824&fit=crop&crop=faces" alt="Vidéo 2 Thumbnail">
-        <div>
-            <h3>Titre de la Vidéo 2</h3>
-            <p>Description de la vidéo 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <!-- <div class="like-buttons">
+                <button><i class="far fa-thumbs-up"></i> Like</button>
+                <button><i class="far fa-thumbs-down"></i> Unlike</button>
+            </div> -->
         </div>
-    </div> -->
 
         <!-- SCRIPTS -->
+        <script>
+            document.title = "Nino - <?= $video['titre'] ?>";
+        </script>
+        <script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/nino/player.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
         <script>
             let url = "https://<?= htmlspecialchars(trim($video['server_url'])) ?>/<?= htmlspecialchars(trim($video['id_video_uuid'])) ?>"

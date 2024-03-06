@@ -1,12 +1,11 @@
 <?php
-function insertDataPDO($tableName, $data) {
+function insertDataPDO($tableName, $data, $pdo)
+{
     try {
-        // Connexion à la base de données
-        require './base/nexus_base.php';
-        
+
         // Définir le mode d'erreur PDO sur exception
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
         // Requête SQL pour l'insertion de données
         $sql = "INSERT INTO $tableName (";
 
@@ -23,18 +22,15 @@ function insertDataPDO($tableName, $data) {
         $sql .= ")";
 
         // Préparation de la requête SQL
-        $stmt = $conn->prepare($sql);
+        $stmt = $pdo->prepare($sql);
 
         // Exécution de la requête avec les valeurs des données
         $stmt->execute(array_values($data));
-        
-        echo "Les données ont été ajoutées avec succès à la table $tableName.";
-    } catch (PDOException $e) {
-        echo "Erreur lors de l'ajout des données à la table $tableName : " . $e->getMessage();
-    }
 
-    // Fermer la connexion
-    $conn = null;
+        return "succes";
+    } catch (PDOException $e) {
+        return "Erreur lors de l'ajout des données à la table $tableName : " . $e->getMessage();
+    }
 }
 
 // $tableName = 'ma_table';

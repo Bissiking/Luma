@@ -161,14 +161,6 @@ input:focus ~ .underline {
     animation: rotate 2s linear infinite;
 }
 
-.fa-triangle-exclamation{
-    color: rgb(255, 102, 0);
-}
-
-.fa-circle-exclamation{
-    color: red;
-}
-
 /* KEYFRAME */
 
 @keyframes rotate {

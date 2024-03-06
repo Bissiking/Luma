@@ -61,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Modification de la table de Nino
             if (DB_LUMA_NINO_DATA_VERSION <= "DB02") {
-                // Création de la table DOMAINS
                 try {
                     // Définir le mode d'erreur de PDO sur Exception
                     $sql = "ALTER TABLE luma_nino_data MODIFY COLUMN tag VARCHAR(255)";
@@ -74,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             if (DB_LUMA_NINO_DATA_VERSION <= "DB03") {
-                // Création de la table DOMAINS
                 try {
                     // Définir le mode d'erreur de PDO sur Exception
                     $sql = "ALTER TABLE luma_nino_data MODIFY COLUMN description TEXT";
@@ -97,6 +95,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } catch (PDOException $e) {
                     echo 'configEditTableNino-echec --> ' . $e->getMessage();
                 }
+            }
+
+            if(DB_LUMA_NINO_DATA_VERSION <= "DB05"){
+                $columnsToAdd = [
+                    "publish TIMESTAMP NULL",
+                    "`create` TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+                ];
+                $BDD_CONST = "DB_LUMA_NINO_DATA_VERSION";
+                $BDD_CONST_VAL = DB_LUMA_NINO_DATA_VERSION;
             }
             break;
             

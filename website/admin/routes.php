@@ -50,7 +50,7 @@ if ($routesJSON === null) {
                         
                         // Vérifier si l'url_pattern est présent dans le tableau extrait
                         if (in_array($route['url_pattern'], $urlPatternsBDD)) : ?>
-                            <button style="background-color: grey;">Option en DEV</button>
+                            <button class="delete" onclick="deleteRoute('<?= $route['url_pattern'] ?>')">Supprimer</button>
                     <?php else : ?>
                             <button onclick="routesAdd('<?= $route['routeName'] ?>')">Ajouter le site</button>
                     <?php endif; ?>
@@ -60,4 +60,4 @@ if ($routesJSON === null) {
     </tbody>
 </table>
 <!-- SCRIPTS SRV -->
-<script src="../javascripts/admin/routes_add.js?0"></script>
+<script src="../javascripts/admin/routes_add.js?1"></script>

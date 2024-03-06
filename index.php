@@ -34,18 +34,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- LINK -->
-    <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/all-page.css?v=2">
+    <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/all-page.css?v=3">
     <?php if (strpos($url, 'nino') !== false) : ?>
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/nino.css?v=1">
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/mobile/nino.css?v=0">
     <?php elseif (strpos($url, 'agent') !== false) : ?>
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/agent.css?v=1">
     <?php elseif (strpos($url, 'admin') !== false) : ?>
-        <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/admin.css?v=1">
+        <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/admin.css?v=2">
         <!-- PROVISOIRE -->
-        <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/style.css?v=2">
+        <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/style.css?v=3">
     <?php else : ?>
-        <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/style.css?v=2">
+        <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/style.css?v=3">
     <?php endif; ?>
     <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/popupv2.css?v=0">
     <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/all.min.css?v=0">

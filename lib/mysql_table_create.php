@@ -1,11 +1,8 @@
 <?php
-function createTablePDO($tableName, $columns) {
-    try {
-        // Connexion à la base de donnée
-        require './base/nexus_base.php';
-        
+function createTablePDO($tableName, $columns, $pdo) {
+    try {       
         // Définir le mode d'erreur PDO sur exception
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
         // Requête SQL pour créer une table
         $sql = "CREATE TABLE $tableName (";
@@ -18,15 +15,12 @@ function createTablePDO($tableName, $columns) {
         $sql .= ")";
 
         // Utiliser exec() car aucune valeur de retour attendue
-        $conn->exec($sql);
-        
-        echo "La table $tableName a été créée avec succès.";
-    } catch (PDOException $e) {
-        echo "Erreur lors de la création de la table $tableName : " . $e->getMessage();
-    }
+        $pdo->exec($sql);
 
-    // Fermer la connexion
-    $conn = null;
+        return "succes";
+    } catch (PDOException $e) {
+        return "Erreur lors de la création de la table $tableName : " . $e->getMessage();
+    }
 }
 
 
