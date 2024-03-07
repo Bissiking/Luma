@@ -62,8 +62,18 @@ if (isset($_SESSION['authentification']['user'])) :
             ?>
                     <div class="modern-box" onclick="DashAgent('<?= $agent['uuid_agent'] ?>')">
                         <h2><?= $agent['agent_name'] ?></h2>
-                        <p>[VERSION]</p>
-                        <p>[Statut]</p>
+                        <p><?php if($agent['agent_etat'] == 0){
+                            echo 'Non associé';
+                        }else if($agent['agent_etat'] == 1){
+                            echo 'En ligne';
+                        }else if($agent['agent_etat'] == 10){
+                            echo 'Hors ligne';
+                        }else if($agent['agent_etat'] == 99){
+                            echo 'En maintenance';
+                        }else{
+                            echo 'Etat indisponible';
+                        }?></p>
+                        <p><?= $agent['agent_version'] ?></p>
                     </div>
             <?php }
             } ?>

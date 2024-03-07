@@ -157,6 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'uuid_agent' => 'VARCHAR(255) NOT NULL',
                         'agent_name' => 'VARCHAR(255) NULL',
                         'agent_etat' => 'TINYINT(4) NOT NULL DEFAULT 0',
+                        'agent_version' => 'VARCHAR(255) NOT NULL DEFAULT "0.0.0"',
                         'token' => 'VARCHAR(255) NULL',
                         'users_autorized' => 'VARCHAR(255) NULL',
                         'agent_create' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
