@@ -4,13 +4,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     require 'base/nexus_base.php';
     require 'lib/mysql_table_select.php';
+    require 'lib/mysql_table_update.php';
     $json = file_get_contents('php://input');
 
     // Convertir le JSON en tableau associatif
     $data = json_decode($json, true);
     if ($data !== null) {
 
-        if ($data['config'] == true) {
+        if (isset($data['config']) && $data['config'] == true) {
             // Vérification de la présence de l'agent
             $tableName = "luma_agent";
             $criteria = [
@@ -26,11 +27,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $req->execute();
                 $agent = $req->fetch(PDO::FETCH_ASSOC);
 
+                // Mise à jour de l'agent dans l'interface
+                // Exemple d'utilisation :
+                $dataPDO = [
+                    'agent_etat' => 1
+                ];
+                $condition = "uuid_agent = '".$data['uuid']."'";
+
+                // Utilisation de la fonction pour mettre à jour les données
+                $update = updateDataPDO($tableName, $dataPDO, $pdo, $condition);
+                if ($update == 'succes') {
+                    // Envoie de la config à l'agent
+                    header('Content-Type: application/json');
+                    echo json_encode([
+                        'success' => true,
+                        'data' => $agent
+                    ]);
+                    exit;
+                }
                 // Envoie de la config à l'agent
                 header('Content-Type: application/json');
                 echo json_encode([
-                    'success' => true,
-                    'data' => $agent
+                    'success' => false,
+                    'PDO ERR' => $update
                 ]);
             } elseif ($rowExists === false) {
                 // Non identifié
@@ -38,12 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode(['success' => false]);
             } else {
                 header('Content-Type: application/json');
-                echo json_encode(['ERROR' => $rowExists]);
+                echo json_encode(['ERROR' => 'STOP: ' . $rowExists]);
             }
         } else {
             $uuid = $data['result']['uuid'];
             $processName = $data['result']['processName'];
-            var_dump($data['result']['uuid']);
             $tableName = 'luma_agent';
             $criteria = [
                 'uuid_agent' => $uuid,
@@ -52,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($rowExists === true) {
                 // correspondance
                 // Chemin du fichier JSON
-                $filePath = $processName.'-data.json';
+                $filePath = $processName . '-data.json';
                 $agentDocs = "data/$uuid";
 
                 // Convertir les données en format JSON
@@ -68,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 // Écrire les données JSON dans un fichier
-                if (file_put_contents($agentDocs.'/'.$filePath, $jsonData)) {
+                if (file_put_contents($agentDocs . '/' . $filePath, $jsonData)) {
                     header('Content-Type: application/json');
                     echo json_encode(['success' => true]);
                 } else {
