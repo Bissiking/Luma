@@ -24,10 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($output === null) {
             throw new Exception('La commande git stash n\'a pas retourné de sortie.');
         }
-        // Afficher la sortie
         echo 'succes';
     } catch (Exception $e) {
-        // Gérer les exceptions
         echo 'Erreur : ' . $e->getMessage();
     }
 }
