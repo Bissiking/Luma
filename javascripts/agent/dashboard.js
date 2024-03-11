@@ -30,5 +30,54 @@ function agent_add() {
 }
 
 function DashAgent(uuid) {
-    window.location.href = "/agent/uuid/"+uuid;
+    window.location.href = "/agent/uuid/" + uuid;
 }
+
+function SatutAgentGlob() {
+    var modernBoxes = $('.modern-box');
+    let online = 0;
+    let offline = 0;
+    let promises = [];
+
+    modernBoxes.each(function() {
+        var data = $(this).data('uuidagent');
+        var url = "/data/" + data + "/";
+        var promise = new Promise(function(resolve, reject) {
+            $.ajax({
+                url: url + "agent-online-data.json",
+                dataType: 'json',
+                cache: false,
+                success: function(response) {
+                    // Calcule du temps d'actualisation de la sonde
+                    var currentTime = new Date();
+                    var sondeTime = new Date(response.result.date);
+                    var elapsedTimeInSeconds = (currentTime - sondeTime) / 1000;
+                    if (elapsedTimeInSeconds > 3600000) {
+                        offline++; 
+                    } else {
+                        online++;
+                    }
+                    resolve();
+                },
+                error: function(error) {
+                    offline++;
+                    resolve();
+                }
+            });
+        });
+        promises.push(promise);
+    });
+
+    Promise.all(promises).then(function() {
+        // Indication du nombre
+        $('#agent-up-txt').text(online);
+        $('#agent-down-txt').text(offline);
+    });
+}
+
+
+SatutAgentGlob();
+
+setInterval(() => {
+    SatutAgentGlob();
+}, 60000);

@@ -89,10 +89,10 @@
         "controller":"AgentDashboardController",
         "action":"show"
     },
-    "StatusController" : {
-        "routeName": "StatusController",
-        "url_pattern": "/status",
-        "controller":"StatusController",
+    "StatutController" : {
+        "routeName": "StatutController",
+        "url_pattern": "/statut",
+        "controller":"StatutController",
         "action":"show"
     },
     "APIAgentStatutController" : {

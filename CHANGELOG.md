@@ -31,7 +31,12 @@
 - Modification du controlleur de l'agent pour éviter une nouvelle route
 - Création du dashboard "View" de l'agent
 - Affichage des informations "Informations Agent, Configuration Système, Mémoire système, Disque système (Non disponible), Services"
-- 
+- Création de la LIB "update SQL"
+- Mise en place du système d'initalisation des agents
+- Récupération de la liste des containers
+- Création de section par containers
+- Actualisation automatique des containers
+
 
 ========== ### V4  ==========
 

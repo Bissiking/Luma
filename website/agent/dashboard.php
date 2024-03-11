@@ -29,11 +29,11 @@ if (isset($_SESSION['authentification']['user'])) :
         <h2>Status global des agents</h2>
         <div class="agent-status">
             <span id="agent-up" class="agent-stats-global">
-                <p class="stats-label bold">*</p>
+                <p id="agent-up-txt" class="stats-label bold">*</p>
                 <p class="stats-label-little">Serveur(s) UP</p>
             </span>
             <span id="agent-down" class="agent-stats-global">
-                <p class="stats-label bold">*</p>
+                <p id="agent-down-txt" class="stats-label bold">*</p>
                 <p class="stats-label-little">Serveur(s) Offline</p>
             </span>
             <span id="agent-maintenance" class="agent-stats-global">
@@ -60,7 +60,7 @@ if (isset($_SESSION['authentification']['user'])) :
             } else {
                 while ($agent = $ListFunc->fetch()) {
             ?>
-                    <div class="modern-box" onclick="DashAgent('<?= $agent['uuid_agent'] ?>')">
+                    <div class="modern-box" onclick="DashAgent('<?= $agent['uuid_agent'] ?>')" data-uuidagent="<?= $agent['uuid_agent'] ?>">
                         <h2><?= $agent['agent_name'] ?></h2>
                         <p><?php if($agent['agent_etat'] == 0){
                             echo 'Non associé';
