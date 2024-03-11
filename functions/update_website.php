@@ -9,13 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         if (PHP_OS === 'Linux') {
-            $gitPath = '/usr/bin/git';
+            // $gitPath = '/usr/bin/git';
             chmod('/', 0777);
         } else {
             $gitPath = 'C:/Program Files/Git/bin/git.exe';
+            putenv("PATH=" . getenv("PATH") . ";" . dirname($gitPath));
         }
 
-        putenv("PATH=" . getenv("PATH") . ";" . dirname($gitPath));
+        
         $output = shell_exec('git stash && git pull 2>&1');
 
         if (PHP_OS === 'Linux') {
