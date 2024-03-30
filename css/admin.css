@@ -217,6 +217,10 @@ button:hover {
     background-color: #0056b3;
 }
 
+.delete{
+    background-color: #d9534f;
+}
+
 
 /* BTN ACTIVE */
 

@@ -75,3 +75,19 @@
 .info-txt {
     color: rgba(79, 153, 202, 0.7137254902) !important;
 }
+
+
+/* MOBILE */
+@media screen and (max-width: 700px)  {
+    #popup-container {
+        width: 100%;
+        padding: 0px;
+        bottom: 15px;
+        flex-direction: column-reverse;
+    }
+
+    .popup-flash {
+        width: 90%;
+        font-size: 12px;
+    }
+}

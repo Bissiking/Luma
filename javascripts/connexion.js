@@ -8,7 +8,6 @@ function performLogin() {
         url: 'functions/login', // Remplacez ceci par le chemin de votre script côté serveur
         data: { identifiant: identifiant, password: password },
         success: function (response) {
-            console.log(response);
             // Afficher le résultat de la connexion
             if (response == "succes") {
                 showPopup("good", "YOUHOU !!", "Vous êtes connecté, Redirection dans 4 Secondes, pas 3, pas 5, 4 ! ... Ouais je suis précis.");
@@ -34,4 +33,9 @@ $('#identifiant, #password').keydown(function (event) {
     if (event.key === 'Enter') {
         performLogin();
     }
+});
+
+$('#inscription').click(function (e) {
+    e.preventDefault();
+    window.location.href = "/inscription";
 });

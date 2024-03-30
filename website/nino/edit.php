@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= SITE_HTTP . "://" . SITE_URL ?>/css/nino-edit.css?1">
+<link rel="stylesheet" href="<?= SITE_HTTP . SITE_URL ?>/css/nino-edit.css?2">
 <script>
     document.title = "Nino - Édition d'une vidéo";
 </script>
@@ -83,9 +83,7 @@ if (isset($_SESSION['authentification']['user'])) {
                     </span>
                 </div>
             </div>
-            <video id="Player" src="" controls>
-
-            </video>
+            <video id="Player" src="" poster="https://<?= $video['server_url']; ?>/Thumbnail/<?= $video['id_video_uuid']; ?>" controls></video>
             <div class="thumbnail-video">
                 <img class="upload-image-select" id="imagePreview" style="display: none; max-width: 100%; max-height: 200px;">
                 <!-- BTN UPLOAD miniature -->
@@ -138,7 +136,7 @@ if (isset($_SESSION['authentification']['user'])) {
         </div>
     </form>
     <!-- SCRIPTS SRV -->
-    <script defer src="../javascripts/nino/edit_v2.js?3"></script>
+    <script defer src="../javascripts/nino/edit_v2.js?4"></script>
 <?php else : ?>
     <h1 class="error"><?= $message_Error ?></h1>
 <?php endif; ?>

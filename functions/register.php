@@ -1,76 +1,68 @@
 <?php
-// Fonction pour vérifier si un identifiant est déjà utilisé
-function isUsernameTaken($username, $pdo) {
-    $query = $pdo->prepare("SELECT COUNT(*) FROM luma_users WHERE identifiant = ?");
-    $query->execute([$username]);
-    return $query->fetchColumn() > 0;
-}
-
-// Fonction pour vérifier si un e-mail est déjà utilisé
-function isEmailTaken($email, $pdo) {
-    $query = $pdo->prepare("SELECT COUNT(*) FROM luma_users WHERE email = ?");
-    $query->execute([$email]);
-    return $query->fetchColumn() > 0;
-}
-
 // Vérifier si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    require 'lib/mysql_table_select.php';
+    require 'lib/mysql_table_add.php';
     extract($_REQUEST);
-
-    echo '<pre>';
-    print_r($_REQUEST);
-    echo '</pre>';
 
     // Récupérer les données du formulaire
     $identifiant = htmlspecialchars(trim($identifiant));
-    $password = password_hash($password, PASSWORD_BCRYPT); // Hacher le mot de passe
-    $email = htmlspecialchars(trim($email));
 
-    // Vérification si les champs sont vides
+    // // Vérification si les champs sont vides
     if (!isset($identifiant) || $identifiant == "") {
-        echo 'ID VIDE';
+        echo 'empty';
         exit;
     }
 
     if (!isset($password) || $password == "") {
-        echo 'PASS VIDE';
+        echo 'empty';
         exit;
     }
 
-    // Connexion à MySQL
+    if (isset($master)) :
+        if ($master == "") {
+            echo 'empty';
+            exit;
+        } else {
+            $master = htmlspecialchars(trim($master));
+        }
+    else :
+        $master = NULL;
+    endif;
+    // // Connexion à MySQL
     require_once 'base/nexus_base.php';
 
-    // Valider et traiter les données (exemple simple de validation)
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        // Les données sont valides, vous pouvez les utiliser comme bon vous semble
-        
+    // Vérification USER
+    $tableName = 'luma_users';
+    $criteria = ['identifiant' => $identifiant];
+    $rowExists = checkRowExistence($tableName, $criteria, $pdo);
 
+    if ($rowExists === false) {
 
-    // Vérifier si l'identifiant est déjà pris
-    if (isUsernameTaken($identifiant, $pdo)) {
-        echo "user-exist";
-    } else {
-        // Vérifier si l'e-mail est déjà pris
-        if (isEmailTaken($email, $pdo)) {
-            echo "email-exist";
+        if ($master == "kids_account") {
+            $master = 1;
+            $users_master = $_SESSION['authentification']['user']['id'];
         } else {
-            // Les données sont valides, vous pouvez les utiliser comme bon vous semble
-            // ... (traitement d'inscription, hachage du mot de passe, etc.)
-            echo "ok";
+            $master = NULL;
+            $users_master = NULL;
         }
-    }
 
+        $data = [
+            'identifiant' => $identifiant,
+            'password' => password_hash("" . $password . "", PASSWORD_BCRYPT),
+            'master' => $master,
+            'users_master' => $users_master,
+            'users_domain' => $_SERVER['HTTP_HOST'],
+            // Ajoutez autant de colonnes et de valeurs que nécessaire
+        ];
 
-
-        // Exemple d'affichage des données (à adapter selon votre besoin)
-        // echo "Identifiant: " . $identifiant . "<br>";
-        // echo "Mot de passe (haché): " . $motDePasse . "<br>";
-        // echo "Email: " . $email . "<br>";
+        $InsertPDO = insertDataPDO($tableName, $data, $pdo);
+        echo $InsertPDO;
+    } elseif ($rowExists === true) {
+        echo "user-exist"; // correspondance
     } else {
-        // Les données ne sont pas valides
-        echo "Adresse email non valide.";
+        echo $rowExists; // Affiche un message d'erreur
     }
 } else {
-    // Le formulaire n'a pas été soumis
     echo "Accès non autorisé.";
 }

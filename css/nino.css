@@ -15,6 +15,14 @@ header {
     height: 50px;
 }
 
+#MenuLUMA{
+    top: 70px;
+}
+
+#menu-luma .bar {
+    background-color: #333;
+}
+
 #logo {
     font-size: 24px;
     font-weight: bold;
@@ -198,7 +206,7 @@ button {
 }
 
 /* PLAYER */
-
+/* 
 .video-container {
     max-width: 800px;
     margin: auto;
@@ -212,7 +220,6 @@ video {
     width: 100%;
     display: block;
     object-fit: contain;
-    max-height: 400px;
 }
 
 .video-info {
@@ -255,7 +262,7 @@ h1 {
 
 .video-list-item h3 {
     margin: 0;
-}
+} */
 
 /* GENERIQUE */
 h1 {

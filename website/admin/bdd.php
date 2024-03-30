@@ -24,6 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         fwrite($file, "define('DB_LUMA_DOMAINS_VERSION', 'DB00');\n");
     }
 
+    if (!defined("DB_LUMA_AGENT_VERSION")) {
+        fwrite($file, "define('DB_LUMA_AGENT_VERSION', 'DB00');\n");
+    }
+
+    if (!defined("DB_LUMA_STATUT_VERSION")) {
+        fwrite($file, "define('DB_LUMA_STATUT_VERSION', 'DB00');\n");
+    }
+
     // Fermer le fichier
     fclose($file);
     echo 'succes';
@@ -74,7 +82,7 @@ if ($DB_VERS_JSON === null) {
                         <?php if (!defined($tableJson['DB_NAME'])) : ?>
                             Version non trouvé
                         <?php elseif (constant($tableJson['DB_NAME']) == $tableJson['version_dispo']) : ?>
-                            <?= constant($tableJson['DB_NAME']). ' - '.$tableJson['version_dispo'] ?>
+                            <?= constant($tableJson['DB_NAME']) . ' - ' . $tableJson['version_dispo'] ?>
                         <?php else : ?>
                             Mise à jour disponible<br /><?= constant($tableJson['DB_NAME']) . ' => ' . $tableJson['version_dispo'] ?>
                         <?php endif; ?>
@@ -98,7 +106,7 @@ if ($DB_VERS_JSON === null) {
                         <?php if (!defined($tableJson['DB_NAME'])) : ?>
                             Version non trouvé
                         <?php elseif (constant($tableJson['DB_NAME']) == $tableJson['version_dispo']) : ?>
-                            <?= constant($tableJson['DB_NAME']). ' - '.$tableJson['version_dispo'] ?>
+                            <?= constant($tableJson['DB_NAME']) . ' - ' . $tableJson['version_dispo'] ?>
                         <?php else : ?>
                             Mise à jour disponible<br /><?= constant($tableJson['DB_NAME']) . ' => ' . $tableJson['version_dispo'] ?>
                         <?php endif; ?>

@@ -11,7 +11,7 @@
 
 <div class="login-container">
 	<h2>Information essentielles</h2>
-	<label for="URL_HOST">Domaine utilisé:</label>
+	<label for="URL_HOST">Domaine détecté:</label>
 	<span id="SPAN-URL_HOST" class="info-popup">Le domaine utilisé permet de voir sur qu'elle domain, le site va renseigné s'initialisé. Ceci permet au routeur de plus facilement attribué les pages essentielles au bon fonctionnement.</span>
 	<input type="text" id="URL_HOST" name="URL_HOST" placeholder="<?= $_SERVER['HTTP_HOST'] ?>" disabled>
 

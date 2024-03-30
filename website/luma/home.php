@@ -1,109 +1,58 @@
 <?php
-    require_once ('./lib/truncateText.php');
-    require ('./base/nexus_base.php');
+require_once('./lib/truncateText.php');
+require('./base/nexus_base.php');
 ?>
 <!-- <link rel="stylesheet" href="../css/home.css?0"> -->
-<link rel="stylesheet" href="../css/home_V2.css?0">
+<link rel="stylesheet" href="../css/home.css?1">
 <script>
     document.title = "Accueil";
 </script>
 
-<div class="right-column">
-    <section class="information">
-        <h2>Informations</h2>
-        <p class="info-popup">
-            Version 4.5.1 du site. <br>
-            Cette version corrige beaucoup de bugs sur l'éditeur de Nino. <br>
-            Celui-ci, comme vous le voyez, teste une nouvelle mise en page et un nouvelle disposition du site ...  <br>Bon c'est une BETA et je penses que les couleurs vont dégagés. <br>
-            - Une mise à jour BDD est aussi en attente la DB05, elle augmente change le type de colonne 'varchar' en 'text' pour pouvoir stocker plus de tag <br>
-            - Ajout d'un indicateur de mise à jour de BDD dans le dashboard <br>
-            - Activation de l'affichage des trois dernières vidéos <br>
-            - Limitation de 20 Caractères du titre des vidéos <br>
-            - Amélioration de certaines fonctionnalités de l'éditeur
-        </p>
-        <p class="info-popup">
-            Le site LUMA et les modules qu'ils embarquent, sont en constantes évolutions. Tous les outils, options et autres services prennent du temps à être développer (pour certains). 😰<br>
-            J'améliore constament le site et fonctionnalités, les parties visible, comme invisible. C'est la raison, pour laquel le site à une fonction de mise à jour intégré. <br>
-            Exemple, le service Nino (Youtube maison), me coûte de l'espace de stockage, ce n'est pas pour ceci, que le service sera payant ou qu'une demande d'argent sera faite. Nan mais sans déconner !! 3Go de moyenne pour une vidéo, les 1To de disque qui on envie de crever à chaque copie ..... Merde je me suis perdu. 🤨 <br>
-            Bref, je suis vraiment désolé pour le retard et les délais d'attentes sur certaines options, je fait de mon mieux entre vie pro, vie perso, et ma non vie 😝 <br>
-            Sur la partie LUMA, le site fait très simpliste, car étant très très très nul en design, j'ai fait le plus simple possible. Bah ChatGPT 🙄 .... <br>
-            J'ai prévilégié un aspect fonctionnel au site et le design sera amélioré plus tard, quand les fonctionnalités de base, seront enfin stable.
-        </p>
-    </section>
-</div>
-<div class="left-column">
-    <section class="api-status">
-        <h2>État des API's <span class="betaPops">BETA</span></h2>
-        <div class="api-block">
-
-            <?php if ($_SERVER['HTTP_HOST'] == 'dev.mhemery.fr') : ?>
-                <!-- API DEV -->
-                <div class="apiBlock api" id="api_nino_dev" data-ip="dev.nino.mhemery.fr/check">
-                    <div class="api-name">API Nino (DEV)</div>
-                    <div class="status-container">
-                        <div class="ping-circle" id="ping_api_nino_dev">***</div>
-                    </div>
-                    <div class="status" id="status_api_nino_dev">Checking ...</div>
-                </div>
-            <?php endif; ?>
-
-            <!-- API Principal -->
-            <div class="apiBlock api" id="api_nino" data-ip="nino.mhemery.fr/check">
-                <div class="api-name">API Nino</div>
-                <div class="status-container">
-                    <div class="ping-circle" id="ping_api_nino">***</div>
-                </div>
-                <div class="status" id="status_api_nino">Checking ...</div>
-            </div>
-
-            <!-- API Enerzein -->
-            <div class="apiBlock api" id="api_nino_enerzein" data-ip="nino.enerzein.fr/check">
-                <div class="api-name">API Nino (Enerzein)</div>
-                <div class="status-container">
-                    <div class="ping-circle" id="ping_api_nino_enerzein">***</div>
-                </div>
-                <div class="status" id="status_api_nino_enerzein">Checking ...</div>
-            </div>
+<section class="information">
+    <div class="home">
+        <h2>Qu'est-ce LUMA ?</h2>
+        <div class="block-img-text block-left-img">
+            <p>
+                LUMA est un projet qui englobe d'autres projets et services. Les services comme (Plex, Nino, Serveur de jeux, ...).<br>
+                LUMA peut vous permettrent (à terme), d'héberger votre propre plateforme vidéo chez vous. Pas besoin de mettre sur Youtube ou autres plateforme. D'autres services sont prévus mais ne verront peut-être jamais le jour.
+            </p>
+            <img src="/images/luma/luma300.png" alt="LUMA LOGO">
         </div>
-    </section>
+        <h2>Pourquoi LUMA ? Son histoire et celle de Nino (Oui elles sont liés)</h2>
+        <div class="block-img-text block-right-img">
+            <p>
+                J'avoue me poser cette question assez souvent. LUMA n'avait pas ce nom il y a 3 ans. LUMA se nommait Nina.<br>
+                De base, Nina était un serveur. Mais je voulais un site associé à celui-ci pour gérer les servies proposé par celui-ci. Alors est née Nina.
+                Ce projet avait pour but de faire la gestion des serveurs minecraft, superviser les containers docker (pour ceux qui connaissent) et m'avertir quand un service ne fonctionnait plus. Pas de bol, ceci a été mal calculer et géré et a été abandonné. L'année suivante l'échec de Nina, alors je décide de reprendre celle-ci, mais avec de nouvelles compétences acquises pendant l'année d'arrêt de développement.<br>
+                <br>
+                Suite à ceci, je décide de changer le nom en Nexus. Nina étant "morte" alors il fallait que le projet revienne en force avec certaines fonctionnalités attendues ... Je nomme Nino. Nino est, comme j'aime bien dire, mon YouTube maison. C'est ici que je mets toutes mes vidéos, car YouTube, c'est bien, mais les droits des musiques et toutes les restrictions, ça m'énerve. Sur Nino, je publie ce que je veux, pour qui je veux, sans aucun souci.<br>
+                <br>
+                Une fois Nino fonctionnelle, celle-ci a fonctionné pendant plusieurs mois jusqu'au drame. Nexus n'avait qu'une seule base de données (hors développement).<br>
+                Ce qui devait arriver, arriva. La base de données de Nexus, c'est brisé, et a emporté avec elle 2 ans de travail. (note à moi-même, faire des sauvegardes). Par dépit et incompatibilité entre la base de données de développement et celle de production, je décide d'abandonner encore le projet, en laissant tous les services pour mort.<br>
+                <br>
+                Encore, 1 an plupart, je décide de reprendre le projet, mais cette fois-ci avec une aide, ChatGPT. ChatGPT est une IA, et elle m'aide dans le développement de LUMA. Oui !! LUMA !! Le nom LUMA a été choisi comme un petit souvenir personnel, et ce projet, c'est vu remonter assez rapidement, avec une toute nouvelle gestion de celui-ci. Je suis toujours tout seul sur ce projet, mais cela ne m'empêche pas de continuer d'ajouter des petites fonctionnalités ou autres sur le site, et des services qui peuvent être intéressantes pour certains
+            </p>
+            <img src="/images/luma/luma_bg_300.png" alt="LUMA LOGO">
+        </div>
+        <h2>Fonctionnalités gratuites et Whitelist de LUMA</h2>
+        <div class="block-img-text block-left-img">
+            <p>
+                Actuellement, il y peut de fonctionnalités disponibles. Mais LUMA est en constante évolution. <br>
+                - Plex (Netflix maison)<br>
+                - Serveur de jeux<br>
+                <br>
+                Les services cité ci-dessus, sont des services dit sous Whitelist. Les accès sont restreints, au personnes proches.<br>
+                <br>
+                Nino est libre d'accès, mais par-contre ... Attention !! Celui-ci ne contient pas de filtre ou de blocage pour les moins de 18 ans. <br>
+                Veuillez à éviter de laisser les enfants consulter le contenu de Nino car certaines vidéos pourrait avoir un humour un peu borderline ou les jeux non approprié. <br>
+                <br>
+                Un système de profils est dans la liste des chsoes de prévu, mais actuellement non prioritaire.
+            </p>
+            <img src="/images/luma/luma_bg_300.png" alt="LUMA LOGO">
+        </div>
+        <!-- FIN HOME -->
+    </div>
+</section>
 
-    <section class="latest-videos">
-        <h2>3 Dernières Vidéos <span class="betaPops">BETA</span></h2>
-        <div class="video-bloc">
-    <?php
-    $sql = 'SELECT * FROM luma_nino_data WHERE publish < "'.date('Y-m-d H:i:s').'" && status = "publique" ORDER BY publish DESC LIMIT 3';
-    $req = $pdo->prepare($sql);
-    $req->execute();
-    $result = $req->rowCount();
-    if ($result >= 1) {
-        while ($video = $req->fetch()) {
-            $PublishVid = $video['publish'];
-            $HeureLocal = date('Y-m-d H:i:s');
-            if ($HeureLocal <= $PublishVid) {
-                $publish = 0;
-            } else {
-                $publish = 1;
-            }
-
-            if ($video['videoThumbnail'] == '' || $video['videoThumbnail'] == null) {
-                $video['videoThumbnail'] = SITE_HTTP . "://" . SITE_URL . "/images/nino/no_image.jpg";
-            }
-    ?>
-            <div class="video" data-idVideo="<?= $video['id_video_uuid'] ?>">
-                <img <?php if ($publish != 1) {
-                            echo 'class="blur"';
-                        } ?> src="<?= 'https://'.$video['server_url'].'/Thumbnail/'.$video['id_video_uuid'] ?>" alt="Thumbnail Nino">
-                <div class="video-info">
-                    <div class="video-title"><?= truncateText($video['titre'], 30) ?></div>
-                </div>
-            </div>
-    <?php }
-    } else {
-        echo '<h5>Aucune vidéo trouvé</h5>';
-    }
-    ?>
-</div>
-    </section>
-</div>
 <!-- SCRIPTS SRV -->
 <script src="../javascripts/home.js?1"></script>

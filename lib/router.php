@@ -38,6 +38,10 @@ if (!file_exists($ConfigFile)) {
                     $queryUrl['path'] = '/nino/player';
                 }
 
+                if (strpos($url, 'agent/uuid') !== false){
+                    $queryUrl['path'] = '/agent';
+                }
+
                 $query = "SELECT * FROM luma_routes WHERE url_pattern = :url";
                 $stmt = $pdo->prepare($query);
                 $stmt->bindParam(':url', $queryUrl['path']);
@@ -65,6 +69,24 @@ if (strpos($url, 'functions') !== false){
     }
     // On appel la function
     require_once("functions/$functions.php");
+    exit;
+    
+}
+
+if (strpos($url, 'init') !== false){
+
+    // Séparation de l'URL
+    $parts = explode('/', $url);
+    $functions = end($parts);
+
+    // On vérifie si il y'a un paramètre
+    if (strpos($url, '?') !== false){
+       $query = explode('?', $functions);
+       // On réécrit la variable avec la nouvelle valeur
+       $functions = $query[0];
+    }
+    // On appel la function
+    require_once("functions/init/$functions.php");
     exit;
     
 }
