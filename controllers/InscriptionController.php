@@ -1,7 +1,4 @@
 <?php
-if (isset($_SESSION['authentification']['user'])) {
-    header('Location: /?connected');
-}
 
 class InscriptionController {
     public function show() {

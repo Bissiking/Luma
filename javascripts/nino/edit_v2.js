@@ -14,7 +14,7 @@ function CheckVideoAPI() {
             console.log(response);
             if (response == "exist") {
                 $('#no-video').hide();
-                showPopup("error", "Ok ...", "Une vidéo à été trouvé. Focntionnalité supplémentaire indisponible pour l'instant");
+                showPopup("warning", "Ok ...", "Une vidéo à été trouvé. Focntionnalité supplémentaire indisponible pour l'instant");
 
                 // Ajout de la vidéo dans le player
                 let url = APIURL+'/'+idVid

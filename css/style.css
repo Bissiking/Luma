@@ -9,13 +9,16 @@ body {
 /* HEADER  */
 
 header {
+    width: 100%;
     height: 50px;
-    background-color: #333;
+    background-color: rgba(0, 43, 65, 0.8);
     color: #fff;
-    padding: 0px 10px;
+    padding: 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: fixed;
+    top: 0;
 }
 
 #logo {
@@ -23,6 +26,8 @@ header {
     height: 50px;
     border-radius: 50%;
     margin-right: 10px;
+    display: flex;
+    align-items: center;
 }
 
 #projectName {
@@ -43,6 +48,7 @@ nav a {
     width: 30px;
     height: 30px;
     border-radius: 50%;
+    margin: 0px 10px;
     cursor: pointer;
 }
 
@@ -81,8 +87,8 @@ nav a {
 main {
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    margin-bottom: 70px;
+    padding: 50px 20px;
+    margin: 20px 0px;
 }
 
 .server-status,
@@ -101,10 +107,9 @@ footer {
     background-color: #333;
     color: #fff;
     text-align: center;
-    padding: 10px 0px;
     position: fixed;
     width: 100%;
-    height: 70px;
+    height: 20px;
     bottom: 0;
 }
 
