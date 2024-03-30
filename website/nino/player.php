@@ -147,7 +147,7 @@ if (!isset($id) || $id == null) {
         <script>
             document.title = "Nino - <?= $video['titre'] ?>";
         </script>
-        <script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/nino/player.js"></script>
+        <script src="../javascripts/nino/player.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
         <script>
             let url = "https://<?= htmlspecialchars(trim($video['server_url'])) ?>/<?= htmlspecialchars(trim($video['id_video_uuid'])) ?>"
