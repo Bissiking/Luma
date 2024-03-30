@@ -54,18 +54,14 @@ if (isset($_SESSION['authentification']['user']['account_administrator']) && $_S
         </div>
         <div class="dashboard-block dashboard-menu">
             <a class="menu-link" href="/admin/domains"><i class="fa-solid fa-globe"></i> Gestion des domaines</a>
-            <a class="menu-link" href="#"><i class="fa-solid fa-ban"></i> EMPTY</a>
+            <a class="menu-link" href="/admin/statut"><i class="fa-solid fa-list-check"></i> Configuration de la page statut</a>
             <a class="menu-link" href="#"><i class="fa-solid fa-ban"></i> EMPTY</a>
             <a class="menu-link" href="#"><i class="fa-solid fa-ban"></i> EMPTY</a>
         </div>
 
         <div class="dashboard-block">
-            <h2>Statut du Serveur</h2>
-            <div id="server-status">
-                <div class="monitoring"><i class="fa-solid fa-microchip"></i><span id="CPU_moni">***</span></div>
-                <div class="monitoring"><i class="fa-solid fa-memory"></i><span id="RAM_moni">***</span></div>
-            </div>
-            <p class="date_moni">Dernière mise à jour: <span id="last_update_moni">***</span></p>
+            <h2>IN PROGRESS</h2>
+            <p>En cours de développement</p>
         </div>
         <div class="dashboard-block">
             <h2>Version du Site</h2>
@@ -75,7 +71,7 @@ if (isset($_SESSION['authentification']['user']['account_administrator']) && $_S
         </div>
     </div>
 
-    <script src="javascripts/admin/dashboard.js?5"></script>
+    <script src="javascripts/admin/dashboard.js?6"></script>
 
 <?php else : header('Location: /');
 endif; ?>

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= SITE_HTTP . "://" . SITE_URL ?>/css/nino-edit.css?1">
+<link rel="stylesheet" href="<?= SITE_HTTP . SITE_URL ?>/css/nino-edit.css?2">
 <script>
     document.title = "Nino - Édition d'une vidéo";
 </script>
@@ -136,7 +136,7 @@ if (isset($_SESSION['authentification']['user'])) {
         </div>
     </form>
     <!-- SCRIPTS SRV -->
-    <script defer src="../javascripts/nino/edit_v2.js?3"></script>
+    <script defer src="../javascripts/nino/edit_v2.js?4"></script>
 <?php else : ?>
     <h1 class="error"><?= $message_Error ?></h1>
 <?php endif; ?>

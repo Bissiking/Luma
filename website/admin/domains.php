@@ -152,4 +152,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </table>
 <?php endif; ?>
 
-<script src="/javascripts/admin/domain.js"></script>
+<script src="/javascripts/admin/domain.js?0"></script>

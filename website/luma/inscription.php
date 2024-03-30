@@ -1,29 +1,46 @@
-<link rel="stylesheet" href="css/init.css">
+<link rel="stylesheet" href="css/init.css?0">
 <script>
     document.title = "Inscription";
 </script>
 
 <h2>Formulaire d'Inscription <span class="betaPops">BETA</span></h2>
 
-<form id="register" class="login-container" method="post">
+<form id="register" class="content">
+    <div class="step-content active">
 
-    <label for="identifiant">Identifiant:</label>
-    <input type="text" id="identifiant" name="identifiant">
+        <div class="input-container">
+            <input type="text" id="identifiant" name="identifiant" placeholder="">
+            <label for="identifiant">Identifiant:</label>
+            <span class="underline"></span>
+        </div>
 
-    <label for="password">Mot de passe:</label>
-    <input type="password" id="password" name="password">
+        <div class="input-container">
+            <input type="password" id="password" name="password" placeholder="">
+            <label for="password">Mot de passe:</label>
+            <span class="underline"></span>
+        </div>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email">
-    <p class="info-popup">
-        L'email servira à activer votre compte et avoir une double authentification quand celle-ci seront disponibles.<br>
-        La possiblité de recevoir des mails quand une vidéo sort sera aussi possible .... Quand celle-ci sera aussi développer.... Quelle grosse merde ce DEV <br>
-        <br>
-        Par default, le mail ne sera utilisé en aucun cas, donc si vous rentrez une adresse mail bidon, bah balek 😂. En vrai, je penses même, que sa ne sera pas obligatoire. <br>
-        Je dis, je penses, car l'option n'est pas encore développer 😊
-    </p>
+        <?php if (isset($_SESSION['authentification']['user'])) : ?>
+            <div class="input-container">
+                <div class="custom-select">
+                    <select name="master"></select>
+                    <div class="select-styled">Choix du type de compte</div>
+                    <div class="select-options">
+                        <option value="kids_account">Compte enfant (Vous gérez ce nouveau compte)</option>
+                        <option value="0">Le compte fonctionne séparément de celui-ci</option>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
 
-    <button type="submit">S'inscrire</button>
+
+        <div class="button-block">
+            <?php if (!isset($_SESSION['authentification']['user'])) : ?><button id="connect" class="custom-button">Déjà un compte</button><?php endif; ?>
+            <button type="submit" class="custom-button">S'enregistrer</button>
+        </div>
+
+    </div>
 </form>
+
 
 <script src="../javascripts/inscription.js"></script>
