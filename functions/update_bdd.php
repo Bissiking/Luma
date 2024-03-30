@@ -34,13 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // SWITCH DE CHOIX DE BDD
     switch ($bdd) {
         case 'luma_users':
-
+            $createTable = 1;
             $columnsToAdd = [
                 "email VARCHAR(255) NULL",
                 "emailValid TINYINT(1) NOT NULL DEFAULT 0",
                 "emailToken VARCHAR(255) NULL",
                 "master TINYINT(1) NULL",
                 "users_master BIGINT(20) NULL",
+                "iconsProfils VARCHAR(255) NULL DEFAULT 'default'"
             ];
 
             $BDD_CONST = "DB_LUMA_USERS_VERSION";
@@ -49,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
 
         case 'luma_routes':
+            $createTable = 1;
             $columnsToAdd = [
                 "email VARCHAR(255) NULL",
             ];
@@ -127,6 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit;
                 }
             } else {
+                $createTable = 1;
                 $columnsToAdd = [
                     "domains VARCHAR(255) NOT NULL",
                     "domains_autorized TINYINT(4) NULL"

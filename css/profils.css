@@ -32,3 +32,46 @@ button{
     cursor: pointer;
     transition: background-color 0.3s;
 }
+
+.profils-icons-preview{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.imgProfils{
+    width: 100px;
+}
+
+
+/* INPUT */
+
+.profils-Icons-Choix {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    overflow: auto;
+}
+
+.profils-Icons-Choix label {
+    position: static;
+    margin-right: 10px;
+}
+
+.profils-Icons-Choix img {
+    width: 100px;
+    height: 100px;
+    margin: 0px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.profils-Icons-Choix input[type="radio"] {
+    display: none;
+}
+
+.profils-Icons-Choix input[type="radio"]:checked + img {
+    border-color: #0078d4;
+}

@@ -1,5 +1,3 @@
-
-
 <section class="maintenance-section">
 	<div class="maintenance-content">
 		<h1>En maintenance</h1>

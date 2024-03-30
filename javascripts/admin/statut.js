@@ -13,19 +13,14 @@ $(document).ready(function () {
                 return;
             }
         } else {
-            inputName = $("#name-"+selectedName).text();
+            inputName = $(this).data('service');
         }
-
-        console.log("Option sélectionnée :", selectedOption);
-        console.log("Select sélectionnée :", selectedName);
-        console.log("Input sélectionnée :", inputName);
 
         $.ajax({
             type: 'POST',
             url: 'functions/statut',
             data: 'selectedOption=' + selectedOption+'&selectedName=' + selectedName+'&inputName=' + inputName,
             success: function (response) {
-                console.log(response);
                 if (response == "exist") {
                     showPopup("warning", "On a encore eu de la chance", "Un doublon à été évité ! regarde ta liste et confirme !");
                 }else if(response == "succes"){

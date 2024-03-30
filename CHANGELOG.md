@@ -54,6 +54,8 @@
 - Suppression des statuts depuis l'espace admin
 - Page des statut fonctionnel
 - API de connexion pour les applications distante
+- Mise à jour de la table Users pour supporter les Images de profils
+- Modification des images de profils OK
 
 ========== ### V4  ==========
 

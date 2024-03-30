@@ -47,9 +47,9 @@ $result = $req->rowCount();
         </tr>
         <?php while ($service = $req->fetch()): ?>
         <tr>
-            <td  id="name-<?= $service['uuid_agent'] ?>" class="editService"><?= $service['service'] ?></td>
+            <td id="name-<?= $service['uuid_agent'] ?>" class="editService"><?= $service['service'] ?></td>
             <td>
-                <select class="select-editService" id="<?= $service['uuid_agent'] ?>">
+                <select class="select-editService" id="<?= $service['uuid_agent'] ?>" data-service="<?= $service['service'] ?>">
                     <option selected disabled hidden><?= $service['uuid_agent'] ?></option>
                     <?php foreach ($data as $row) : ?>
                         <option value="<?= $row['uuid_agent'] ?>"><?= $row['agent_name'] ?> - <?= $row['uuid_agent'] ?></option>

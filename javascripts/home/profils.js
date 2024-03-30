@@ -1,4 +1,4 @@
-document.getElementById('profileForm').addEventListener('submit', function(event) {
+document.getElementById('profileForm').addEventListener('submit', function (event) {
     event.preventDefault();
     var formData = new FormData($('#profileForm')[0]);
 
@@ -22,9 +22,9 @@ document.getElementById('profileForm').addEventListener('submit', function(event
         success: function (response) {
             if (response == "EMPTY") {
                 showPopup("error", "Bah mon grand !!!", "Faut remplir tout les champs mon copaing, sinon, c'est pété !!");
-            }else if(response == "succes"){
+            } else if (response == "succes") {
                 showPopup("good", "Magnifique ...", "Mise à jour du compte OK");
-            }else{
+            } else {
                 showPopup("error", "Mince, je me suis blessé ...", "J'ai eu une erreur non répertorié. regarde les logs pour avoir plus d'informations");
             }
         },
@@ -34,7 +34,7 @@ document.getElementById('profileForm').addEventListener('submit', function(event
     });
 });
 
-$('input').on('change', function() {
+$('input').on('change', function () {
     let inputVal = $(this).val();
     let inputID = $(this).attr('id');
 
@@ -43,4 +43,31 @@ $('input').on('change', function() {
     } else {
         $(this).attr('name', inputID);
     }
+});
+
+var imageInputs = document.querySelectorAll('.profils-Icons-Choix input[type="radio"]');
+imageInputs.forEach(input => {
+    input.addEventListener('change', function () {
+        const selectedImage = this.value;
+        // Ici, vous pouvez effectuer des actions en fonction de l'image sélectionnée
+        $.ajax({
+            type: 'POST',
+            url: 'functions/profilsIcon',
+            data: {
+                "iconsProfils": selectedImage
+            },
+            success: function (response) {
+                if (response == "EMPTY") {
+                    showPopup("error", "Bah mon grand !!!", "Faut remplir tout les champs mon copaing, sinon, c'est pété !!");
+                } else if (response == "succes") {
+                    showPopup("good", "Magnifique ...", "Mise à jour du compte OK");
+                } else {
+                    showPopup("error", "Mince, je me suis blessé ...", "J'ai eu une erreur non répertorié. regarde les logs pour avoir plus d'informations");
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    })
 });
