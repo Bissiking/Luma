@@ -33,6 +33,12 @@ function DashAgent(uuid) {
     window.location.href = "/agent/uuid/" + uuid;
 }
 
+function ColorStatut(divID, etatStats) {
+    $(divID).removeClass();
+    $(divID).addClass('agent-etat');
+    $(divID).addClass(etatStats);
+}
+
 function SatutAgentGlob() {
     var modernBoxes = $('.modern-box');
     let online = 0;
@@ -52,10 +58,14 @@ function SatutAgentGlob() {
                     var currentTime = new Date();
                     var sondeTime = new Date(response.result.date);
                     var elapsedTimeInSeconds = (currentTime - sondeTime) / 1000;
-                    if (elapsedTimeInSeconds > 3600000) {
-                        offline++; 
+                    if (elapsedTimeInSeconds > 600) { // 10 Minutes
+                        offline++;
+                        $('#agent-statut-'+data).text('Hors ligne');
+                        ColorStatut('#agent-statut-'+data, 'error');
                     } else {
                         online++;
+                        $('#agent-statut-'+data).text('En ligne');
+                        ColorStatut('#agent-statut-'+data, 'good');
                     }
                     resolve();
                 },

@@ -206,7 +206,7 @@ button {
 }
 
 /* PLAYER */
-
+/* 
 .video-container {
     max-width: 800px;
     margin: auto;
@@ -220,7 +220,6 @@ video {
     width: 100%;
     display: block;
     object-fit: contain;
-    max-height: 400px;
 }
 
 .video-info {
@@ -263,7 +262,7 @@ h1 {
 
 .video-list-item h3 {
     margin: 0;
-}
+} */
 
 /* GENERIQUE */
 h1 {

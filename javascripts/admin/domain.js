@@ -2,7 +2,7 @@ function addDomain() {
     // Effectuer la requête AJAX
     let domain = $('#add-domain').val();
     if (domain == "") {
-        showPopup("Domaine non valide", false);
+        showPopup("error", "Domaine non valide", "Le domaine n'est pas valide. As-tu renseigné un domain logique ??");
         return;
     }
 
@@ -30,7 +30,7 @@ function addDomain() {
 function delDomain(domain) {
     // Effectuer la requête AJAX
     if (domain == "") {
-        showPopup("Domaine non valide", false);
+        showPopup("error", "Domaine non valide", "Le domaine n'est pas valide. As-tu renseigné un domain logique ??");
         return;
     }
 

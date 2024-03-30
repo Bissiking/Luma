@@ -32,6 +32,11 @@ function deleteRoute(url_pattern) {
                 setTimeout(() => {
                     window.location.href = "/admin/routes";
                 }, 4000);
+            } else if (response == 'refused-delete-route') {
+                showPopup("warning", "Supression de la route refusé", "La suppression de la route n'est pas autorisé.");
+                setTimeout(() => {
+                    window.location.href = "/admin/routes";
+                }, 4000);
             } else {
                 showPopup("error", "Petit soucis imprévu ...", "Supression de la route en erreur");
             }

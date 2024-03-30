@@ -34,3 +34,8 @@ $('#identifiant, #password').keydown(function (event) {
         performLogin();
     }
 });
+
+$('#inscription').click(function (e) {
+    e.preventDefault();
+    window.location.href = "/inscription";
+});

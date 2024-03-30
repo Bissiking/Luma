@@ -1,57 +1,80 @@
-var url = "/data/1a0c7cba-cd1f-438e-8750-3d566cd81fdc/";
+// var url = "/data/1a0c7cba-cd1f-438e-8750-3d566cd81fdc/";
 
-function StatsEdit(idDiv, StatsClass, StatsTxt) {
-    if (idDiv == 1) {
-        statsTxt = 'Service opérationnel';
-        statsClass = "circle-online"
-    } else {
-        statsTxt = 'Service hors ligne';
-        statsClass = "circle-offline"
-    }
+function ServicesCheck() {
+    let NbServiceSection = $('.serviceSection');
 
-    $('#' + StatsClass).addClass(statsClass);
-    $('#' + StatsTxt).text(statsTxt);
-}
+    console.log(NbServiceSection);
+    console.log(NbServiceSection.length);
 
-function ServicesPlex() {
-    $.ajax({
-        url: url + "plex-data.json",
-        dataType: 'json',
-        cache: false,
-        success: function (response) {
-            let data = response.result;
-            StatsEdit(data.status, 'plex-indiq-stats', 'plex-txt-stats');
+    for (let i = 0; i < NbServiceSection.length; i++) {
+        let element = NbServiceSection[i];
+        $(element).find('span.circle-stats').each(function () {
+            console.log($(this).attr('class'));
 
-        },
-        error: function (error) {
-            StatsEdit(0, 'plex-indiq-stats', 'plex-txt-stats');
-        }
-    });
-}
+            const id = $(this).data('id');
+            var service = $(this).data('service');
 
-function api_nino_prod() {
-    $.ajax({
-        type: 'GET',
-        url: 'https://nino.mhemery.fr/check/',
-        success: function (response) {
-            if (response.status == "ok") {
-                StatsEdit(1, 'api-nino-indiq-stats', 'api-nino-txt-stats');
+            let searchTerm = service.toLowerCase();
+
+            console.log(searchTerm);
+
+            if (searchTerm.includes("plex")) {
+                service = "plex";
+            } else if (searchTerm.includes("jelly")) {
+                service = "jellyfin";
             } else {
-                StatsEdit(0, 'api-nino-indiq-stats', 'plex-txt-stats');
+                console.log('DEBUG');
+                let statsTxt = 'Service hors ligne';
+                let statsClass = "circle-offline";
+                let $currentElement = $(this);
+                $currentElement.addClass(statsClass);
+                $currentElement.siblings('.txt-stats').text(statsTxt);
+                return;
             }
-        },
-        error: function (error) {
-            StatsEdit(0, 'api-nino-indiq-stats', 'api-nino-txt-stats');
-        }
-    });
-}
 
+            let $currentElement = $(this); // Stocker une référence à $(this)
+
+            $.ajax({
+                url: "/data/" + id + "/" + service + "-data.json",
+                dataType: 'json',
+                cache: false,
+                context: $currentElement, // Définir le contexte pour utiliser $(this) dans success et error
+                success: function (response) {
+                    let data = response.result;
+                    let Statut = data.status
+                    if (Statut == 1) {
+                        let statsTxt = 'Service opérationnel';
+                        let statsClass = "circle-online";
+                        let statsRemove = "circle-offline";
+                        this.addClass(statsClass); // Utiliser this ici fait référence à $currentElement
+                        this.removeClass(statsRemove);
+                        this.siblings('.txt-stats').text(statsTxt);
+                    } else {
+                        let statsTxt = 'Service hors ligne :(';
+                        let statsClass = "circle-offline";
+                        let statsRemove = "circle-online";
+                        this.addClass(statsClass);
+                        this.removeClass(statsRemove);
+                        this.siblings('.txt-stats').text(statsTxt);
+                    }
+
+                    console.log(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                    let statsTxt = 'Service hors ligne --';
+                    let statsClass = "circle-offline";
+                    this.addClass(statsClass);
+                    this.siblings('.txt-stats').text(statsTxt);
+                }
+            });
+        });
+    }
+}
 
 // Fisrt Start
-ServicesPlex();
-api_nino_prod();
+ServicesCheck();
 
 setTimeout(() => {
-    ServicesPlex();
-    api_nino_prod();
+    ServicesCheck();
 }, 60000);

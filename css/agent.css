@@ -90,13 +90,18 @@ h3 {
 }
 
 .content-dashboard-agent {
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
+    margin-right: 200px;
 }
 
 .content-dashboard-agent-disk {
+    overflow: auto;
+    height: 86vh;
     width: 200px;
+    position: fixed;
+    right: 0px;
 }
 
 section {
@@ -121,6 +126,14 @@ section>h2 {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    color: #d7d7d7;
+}
+
+.agent-etat{
+    padding: 5px;
+    text-align: center;
+    background-color: #bbbbbb;
+    border-radius: 10px;
 }
 
 .agent-stats-global {
@@ -168,6 +181,9 @@ section>h2 {
 }
 
 .modern-box {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
     min-width: 100px;
     height: 150px;
     background-color: #f2f2f2;
@@ -192,16 +208,17 @@ section>h2 {
 }
 
 .modern-box p {
-    color: #666;
+    color: #FFF;
     font-size: 12px;
     line-height: 1.5;
+    font-weight: bold;
 }
 
 .agent-data {
     display: flex;
 }
 
-p {
+.agent-data > p{
     margin: 3px 0px;
 }
 

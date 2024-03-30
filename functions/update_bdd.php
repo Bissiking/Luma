@@ -2,6 +2,7 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Exctraction
     extract($_REQUEST);
+    $createTable = 0;
     require_once 'base/nexus_base.php';
     require_once 'base/config.php';
 
@@ -33,14 +34,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // SWITCH DE CHOIX DE BDD
     switch ($bdd) {
         case 'luma_users':
+
             $columnsToAdd = [
                 "email VARCHAR(255) NULL",
                 "emailValid TINYINT(1) NOT NULL DEFAULT 0",
                 "emailToken VARCHAR(255) NULL",
+                "master TINYINT(1) NULL",
+                "users_master BIGINT(20) NULL",
             ];
 
             $BDD_CONST = "DB_LUMA_USERS_VERSION";
             $BDD_CONST_VAL = DB_LUMA_USERS_VERSION;
+
             break;
 
         case 'luma_routes':
@@ -52,59 +57,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
 
         case 'luma_nino_data':
-            $columnsToAdd = [
-                "status VARCHAR(255) NULL",
-                "nino_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
-            ];
-            $BDD_CONST = "DB_LUMA_NINO_DATA_VERSION";
-            $BDD_CONST_VAL = DB_LUMA_NINO_DATA_VERSION;
 
-            // Modification de la table de Nino
-            if (DB_LUMA_NINO_DATA_VERSION <= "DB02") {
-                try {
-                    // Définir le mode d'erreur de PDO sur Exception
-                    $sql = "ALTER TABLE luma_nino_data MODIFY COLUMN tag VARCHAR(255)";
-                    if ($pdo->query($sql) !== TRUE) {
-                        $pdo->errorInfo();
-                    };
-                } catch (PDOException $e) {
-                    echo 'configCreateTableNino-echec --> ' . $e->getMessage();
-                }
+            // Modification Colonne TAG
+            try {
+                // Définir le mode d'erreur de PDO sur Exception
+                $sql = "ALTER TABLE luma_nino_data MODIFY COLUMN tag TEXT";
+                if ($pdo->query($sql) !== TRUE) {
+                    $pdo->errorInfo();
+                };
+            } catch (PDOException $e) {
+                echo 'configEditTableNino-echec --> ' . $e->getMessage();
             }
 
-            if (DB_LUMA_NINO_DATA_VERSION <= "DB03") {
-                try {
-                    // Définir le mode d'erreur de PDO sur Exception
-                    $sql = "ALTER TABLE luma_nino_data MODIFY COLUMN description TEXT";
-                    if ($pdo->query($sql) !== TRUE) {
-                        $pdo->errorInfo();
-                    };
-                } catch (PDOException $e) {
-                    echo 'configEditTableNino-echec --> ' . $e->getMessage();
-                }
+            // Modification Colonne DESCRIPTION
+            try {
+                // Définir le mode d'erreur de PDO sur Exception
+                $sql = "ALTER TABLE luma_nino_data MODIFY COLUMN description TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
+                if ($pdo->query($sql) !== TRUE) {
+                    $pdo->errorInfo();
+                };
+
+                $sql = "ALTER TABLE luma_nino_data CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;";
+                if ($pdo->query($sql) !== TRUE) {
+                    $pdo->errorInfo();
+                };
+            } catch (PDOException $e) {
+                echo 'configEditTableNino-echec --> ' . $e->getMessage();
             }
 
-            if (DB_LUMA_NINO_DATA_VERSION <= "DB04") {
-                // Création de la table DOMAINS
-                try {
-                    // Définir le mode d'erreur de PDO sur Exception
-                    $sql = "ALTER TABLE luma_nino_data MODIFY COLUMN tag TEXT";
-                    if ($pdo->query($sql) !== TRUE) {
-                        $pdo->errorInfo();
-                    };
-                } catch (PDOException $e) {
-                    echo 'configEditTableNino-echec --> ' . $e->getMessage();
-                }
-            }
 
-            if (DB_LUMA_NINO_DATA_VERSION <= "DB05") {
+            if (DB_LUMA_DOMAINS_VERSION >= "DB06") {
+                $createTable = 1;
                 $columnsToAdd = [
+                    "status VARCHAR(255) NULL",
+                    "nino_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
                     "publish TIMESTAMP NULL",
                     "`create` TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
                 ];
-                $BDD_CONST = "DB_LUMA_NINO_DATA_VERSION";
-                $BDD_CONST_VAL = DB_LUMA_NINO_DATA_VERSION;
             }
+            $BDD_CONST = "DB_LUMA_NINO_DATA_VERSION";
+            $BDD_CONST_VAL = DB_LUMA_NINO_DATA_VERSION;
+
+
+
             break;
 
         case 'luma_domains':
@@ -145,59 +140,92 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
 
         case 'luma_agent':
-            if (DB_LUMA_AGENT_VERSION == "DB00") {
-                // Création de la table AGENT
-                try {
-                    require './lib/mysql_table_create.php';
 
-                    $tableName = "luma_agent";
-                    $columns = [
-                        'id' => 'INT PRIMARY KEY AUTO_INCREMENT',
-                        'id_users' => 'BIGINT(20) NOT NULL',
-                        'uuid_agent' => 'VARCHAR(255) NOT NULL',
-                        'agent_name' => 'VARCHAR(255) NULL',
-                        'agent_etat' => 'TINYINT(4) NOT NULL DEFAULT 0',
-                        'agent_version' => 'VARCHAR(255) NOT NULL DEFAULT "0.0.0"',
-                        'module' => 'VARCHAR(255) NULL',
-                        'token' => 'VARCHAR(255) NULL',
-                        'MemoryModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
-                        'MemoryModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
-                        'ProcessorModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
-                        'ProcessorModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
-                        'DiskModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
-                        'DiskModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 1',
-                        'PlexProcessCheck_autostart' => 'TINYINT(1) NOT NULL DEFAULT 0',
-                        'PlexProcessCheck_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
-                        'DockerModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
-                        'DockerModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
-                        'users_autorized' => 'VARCHAR(255) NULL',
-                        'agent_create' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
-                        'agent_edit' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
-                    ];
-                    $result_PDO = createTablePDO($tableName, $columns, $pdo);
+            // Création de la table AGENT
+            try {
+                require './lib/mysql_table_create.php';
 
-                    // Requête de UPDATE auto
-                    $query = "CREATE TRIGGER IF NOT EXISTS update_agent_edit
+                $tableName = "luma_agent";
+                $columns = [
+                    'id' => 'INT PRIMARY KEY AUTO_INCREMENT',
+                    'id_users' => 'BIGINT(20) NOT NULL',
+                    'uuid_agent' => 'VARCHAR(255) NOT NULL',
+                    'agent_name' => 'VARCHAR(255) NULL',
+                    'agent_etat' => 'TINYINT(4) NOT NULL DEFAULT 0',
+                    'agent_version' => 'VARCHAR(255) NOT NULL DEFAULT "0.0.0"',
+                    'module' => 'VARCHAR(255) NULL',
+                    'token' => 'VARCHAR(255) NULL',
+                    'MemoryModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
+                    'MemoryModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
+                    'ProcessorModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
+                    'ProcessorModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
+                    'DiskModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
+                    'DiskModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 1',
+                    'PlexProcessCheck_autostart' => 'TINYINT(1) NOT NULL DEFAULT 0',
+                    'PlexProcessCheck_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
+                    'JellyFinProcessCheck_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
+                    'JellyFinProcessCheck_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
+                    'DockerModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
+                    'DockerModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
+                    'users_autorized' => 'VARCHAR(255) NULL',
+                    'agent_create' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+                    'agent_edit' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+                ];
+                $result_PDO = createTablePDO($tableName, $columns, $pdo);
+
+                // Requête de UPDATE auto
+                $query = "CREATE TRIGGER IF NOT EXISTS update_agent_edit
                                 BEFORE UPDATE ON luma_agent
                                 FOR EACH ROW
                                 SET NEW.agent_edit = CURRENT_TIMESTAMP;";
 
-                    // Exécution de la requête
-                    $pdo->exec($query);
+                // Exécution de la requête
+                $pdo->exec($query);
 
-                    $BDD_CONST = "DB_LUMA_AGENT_VERSION";
-                    $BDD_CONST_VAL = DB_LUMA_AGENT_VERSION;
-                    ConstEdit($BDD_CONST, $BDD_CONST_VAL);
+                $BDD_CONST = "DB_LUMA_AGENT_VERSION";
+                $BDD_CONST_VAL = DB_LUMA_AGENT_VERSION;
+                ConstEdit($BDD_CONST, $BDD_CONST_VAL);
 
-                    echo $result_PDO;
-                    exit;
-                } catch (PDOException $e) {
-                    echo 'configCreateTableAgent-echec --> ' . $e->getMessage();
-                    exit;
-                }
-            };
+                echo $result_PDO;
+
+                exit;
+            } catch (PDOException $e) {
+                echo 'configCreateTableAgent-echec --> ' . $e->getMessage();
+                exit;
+            }
+
 
             break;
+
+        case 'luma_statut':
+
+            // Création de la table STATUT
+            try {
+                require './lib/mysql_table_create.php';
+
+                $tableName = "luma_statut";
+                $columns = [
+                    'id' => 'INT PRIMARY KEY AUTO_INCREMENT',
+                    'apps' => 'VARCHAR(255) NOT NULL',
+                    'uuid_agent' => 'VARCHAR(255) NOT NULL',
+                ];
+                $result_PDO = createTablePDO($tableName, $columns, $pdo);
+
+                $BDD_CONST = "DB_LUMA_STATUT_VERSION";
+                $BDD_CONST_VAL = DB_LUMA_STATUT_VERSION;
+                ConstEdit($BDD_CONST, $BDD_CONST_VAL);
+
+                echo $result_PDO;
+
+                exit;
+            } catch (PDOException $e) {
+                echo 'configCreateTableSTATUT-echec --> ' . $e->getMessage();
+                exit;
+            }
+
+
+            break;
+
 
         default:
             echo "error -> STOP CODE #001";
@@ -206,20 +234,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Générez la partie SET de la requête ALTER TABLE
     try {
-        // Vérifier l'existence de chaque colonne avant de l'ajouter
-        foreach ($columnsToAdd as $columnDefinition) {
-            $columnName = explode(" ", $columnDefinition)[0];
+        if ($createTable == 1) {
+            // Vérifier l'existence de chaque colonne avant de l'ajouter
+            foreach ($columnsToAdd as $columnDefinition) {
+                $columnName = explode(" ", $columnDefinition)[0];
 
-            $checkColumnQuery = "SHOW COLUMNS FROM $bdd LIKE '$columnName'";
-            $checkColumnResult = $pdo->query($checkColumnQuery);
+                $checkColumnQuery = "SHOW COLUMNS FROM $bdd LIKE '$columnName'";
+                $checkColumnResult = $pdo->query($checkColumnQuery);
 
-            if ($checkColumnResult->rowCount() === 0) {
-                // La colonne n'existe pas, on peut l'ajouter
-                $alterTableQuery = "ALTER TABLE $bdd ADD $columnDefinition";
+                if ($checkColumnResult->rowCount() === 0) {
+                    // La colonne n'existe pas, on peut l'ajouter
+                    $alterTableQuery = "ALTER TABLE $bdd ADD $columnDefinition";
 
-                if (!$pdo->query($alterTableQuery)) {
-                    $errorInfo = $pdo->errorInfo();
-                    echo "Erreur lors de l'ajout de la colonne $columnName : " . $errorInfo[2];
+                    if (!$pdo->query($alterTableQuery)) {
+                        $errorInfo = $pdo->errorInfo();
+                        echo "Erreur lors de l'ajout de la colonne $columnName : " . $errorInfo[2];
+                    }
                 }
             }
         }

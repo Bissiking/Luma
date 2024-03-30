@@ -4,6 +4,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require './lib/mysql_table_delete.php';
     extract($_REQUEST);
     $url_pattern = htmlspecialchars(trim($url_pattern));
+
+
+    if ($url_pattern === '/admin/routes') {
+        echo 'refused-delete-route';
+        exit();
+    }
+
     // Valeur à supprimer
     $tableName = 'luma_routes';
 

@@ -1,11 +1,11 @@
 // Récupérer les éléments des contrôles personnalisés
-var volume = document.getElementById("volume-low");
+// var volume = document.getElementById("volume-low");
 var playPauseBtn = document.getElementById("playPauseBtn");
 var back10SecBtn = document.getElementById("back10SecBtn");
 var skip10SecBtn = document.getElementById("skip10SecBtn");
 var fullscreenBtn = document.getElementById("fullscreenBtn");
-var moviesScreen = document.getElementById("movies-screen");
 var myVideo = document.getElementById("Player");
+var videoContainer = document.getElementById("videoContainer");
 var progressBar = document.getElementById('progressBar');
 var progressBarLoader = document.getElementById('progressBarLoader');
 // JQUERY VAR
@@ -27,8 +27,8 @@ function resetIdleTimeout() {
 }
 
 // Écouter les événements de la souris et du clavier pour réinitialiser le délai d'inactivité
-BlockCustomControls.on('mousemove keydown', function() {
-    $(this).css('opacity', 1); // Rétablir l'opacité de la vidéo
+VCP.on('mousemove keydown', function() {
+    BlockCustomControls.css('opacity', 1); // Rétablir l'opacité de la vidéo
     resetIdleTimeout(); // Réinitialiser le délai d'inactivité
 });
 
@@ -78,19 +78,6 @@ skip10SecBtn.addEventListener("click", function () {
     myVideo.currentTime += 10;
 });
 
-moviesScreen.addEventListener("click", function () {
-    let width = $('body').width();
-    if (VCP.hasClass('movies')) {
-        VCP.removeClass('movies');
-        MS.css('font-size', '20px');
-        $('main').css('max-width', '1200px');
-    } else {
-        VCP.addClass('movies');
-        MS.css('font-size', '10px');
-        $('main').css('max-width', width);
-    }
-});
-
 setInterval(() => {
     // Check statut pause pour update btn
     if (myVideo.paused) {
@@ -115,17 +102,17 @@ setInterval(() => {
 }, 500);
 
 // Volume
-volume.addEventListener("click", function () {
-    showPopup('info', 'Encore de la patience', 'Fonctionalité non disponible')
-});
+// volume.addEventListener("click", function () {
+//     showPopup('info', 'Encore de la patience', 'Fonctionalité non disponible')
+// });
 
 // BETA TEST
-
-
-// Fonction pour basculer en mode plein écran
-function toggleFullScreen() {
-    var elem = document.getElementById("Player");
-    if (elem.requestFullscreen) {
-        elem.requestFullscreen();
+videoContainer.addEventListener("fullscreenchange", function() {
+    if (document.fullscreenElement) {
+        $('video').css('height', "100vh");
+        $('video').removeClass('VideoHeightMax');
+    } else {
+        $('video').css('height', "auto");
+        $('video').addClass('VideoHeightMax');
     }
-}
+});

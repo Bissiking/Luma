@@ -62,18 +62,17 @@ if (isset($_SESSION['authentification']['user'])) :
             ?>
                     <div class="modern-box" onclick="DashAgent('<?= $agent['uuid_agent'] ?>')" data-uuidagent="<?= $agent['uuid_agent'] ?>">
                         <h2><?= $agent['agent_name'] ?></h2>
-                        <p><?php if($agent['agent_etat'] == 0){
-                            echo 'Non associé';
-                        }else if($agent['agent_etat'] == 1){
-                            echo 'En ligne';
-                        }else if($agent['agent_etat'] == 10){
-                            echo 'Hors ligne';
-                        }else if($agent['agent_etat'] == 99){
-                            echo 'En maintenance';
-                        }else{
-                            echo 'Etat indisponible';
-                        }?></p>
-                        <p><?= $agent['agent_version'] ?></p>
+                        <?php if($agent['agent_etat'] == 0): ?>
+                            <p id="agent-statut-<?= $agent['uuid_agent'] ?>" class="agent-etat info">Non associé</p>
+                        <?php elseif($agent['agent_etat'] == 1): ?>
+                            <p id="agent-statut-<?= $agent['uuid_agent'] ?>" class="agent-etat good">En ligne</p>
+                        <?php elseif($agent['agent_etat'] == 10): ?>
+                            <p id="agent-statut-<?= $agent['uuid_agent'] ?>" class="agent-etat offline">Hors ligne</p>
+                        <?php elseif($agent['agent_etat'] == 99): ?>
+                            <p id="agent-statut-<?= $agent['uuid_agent'] ?>" class="agent-etat">En maintenance</p>
+                        <?php else: ?>
+                            <p id="agent-statut-<?= $agent['uuid_agent'] ?>" class="agent-etat">Etat indisponible</p>
+                        <?php endif; ?>
                     </div>
             <?php }
             } ?>

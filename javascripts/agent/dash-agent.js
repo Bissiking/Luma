@@ -14,7 +14,7 @@ function ModelProcessor() {
             var sondeTime = new Date(response.result.status.date);
             var elapsedTimeInSeconds = (currentTime - sondeTime) / 1000;
 
-            if (elapsedTimeInSeconds > 300) {
+            if (elapsedTimeInSeconds > 600) {
                 // Avertissement alerte sonde
                 $('#config-sys').removeClass();
                 $('#config-sys').addClass('sonde-error');
@@ -27,7 +27,7 @@ function ModelProcessor() {
 
                 // Message d'alerte de non contact de la sonde
                 $('#config-sys-alerte').text(`La sonde ne réponds plus depuis: ${jours} Jour(s), ${heures} Heure(s), ${minutes} minute(s) et ${secondes} seconde(s)`);
-            } else if (elapsedTimeInSeconds > 120) {
+            } else if (elapsedTimeInSeconds > 300) {
                 // Avertissement alerte sonde
                 $('#config-sys').removeClass();
                 $('#config-sys').addClass('sonde-warning');
@@ -126,14 +126,14 @@ function ServicesPlex() {
             const minutes = Math.floor((elapsedTimeInSeconds % 3600) / 60);
             const secondes = Math.floor(elapsedTimeInSeconds % 60);
 
-            if (elapsedTimeInSeconds > 900000) {
+            if (elapsedTimeInSeconds > 900) { // 15 Minutes
                 // Avertissement alerte sonde
                 $('#plex-sys').removeClass();
                 $('#plex-sys').addClass('sonde-error');
 
                 // Message d'alerte de non contact de la sonde
                 $('#plex-sys-alerte').text(`La sonde ne réponds plus depuis: ${jours} Jour(s), ${heures} Heure(s), ${minutes} minute(s) et ${secondes} seconde(s)`);
-            } else if (elapsedTimeInSeconds > 600000) {
+            } else if (elapsedTimeInSeconds > 600) { // 10 Minutes
                 // Avertissement alerte sonde
                 $('#plex-sys').removeClass();
                 $('#plex-sys').addClass('sonde-warning');
@@ -248,12 +248,12 @@ function ContainerCheck() {
                 var sectionAlerte = "RAS";
                 var txtSonde = "";
 
-                if (elapsedTimeInSeconds > 900000) {
+                if (elapsedTimeInSeconds > 600) {
                     // Avertissement alerte sonde
                     sectionAlerte = "sonde-error"
                     // Message d'alerte de non contact de la sonde
                     txtSonde = `La sonde ne réponds plus depuis: ${jours} Jour(s), ${heures} Heure(s), ${minutes} minute(s) et ${secondes} seconde(s)`;
-                } else if (elapsedTimeInSeconds > 600000) {
+                } else if (elapsedTimeInSeconds > 300) {
                     // Avertissement alerte sonde
                     sectionAlerte = "sonde-warning"
                     // Message d'alerte de non contact de la sonde
@@ -317,16 +317,65 @@ function CheckService(status) {
     }
 }
 
+function ServicesJellyFin() {
+    $.ajax({
+        url: url + "JellyFin-data.json",
+        dataType: 'json',
+        cache: false,
+        success: function (response) {
+            let data = response.result;
+            var currentTime = new Date();
+            var sondeTime = new Date(response.result.date);
+            var elapsedTimeInSeconds = (currentTime - sondeTime) / 1000;
+            // Calcule en Heure lisible
+            const jours = Math.floor(elapsedTimeInSeconds / (3600 * 24));
+            const heures = Math.floor((elapsedTimeInSeconds % (3600 * 24)) / 3600);
+            const minutes = Math.floor((elapsedTimeInSeconds % 3600) / 60);
+            const secondes = Math.floor(elapsedTimeInSeconds % 60);
+
+            if (elapsedTimeInSeconds > 900) { // 15 Minutes
+                // Avertissement alerte sonde
+                $('#JellyFin-sys').removeClass();
+                $('#JellyFin-sys').addClass('sonde-error');
+
+                // Message d'alerte de non contact de la sonde
+                $('#JellyFin-sys-alerte').text(`La sonde ne réponds plus depuis: ${jours} Jour(s), ${heures} Heure(s), ${minutes} minute(s) et ${secondes} seconde(s)`);
+            } else if (elapsedTimeInSeconds > 600) { // 10 Minutes 
+                // Avertissement alerte sonde
+                $('#JellyFin-sys').removeClass();
+                $('#JellyFin-sys').addClass('sonde-warning');
+
+                // Message d'alerte de non contact de la sonde
+                $('#JellyFin-sys-alerte').text(`La sonde ne réponds plus depuis: ${jours} Jour(s), ${heures} Heure(s), ${minutes} minute(s) et ${secondes} seconde(s)`);
+            } else {
+                $('#JellyFin-sys').removeClass();
+                $('#JellyFin-sys-alerte').text(`RAS`);
+            }
+
+            if (data.status == 1) {
+                statsTxt = 'En fonctionnement';
+            } else {
+                statsTxt = 'Service stoppé'
+            }
+
+            $('#data-agent-JellyFin').text(statsTxt)
+            $('#data-agent-servicesJellyFinUpdate').text(data.date)
+        },
+        error: function (error) {
+            console.error('Erreur lors du chargement du fichier JSON :', error);
+        }
+    });
+}
 
 function AutoStart(id) {
     let etat = $('#' + id).data('autostart');
     let uuid_agent = $('#agent-uuid').text();
 
-    if (etat == 0){
+    if (etat == 0) {
         etat = 1;
         textBtn = "Désactivé AutoStart";
         Class = "Delete"
-    }else{
+    } else {
         etat = 0;
         textBtn = "Activé AutoStart";
         Class = ""
@@ -335,13 +384,13 @@ function AutoStart(id) {
     $.ajax({
         type: 'POST',
         url: 'functions/update_statut_container',
-        data: 'id='+id+"&etat="+etat+"&uuid_agent="+uuid_agent,
+        data: 'id=' + id + "&etat=" + etat + "&uuid_agent=" + uuid_agent,
         success: function (response) {
             $('#' + id).data('autostart', etat);
             $('#' + id).text(textBtn);
             if (Class == 'Delete') {
                 $('#' + id).addClass('delete');
-            }else{
+            } else {
                 $('#' + id).removeClass();
             }
         },
@@ -356,11 +405,11 @@ function AutoRestart(id) {
     let etat = $('#' + id).data('autorestart');
     let uuid_agent = $('#agent-uuid').text();
 
-    if (etat == 0){
+    if (etat == 0) {
         etat = 1;
         textBtn = "Désactivé AutoRestart";
         Class = "Delete"
-    }else{
+    } else {
         etat = 0;
         textBtn = "Activé AutoRestart";
         Class = ""
@@ -369,13 +418,13 @@ function AutoRestart(id) {
     $.ajax({
         type: 'POST',
         url: 'functions/update_statut_container',
-        data: 'id='+id+"&etat="+etat+"&uuid_agent="+uuid_agent,
+        data: 'id=' + id + "&etat=" + etat + "&uuid_agent=" + uuid_agent,
         success: function (response) {
             $('#' + id).data('autorestart', etat);
             $('#' + id).text(textBtn);
             if (Class == 'Delete') {
                 $('#' + id).addClass('delete');
-            }else{
+            } else {
                 $('#' + id).removeClass();
             }
         },
@@ -391,6 +440,7 @@ function AutoRestart(id) {
 ContainerCheck();
 ModelProcessor();
 ServicesPlex();
+ServicesJellyFin();
 Memory();
 LoadDisk();
 
@@ -405,6 +455,7 @@ setInterval(() => {
 
 setInterval(() => {
     ServicesPlex();
+    ServicesJellyFin();
     ContainerCheck();
 }, 150000);
 

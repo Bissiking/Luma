@@ -100,6 +100,24 @@
         "url_pattern": "/api/agent/statut",
         "controller":"APIAgentStatutController",
         "action":"show"
+    },
+    "AdminStatutController" : {
+        "routeName": "AdminStatutController",
+        "url_pattern": "/admin/statut",
+        "controller":"AdminStatutController",
+        "action":"show"
+    },
+    "ProfilsController" : {
+        "routeName": "ProfilsController",
+        "url_pattern": "/profil",
+        "controller":"ProfilsController",
+        "action":"show"
+    },
+    "APINinoLogin" : {
+        "routeName": "APINinoLogin",
+        "url_pattern": "/api/login",
+        "controller":"APINinoLogin",
+        "action":"show"
     }
 }
 

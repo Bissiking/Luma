@@ -28,6 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         fwrite($file, "define('DB_LUMA_AGENT_VERSION', 'DB00');\n");
     }
 
+    if (!defined("DB_LUMA_STATUT_VERSION")) {
+        fwrite($file, "define('DB_LUMA_STATUT_VERSION', 'DB00');\n");
+    }
+
     // Fermer le fichier
     fclose($file);
     echo 'succes';

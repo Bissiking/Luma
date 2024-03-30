@@ -19,8 +19,8 @@
 - ProgressBar de timeline
 - Bouton Pause/Play
 - Bouton +10 secondes et -10 secondes
-- Bouton du mode cinéma
-- Activation du FullScreen (Commande de base du navigateur)
+- Bouton Fullscreen
+- Activation du FullScreen (Commande de personnalisé)
 - Bouton de supression d'une route
 - Réorganisation des menus
 - API de reception des données agent
@@ -36,7 +36,24 @@
 - Récupération de la liste des containers
 - Création de section par containers
 - Actualisation automatique des containers
-
+- Retrait du check-up de la sonde sur le dashboard
+- Mise en place du formulaire d'inscription
+- Ajout de l'entrée routeur (Admin -> Statut)
+- Blocage de la suppression de la route '/admin/routes'
+- Formulaire d'inscription fonctionnel
+- Création de la page "profil"
+- Création de la route
+- Création des formulaire de modification de profils
+- Ajout de 5 vidéos récentes dans la page "player" de Nino
+- Ajout du block "JellyFin" dans le dashboard
+- Ajout du block "JellyFin dans Statut
+- Modification du "Nom complet, Mot de passe, Email" - OK
+- Changement de la version de la BDD "Nino"
+- Ajout des statut depuis l'espace admin
+- Modification des statuts depuis l'espace admin
+- Suppression des statuts depuis l'espace admin
+- Page des statut fonctionnel
+- API de connexion pour les applications distante
 
 ========== ### V4  ==========
 

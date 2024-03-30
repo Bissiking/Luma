@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- LINK -->
-    <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/all-page.css?v=4">
+    <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/all-page.css?v=5">
     <?php if (strpos($url, 'nino') !== false) : ?>
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/nino.css?v=1">
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/mobile/nino.css?v=0">
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <!-- Icône représentant un compte non connecté -->
-        <img id="profileIcon" src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/images/user-offline.png" alt="Icône de Profil">
+        <!-- <img id="profileIcon" src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/images/user-offline.png" alt="Icône de Profil"> -->
 
         <!-- Menu déroulant pour le profil -->
         <ul id="profileMenu">
@@ -90,6 +90,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="/nino" class="block-url">
                 <img src="/images/nino75.png">
                 <p>Nino</p>
+            </a>
+            <a href="/statut" class="block-url">
+                <i class="fa-solid fa-list-check"></i>
+                <p>État des services</p>
             </a>
 
             <?php if (isset($_SESSION['authentification']['user'])) : ?>
@@ -112,11 +116,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <!-- Si connecté et url n'est pas 'NINO' -->
                     <a href="/agent" class="block-url">
                         <i class="fa-solid fa-jug-detergent"></i>
-                        <p>Gestion des agents</p>
+                        <p>Gestion des agents <span class="betaPops">ALPHA</span> </p>
                     </a>
 
-                    <a href="#" class="block-url">
-                        <i style="color:grey" class="fa-regular fa-address-card"></i>
+                    <a href="/profil" class="block-url">
+                        <i class="fa-regular fa-address-card"></i>
                         <p>Configurer le Profil</p>
                     </a>
                 <?php endif; ?>
