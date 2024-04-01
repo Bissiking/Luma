@@ -209,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $tableName = "luma_statut";
                 $columns = [
                     'id' => 'INT PRIMARY KEY AUTO_INCREMENT',
-                    'apps' => 'VARCHAR(255) NOT NULL',
+                    'service' => 'VARCHAR(255) NOT NULL',
                     'uuid_agent' => 'VARCHAR(255) NOT NULL',
                 ];
                 $result_PDO = createTablePDO($tableName, $columns, $pdo);
