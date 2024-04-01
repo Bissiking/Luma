@@ -78,9 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Vérification de la présence du dossier
                 if (!is_dir($agentDocs)) {
-                    if (!mkdir($agentDocs, 0777)) {
+                    if (!mkdir($agentDocs, 0777, true)) {
                         header('Content-Type: application/json');
-                        echo json_encode(['ERROR' => 'ECHEC DOCS CREATE']);
+                        echo json_encode(['ERROR' => 'ECHEC DOCS CREATE - SRV']);
                         exit;
                     }
                 }
