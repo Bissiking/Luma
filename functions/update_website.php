@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $gitPath = 'C:/Program Files/Git/bin/git.exe';
             putenv("PATH=" . getenv("PATH") . ";" . dirname($gitPath));
         }
-        $output = shell_exec('git stash && git pull 2>&1');
+        $output = shell_exec('git clean -d -f && git stash && git pull 2>&1');
 
         if (PHP_OS === 'Linux') {
             chmod('/', 0777);
