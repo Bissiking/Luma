@@ -1,17 +1,17 @@
-body{
+body {
     height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-header{
+header {
     width: 100%;
     padding: 10px 0px;
     z-index: 99;
 }
 
-main{
+main {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -20,11 +20,11 @@ main{
     flex-wrap: wrap;
 }
 
-h1{
+h1 {
     text-align: left;
 }
 
-.info-popup{
+.info-popup {
     margin: 0px;
 }
 
@@ -40,11 +40,11 @@ h1{
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.disable{
+.disable {
     color: grey !important;
 }
 
-.movies{
+.movies {
     width: 100%;
     position: relative;
     left: 0;
@@ -57,10 +57,11 @@ video {
     width: 100%;
     height: auto;
     object-fit: cover;
-    border-radius: 0px 0px 10px 10px; /* Coins arrondis */
+    border-radius: 0px 0px 10px 10px;
+    /* Coins arrondis */
 }
 
-video.VideoHeightMax{
+video.VideoHeightMax {
     max-height: 400px;
 }
 
@@ -147,13 +148,68 @@ video.VideoHeightMax{
     height: 100vh;
 }
 
+/* VOLUME */
+.slider-container {
+    width: 10px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slider {
+    width: 35px;
+    height: 5px;
+    padding: 0px;
+    margin: 0px;
+    background: #9b9b9b;
+    border: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    transform: rotate(270deg);
+}
+
+.slider:focus {
+    border-bottom: transparent
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 2px;
+    height: 5px;
+    border-radius: 10px;
+    padding: 0px;
+    margin: 0px;
+    background: #009edd;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.fa-volume-xmark{
+    color: rgb(160, 0, 0) !important;
+}
+
+/* FOOTER */
+
+.TimeEnd{
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+}
+
 footer {
     display: none;
 }
 
 /* FUTUR GEN */
 
-.description{
+.description {
     width: 700px;
     padding: 10px;
     font-size: 14px;
@@ -168,40 +224,40 @@ footer {
 
 /* VIDEO RECOMMENDATION */
 
-.video-bloc{
+.video-bloc {
     width: 300px;
     margin: 0px;
 }
 
-.video-bloc > .video{
+.video-bloc>.video {
     height: 70px;
     flex-direction: row;
     text-decoration: none;
     color: #000000;
 }
 
-.video-bloc > .video > img{
+.video-bloc>.video>img {
     width: 125px;
     height: 100%;
     object-fit: scale-down;
 }
 
-.video-bloc > .video > .video-info{
+.video-bloc>.video>.video-info {
     padding: 0px;
     margin: 10px;
 }
 
-.video-bloc > .video > .video-info > .video-title{
+.video-bloc>.video>.video-info>.video-title {
     font-size: 12px;
     font-weight: lighter;
 }
 
 @media only screen and (max-width: 767px) {
-    main{
+    main {
         flex-direction: column;
     }
 
-    #videoContainer{
+    #videoContainer {
         width: 100%;
     }
 
