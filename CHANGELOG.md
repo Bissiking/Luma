@@ -1,3 +1,9 @@
+### 5.1.0
+- Ajout du bouton Mute sur le player
+- Ajout d'un slider de volume
+- Ajout de l'heure de fin
+
+
 ### 5.0.0
 - Création de la LIB ajout data dans une table
 - Changement du logo de LUMA
