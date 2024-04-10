@@ -24,7 +24,7 @@ if (!isset($id) || $id == null) {
         foreach ($req as $video) {
         }
 ?>
-        <link rel="stylesheet" href="<?= SITE_HTTP . SITE_URL ?>/css/player.css?V0">
+        <link rel="stylesheet" href="<?= SITE_HTTP . SITE_URL ?>/css/player.css?V1">
 
 
 
@@ -52,12 +52,14 @@ if (!isset($id) || $id == null) {
             <figure id="videoContainer" class="video-container-player">
                 <video class="video-player VideoHeightMax" id="Player" poster="https://<?= htmlspecialchars(trim($video['server_url'])) ?>/Thumbnail/<?= htmlspecialchars(trim($video['id_video_uuid'])) ?>">
                 </video>
-                <div id="customControls">
+                <div id="customControls" data-fullscreen="false">
                     <span id="progressBar" class="progress-bar progress-bar-fill-player"></span>
                     <span id="progressBarLoader" class="progress-bar progress-bar-fill-loader"></span>
                     <div class="controls-btn controls-left">
-                        <!-- <i id="volume-low" class="fa-solid fa-volume-low disable"></i> -->
-                        Nino Player
+                        <i id="volume-mute" class="fa-solid fa-volume-low"></i>
+                        <div class="slider-container">
+                            <input type="range" min="0" max="100" value="50" class="slider" id="volumeSlider">
+                        </div>
                     </div>
                     <div class="controls-btn controls-center">
                         <i id="back10SecBtn" class="fa-solid fa-clock-rotate-left"></i>
@@ -65,6 +67,7 @@ if (!isset($id) || $id == null) {
                         <i id="skip10SecBtn" class="fa-solid fa-clock-rotate-left"></i>
                     </div>
                     <div class="controls-btn controls-right">
+                        <p class="TimeEnd">Se termine à : <span id="TimeEndVideo">**:**</span></p>
                         <i id="fullscreenBtn" class="fas fa-expand"></i>
                     </div>
                 </div>
@@ -147,7 +150,7 @@ if (!isset($id) || $id == null) {
         <script>
             document.title = "Nino - <?= $video['titre'] ?>";
         </script>
-        <script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/nino/player.js"></script>
+        <script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/nino/player.js?0"></script>
         <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
         <script>
             let url = "https://<?= htmlspecialchars(trim($video['server_url'])) ?>/<?= htmlspecialchars(trim($video['id_video_uuid'])) ?>"
