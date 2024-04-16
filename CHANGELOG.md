@@ -1,3 +1,7 @@
+### 5.1.1
+- Ajout du check de l'API
+
+
 ### 5.1.0
 - Ajout du bouton Mute sur le player
 - Ajout d'un slider de volume
