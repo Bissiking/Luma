@@ -15,6 +15,7 @@ var VCP = $('.video-container-player');
 var MS = $('#movies-screen');
 var PBP = $('#playPauseBtn');
 var volumeIcon = $('#volume-mute');
+var PiPBtn = $('#PiP');
 // AUTRES
 var idleTimeout;
 
@@ -35,13 +36,6 @@ VCP.on('mousemove keydown', function () {
 
 // Appeler la fonction de réinitialisation du délai d'inactivité au chargement de la page
 resetIdleTimeout();
-
-// ProgressBar
-myVideo.addEventListener('timeupdate', function () {
-    var value = (myVideo.currentTime / myVideo.duration) * 100;
-    var widthPB = value * ProgressBarJquery.width() / 100;
-    $('#progressBar').css('box-shadow', 'inset ' + widthPB + 'px 0px 0px 0px #0088a7');
-});
 
 // Bouton pause et play
 $('#playPauseBtn').click(function () {
@@ -169,22 +163,26 @@ Player.addEventListener("loadedmetadata", function () {
     const endTime = new Date(currentTime.getTime() + duration * 1000);
 
     $('#TimeEndVideo').text(formatTime(endTime));
-    ProgressBarUpdate();
+    setInterval(() => {
+        ProgressBarUpdate();
+    }, 500);
     DataTimeUpdate();
 });
 
 function ProgressBarUpdate() {
-    setInterval(() => { // Barre de progression auto regul
-        // Calculer la proportion de la vidéo chargée
-        var bufferedEnd = myVideo.buffered.end(0);
-        var duration = myVideo.duration;
-        if (duration > 0) {
-            // Mettre à jour la valeur de la barre de progression
-            var value = (bufferedEnd / duration) * 100;
-            var widthPBL = value * ProgressBarJquery.width() / 100;
-            $('#progressBarLoader').css('box-shadow', 'inset ' + widthPBL + 'px 0px 0px 0px rgb(255 255 255 / 50%)');
-        }
-    }, 500);
+    // Calculer la proportion de la vidéo chargée
+    var bufferedEnd = myVideo.buffered.end(0);
+    var duration = myVideo.duration;
+    if (duration > 0) {
+        // Mettre à jour la valeur de la barre de progression
+        var value = (bufferedEnd / duration) * 100;
+        var widthPBL = value * ProgressBarJquery.width() / 100;
+        $('#progressBarLoader').css('box-shadow', 'inset ' + widthPBL + 'px 0px 0px 0px rgb(255 255 255 / 50%)');
+    }
+
+    var value = (myVideo.currentTime / duration) * 100;
+    var widthPB = value * ProgressBarJquery.width() / 100;
+    $('#progressBar').css('box-shadow', 'inset ' + widthPB + 'px 0px 0px 0px #0088a7');
 }
 
 function DataTimeUpdate() {
@@ -236,8 +234,31 @@ ProgressBarJquery.click(function (event) {
     const duration = Player.duration;
     const newPosition = (progressPercentage / 100) * duration;
     Player.currentTime = newPosition;
-    // Mettre à jour la position de la vidéo dans l'interface utilisateur
-    // (Remplacez cette partie par le code pour mettre à jour votre lecteur vidéo)
-    console.log('Position de la vidéo mise à jour :', progressPercentage);
 });
 
+if ('pictureInPictureEnabled' in document) {
+    console.log('PiP OK');
+} else {
+    PiPBtn.hide();
+    console.log('PiP NOK');
+}
+
+PiPBtn.click(function () {
+    togglePiPButton();
+})
+
+function togglePiPButton() {
+    if ('pictureInPictureEnabled' in document) {
+        try {
+            if (document.pictureInPictureElement) {
+                // Si une vidéo est déjà en mode Picture-in-Picture, désactivez-la
+                document.exitPictureInPicture();
+            } else {
+                // Sinon, activez le mode Picture-in-Picture pour la vidéo spécifiée
+                Player.requestPictureInPicture();
+            }
+        } catch (error) {
+            console.error('Erreur lors du changement en mode Picture-in-Picture :', error);
+        }
+    }
+}
