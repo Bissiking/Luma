@@ -13,7 +13,7 @@ function reserveVideo(event) {
             if (response == 'succes') {
                 window.location.href = "/nino/add";
             } else {
-                showPopup("warning", "Nino !!", "Un champs ... Et tu as réussi à foiré");
+                showPopup("warning", "Nino !!", "Une informations à renseigner... Et tu as réussi à rater");
             }
 
         },

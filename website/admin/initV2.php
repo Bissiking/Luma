@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_URI'] !== '/') {
 			</div>
 
 			<div class="input-container">
-				<input type="text" id="DB_NAME" name="DB_NAME" placeholder="" value="nexus">
+				<input type="text" id="DB_NAME" name="DB_NAME" placeholder="" value="luma">
 				<label for="DB_NAME">Nom de la BDD:</label>
 				<span class="underline"></span>
 			</div>

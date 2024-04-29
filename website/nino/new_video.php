@@ -127,4 +127,4 @@
 </script>
 
 <!-- SCRIPTS SRV -->
-<script src="../javascripts/nino/add.js?0"></script>
+<script src="../javascripts/nino/add.js?1"></script>

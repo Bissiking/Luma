@@ -66,7 +66,7 @@ if (isset($_SESSION['authentification']['user'])) {
         <p class="pops-api-use"><span id="apiuse"><?= $video['server_url']; ?></span></p>
         <p class="info-popup">La plupart des champs, sont en enregistrement automatiques. Vous avez juste à cliquer en dehors du champs</p>
 
-        <input id="videoTitle" type="text" name="videoTitle" placeholder="Titre de la vidéo" value="<?= $video['titre']; ?>"></input>
+        <input id="videoTitle" type="text" name="videoTitle" placeholder="Titre de la vidéo" placeholder="Récupération des informations ...."></input>
 
         <div class="player-thumbnail">
             <div id="no-video">
@@ -83,7 +83,7 @@ if (isset($_SESSION['authentification']['user'])) {
                     </span>
                 </div>
             </div>
-            <video id="Player" src="" poster="https://<?= $video['server_url']; ?>/Thumbnail/<?= $video['id_video_uuid']; ?>" controls></video>
+            <video id="Player" src="" poster="https://<?= $video['server_url']; ?>/Thumbnail/<?= $video['id_video_uuid']; ?>" controls width="85%"></video>
             <div class="thumbnail-video">
                 <img class="upload-image-select" id="imagePreview" style="display: none; max-width: 100%; max-height: 200px;">
                 <!-- BTN UPLOAD miniature -->
@@ -94,33 +94,13 @@ if (isset($_SESSION['authentification']['user'])) {
             </div>
         </div>
 
-        <textarea name="videoDescription" id="videoDescription" cols="30" rows="5" placeholder="Ma description trop cool ici"><?= $video['description']; ?></textarea>
+        <textarea name="videoDescription" id="videoDescription" cols="30" rows="5" placeholder="Récupération des informations ...."></textarea>
 
-        <input id="tagInput" type="text" placeholder="Renseigne ton tag, puis fait entrée">
-        <div id="tag-container">
-            <?php
-            if ($video['tag'] != "") :
-                $tags = json_decode($video['tag']);
-
-                if ($tags === null && json_last_error() !== JSON_ERROR_NONE) :
-                    // La conversion a échoué, gérer l'erreur ici
-                    echo 'Récupération des tag impossible';
-                else :
-                    foreach ($tags as $tag) { ?>
-                        <div class="tag"><?php if ($tag != "") {
-                                                echo $tag;
-                                            } ?></div>
-            <?php }
-                endif;
-            endif; ?>
-        </div>
+        <input id="tagInput" type="text" placeholder="Renseigne ton tag, puis fait entrée ou espace">
+        <div id="tag-container"></div>
 
         <div class="timezone-publication">
-            <input type="datetime-local" id="datetimepicker" value="<?php
-                                                                    if (isset($video['publish'])) {
-                                                                        echo date('Y-m-d\TH:i', strtotime($video['publish']));
-                                                                    }
-                                                                    ?>">
+            <input type="datetime-local" id="datetimepicker">
             <select name="videoStatus" id="videoStatus">
                 <option selected hidden value="<?= $video['status']; ?>">Choisir si la vidéo est visible ou non</option>
                 <?php if ($video['status'] !== "") : ?>
@@ -136,7 +116,7 @@ if (isset($_SESSION['authentification']['user'])) {
         </div>
     </form>
     <!-- SCRIPTS SRV -->
-    <script defer src="../javascripts/nino/edit_v2.js?4"></script>
+    <script defer src="../javascripts/nino/edit_v2.js?6"></script>
 <?php else : ?>
     <h1 class="error"><?= $message_Error ?></h1>
 <?php endif; ?>

@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
 
-            if (DB_LUMA_DOMAINS_VERSION >= "DB06") {
+            if (DB_LUMA_NINO_DATA_VERSION >= "DB06") {
                 $createTable = 1;
                 $columnsToAdd = [
                     "status VARCHAR(255) NULL",

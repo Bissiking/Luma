@@ -4,7 +4,7 @@ function createTablePDO($tableName, $columns, $pdo) {
         // Définir le mode d'erreur PDO sur exception
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        // Requête SQL pour créer une table
+        // Requête SQL pour créer une table avec le moteur InnoDB
         $sql = "CREATE TABLE $tableName (";
         
         foreach ($columns as $columnName => $columnDefinition) {
@@ -12,7 +12,7 @@ function createTablePDO($tableName, $columns, $pdo) {
         }
 
         $sql = rtrim($sql, ", "); // Supprimer la virgule finale
-        $sql .= ")";
+        $sql .= ") ENGINE=InnoDB"; // Spécifier le moteur InnoDB
 
         // Utiliser exec() car aucune valeur de retour attendue
         $pdo->exec($sql);
@@ -22,6 +22,7 @@ function createTablePDO($tableName, $columns, $pdo) {
         return "Erreur lors de la création de la table $tableName : " . $e->getMessage();
     }
 }
+
 
 
 // Exemple d'utilisation
