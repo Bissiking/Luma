@@ -9,8 +9,11 @@ function ExtractDataAPI() {
     $.ajax({
         type: 'GET',
         url: APIURL + '/video/data/' + idVid,
-        success: function (response) {
-            console.log(response);
+        success: function (data) {
+            console.log(data[0].data);
+
+            let response = data[0].data
+
             let titre = response.titre,
                 description = response.description,
                 tags = response.tags,
