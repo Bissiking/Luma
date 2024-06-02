@@ -8,7 +8,7 @@ function pingServer() {
     api_nino_txt.text('Vérification du service');
 
     $.ajax({
-        url: 'https://nino.mhemery.fr/check',
+        url: 'https://api.nino.mhemery.fr/check',
         type: 'GET',
         timeout: 3000, // Définir un délai d'attente pour la réponse (en millisecondes)
         success: function (response) {
