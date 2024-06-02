@@ -350,3 +350,12 @@ footer {
     justify-content: center;
     align-items: center;
 }
+
+.error {
+    background-color: #9b0000;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}

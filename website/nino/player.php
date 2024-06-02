@@ -70,7 +70,8 @@ if (!isset($id) || $id == null) {
                         <i id="skip10SecBtn" class="fa-solid fa-clock-rotate-left"></i>
                     </div>
                     <div class="controls-btn controls-right">
-                        <p class="TimeEnd">Se termine à : <span id="TimeEndVideo">**:**</span></p>
+                        <span class="TimeEnd">Se termine à <span id="TimeEndVideo">**:**</span></span>
+                        <i id="PiP" class="fa-solid fa-window-restore"></i>
                         <i id="fullscreenBtn" class="fas fa-expand"></i>
                     </div>
                 </div>

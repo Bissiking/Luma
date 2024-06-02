@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'uuid_agent' => $uuid,
             'id_users' => $_SESSION['authentification']['user']['id'],
             'agent_name' => $agent_name,
+            'module' => $module,
         ];
 
         $PDO = insertDataPDO($tableName, $data, $pdo);

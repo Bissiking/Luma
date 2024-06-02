@@ -2,22 +2,75 @@ var isProcessing = false,
     isProcessing1 = false,
     isThumbnailUpload = false,
     idVid = getParameterByName('id'),
-    APIURL = 'https://'+$('#apiuse').text();
-SearchImage(APIURL+'/Thumbnail/' + idVid);
+    APIURL = 'https://' + $('#apiuse').text();
+SearchImage(APIURL + '/Thumbnail/' + idVid);
 
+function ExtractDataAPI() {
+    $.ajax({
+        type: 'GET',
+        url: APIURL + '/video/data/' + idVid,
+        success: function (data) {
+            console.log(data[0].data);
+
+            let response = data[0].data
+
+            let titre = response.titre,
+                description = response.description,
+                tags = response.tags,
+                datetimepicker = response.datetimepicker;
+
+            // Affichage du titre
+            $('input#videoTitle').val(titre);
+            // Affichage de la description
+            $('#videoDescription').val(description);
+            // Affichage de la date et l'heure
+            $('#datetimepicker').val(datetimepicker);
+            // Affichage de la date et l'heure
+            $('#datetimepicker').val(datetimepicker);
+            // Affichage des tags
+            if (tags && tags.length > 0) {
+                // Parcourir les tags et les ajouter au conteneur
+                response.tags.forEach(function (tag) {
+                    // Vérifier si le tag n'est pas vide
+                    if (tag !== "") {
+                        // Créer un élément div pour le tag et l'ajouter au conteneur
+                        var tagElement = $('<div class="tag"></div>').text(tag);
+                        $('#tag-container').append(tagElement);
+
+                        tagElement.click(function () {
+                            $(this).remove(); // Supprimer le tag
+                            doneTyping(); //Mise a jour des infos
+                        });
+                    }
+                });
+            } else {
+                // Afficher un message d'erreur si aucun tag n'est disponible
+                $('#tag-container').text('Aucun tag disponible');
+            }
+
+
+
+        },
+        error: function (error) {
+            console.log(error);
+            showPopup("error", "ECHEC", "Récupération des informations en erreur");
+        }
+    });
+}
+
+ExtractDataAPI()
 
 function CheckVideoAPI() {
     $.ajax({
         type: 'GET',
-        url: APIURL+'/video/check/'+idVid,
+        url: APIURL + '/video/check/' + idVid,
         success: function (response) {
-            console.log(response);
             if (response == "exist") {
                 $('#no-video').hide();
                 showPopup("warning", "Ok ...", "Une vidéo à été trouvé. Focntionnalité supplémentaire indisponible pour l'instant");
 
                 // Ajout de la vidéo dans le player
-                let url = APIURL+'/'+idVid
+                let url = APIURL + '/' + idVid
                 var id = new URL(url).pathname;
                 const video = document.getElementById('Player');
                 const videoSrc = url + '/nino.m3u8';
@@ -25,10 +78,10 @@ function CheckVideoAPI() {
                     const hls = new Hls();
                     hls.loadSource(videoSrc);
                     hls.attachMedia(video);
-                    hls.on(Hls.Events.MANIFEST_PARSED, () => {});
+                    hls.on(Hls.Events.MANIFEST_PARSED, () => { });
                 } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
                     video.src = videoSrc;
-                    video.addEventListener('loadedmetadata', () => {});
+                    video.addEventListener('loadedmetadata', () => { });
                 }
             } else {
                 showPopup("error", "l'API parle chelou", "Fichier non trouver, ou ton API pète un câble. Toi qui choisi ...");
@@ -71,27 +124,6 @@ textarea.on('input', function () {
     // Ajustez la hauteur du textarea en fonction de son contenu
     this.style.height = 'auto';
     this.style.height = (this.scrollHeight) + 'px';
-});
-
-// AJOUT DE TAGS
-const tagInput = $('#tagInput');
-const tagContainer = $('#tag-container');
-
-tagInput.on('keydown', function (event) {
-    // Vérifier si la touche est "Entrée" ou "Espace" et si le champ n'est pas vide
-    if ((event.key === 'Enter' || event.key === ' ') && tagInput.val().trim() !== '') {
-        // Ajouter le tag à la liste
-        addTag(tagInput.val().trim());
-
-        // Ajout du tag en BDD
-        doneTyping();
-
-        // Effacer le champ de saisie
-        tagInput.val('');
-
-        // Empêcher le formulaire de se soumettre
-        event.preventDefault();
-    }
 });
 
 // UPLOAD DE L'IMAGE
@@ -145,14 +177,13 @@ function SearchImage(url) {
     });
 }
 
-// URL A CHANGER
 function UploadThumbnailAjax(thisThumbnail) {
     var fileInput = $('#imageInput')[0].files[0];
     if (fileInput) {
         var formData = new FormData();
         formData.append('image', fileInput);
         $.ajax({
-            url: APIURL+'/upload/' + idVid,
+            url: APIURL + '/upload/' + idVid,
             type: 'POST',
             data: formData,
             processData: false,
@@ -187,6 +218,28 @@ function UploadThumbnailAjax(thisThumbnail) {
     }
 }
 
+
+// AJOUT DE TAGS
+const tagInput = $('#tagInput');
+const tagContainer = $('#tag-container');
+
+tagInput.on('keydown', function (event) {
+    // Vérifier si la touche est "Entrée" ou "Espace" et si le champ n'est pas vide
+    if ((event.key === 'Enter' || event.key === ' ') && tagInput.val().trim() !== '') {
+        // Ajouter le tag à la liste
+        addTag(tagInput.val().trim());
+
+        // Ajout du tag en BDD
+        doneTyping();
+
+        // Effacer le champ de saisie
+        tagInput.val('');
+
+        // Empêcher le formulaire de se soumettre
+        event.preventDefault();
+    }
+});
+
 $('.tag').on('click', function () {
     var clickedTag = $(this).text();
     console.log(clickedTag);
@@ -202,10 +255,10 @@ function addTag(tagText) {
     // Supprimer le tag lorsque l'utilisateur clique dessus
     tag.on('click', function () {
         $(this).remove();
+        doneTyping();
     });
     tagContainer.append(tag);
 }
-
 
 // ADD TO BDD
 var typingTimer;
@@ -223,40 +276,6 @@ function getTagsFromContainer() {
         tags.push($(this).text().trim());
     });
     return tags;
-}
-
-function doneTyping() {
-    // Récupérer les valeurs des champs
-    var titre = $('#videoTitle').val(),
-        description = $('#videoDescription').val(),
-        datetimepicker = $('#datetimepicker').val(),
-        tags = getTagsFromContainer();
-    videoStatus = $('#videoStatus').val();
-
-    // Envoyer une requête AJAX pour mettre à jour en base de données
-    $.ajax({
-        type: 'POST',
-        url: 'functions/nino_edit_v2?id=' + idVid, // Remplacez par l'URL de votre script serveur
-        data: {
-            titre: titre,
-            description: description,
-            datetimepicker: datetimepicker,
-            tags: tags,
-            videoStatus: videoStatus
-        },
-        success: function (response) {
-            response = JSON.parse(response);
-            if (response.success == true) {
-               showPopup("good", "The save is saving ...", "Changements sauvegardés"); 
-            }else{
-                showPopup("error", "Echec de la sauvegarde", "Une erreur est survenue pendant la sauvegarde, vérifie ta connexion .... on sait jamais ... #0001");
-            }
-        },
-        error: function (error) {
-            console.error('Erreur lors de la mise à jour des données:', error);
-            showPopup("error", "Echec de la sauvegarde", "Une erreur est survenue pendant la sauvegarde, vérifie ta connexion .... on sait jamais ... #0002");
-        }
-    });
 }
 
 // UPLOAD VIDEO - SINGLE
@@ -282,6 +301,7 @@ $('#videoUP01').change(function () {
     }
 });
 
+// UPLOAD DE LA VIDEO
 function uploadVideo() {
     var fileInput = $('#videoUP01')[0].files[0];
     if (fileInput) {
@@ -297,10 +317,10 @@ function uploadVideo() {
         // }
 
         // Modifie l'URL de la requête Axios
-        const uploadUrl = APIURL+`/upload/video/${idVid}`;
+        const uploadUrl = APIURL + `/upload/video/${idVid}`;
         axios.post(uploadUrl, formDataVideo, {
             params: { encoded: false },
-          })
+        })
             .then(response => {
                 console.log(response.data);
                 alert('Vidéo envoyée avec succès!');
@@ -312,4 +332,37 @@ function uploadVideo() {
     } else {
         console.log('ERROR');
     }
+}
+
+
+// Validation des actions
+function doneTyping() {
+    // Récupérer les valeurs des champs
+    var titre = $('#videoTitle').val(),
+        description = $('#videoDescription').val(),
+        datetimepicker = $('#datetimepicker').val(),
+        tags = getTagsFromContainer();
+    videoStatus = $('#videoStatus').val();
+
+    // Envoyer une requête AJAX pour mettre à jour en base de données
+    axios.post(APIURL + '/upload/video/data/' + idVid, {
+        id: idVid,
+        titre: titre,
+        description: description,
+        datetimepicker: datetimepicker,
+        tags: tags,
+        videoStatus: videoStatus
+    })
+        .then(function (response) {
+            if (response.data == "success") {
+                showPopup("good", "La sauvegarde est en cours...", "Changements sauvegardés");
+            } else {
+                showPopup("error", "Échec de la sauvegarde", "Une erreur est survenue pendant la sauvegarde, vérifie ta connexion .... on sait jamais ... #0001");
+                console.log(response);
+            }
+        })
+        .catch(function (error) {
+            console.error('Erreur lors de la mise à jour des données:', error);
+            showPopup("error", "Échec de la sauvegarde", "Une erreur est survenue pendant la sauvegarde, vérifie ta connexion .... on sait jamais ... #0002");
+        });
 }

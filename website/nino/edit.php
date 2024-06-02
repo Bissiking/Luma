@@ -6,55 +6,40 @@
 
 <?php
 if (isset($_SESSION['authentification']['user'])) {
-    require './base/nexus_base.php';
-    $id_users = $_SESSION['authentification']['user']['id'];
-    $id = $_GET['id'];
-    $v = array('id_users' => $id_users, 'id_video_uuid' => $id);
-    $sql = 'SELECT * FROM luma_nino_data WHERE id_users = :id_users AND id_video_uuid = :id_video_uuid';
-    $req = $pdo->prepare($sql);
-    $req->execute($v);
-    $result = $req->rowCount();
 
-    if ($result >= 1) {
-        foreach ($req as $video) {
-        }
-        $apiUrl = "https://".$video['server_url']."/check";
+    $apiUrl = "dev.nino.mhemery.fr";
 
-        $options = [
-            'http' => [
-                'timeout' => 1, // Timeout en secondes
-            ],
-        ];
+    $options = [
+        'http' => [
+            'timeout' => 3, // Timeout en secondes
+        ],
+    ];
 
-        // Création du contexte
-        $context = stream_context_create($options);
+    // Création du contexte
+    $context = stream_context_create($options);
 
-        // Récupération du contenu avec gestion du timeout
-        $content = @file_get_contents($apiUrl, false, $context);
+    // Récupération du contenu avec gestion du timeout
+    $content = @file_get_contents("https://".$apiUrl."/check", false, $context);
 
-        if ($content === false) {
-            // Gérer les erreurs en fonction de la raison de l'échec
-            $error = error_get_last();
-            if ($error !== null && strpos($error['message'], 'timed out') !== false) {
-                // Gérer le timeout
-                $ERROR_EDIT = 1;
-                $message_Error = "L\'API à mis trop de temps à répondre.\n";
-            } else {
-                // Gérer d'autres erreurs
-                $ERROR_EDIT = 1;
-                $message_Error = "Une erreur s'est produite lors de la récupération de la version de l'API = " . $apiUrl;
-            }
+    if ($content === false) {
+        // Gérer les erreurs en fonction de la raison de l'échec
+        $error = error_get_last();
+        if ($error !== null && strpos($error['message'], 'timed out') !== false) {
+            // Gérer le timeout
+            $ERROR_EDIT = 1;
+            $message_Error = "L\'API à mis trop de temps à répondre.\n";
         } else {
-            // Utiliser le contenu récupéré
-            $data = json_decode($content, true);
-            if ($data['version'] < '1.0.0') {
-                $ERROR_EDIT = 1;
-                $message_Error = 'l\'API n\'est pas de la bonne version. <br>Version minimal exigé: 1.0.0';
-            }
+            // Gérer d'autres erreurs
+            $ERROR_EDIT = 1;
+            $message_Error = "Une erreur s'est produite lors de la récupération de la version de l'API = " . $apiUrl;
         }
     } else {
-        $ERROR_EDIT = 1;
-        $message_Error = 'Aucune vidéo trouvé';
+        // Utiliser le contenu récupéré
+        $data = json_decode($content, true);
+        if ($data['version'] < '1.0.0') {
+            $ERROR_EDIT = 1;
+            $message_Error = 'l\'API n\'est pas de la bonne version. <br>Version minimal exigé: 1.0.0';
+        }
     }
 } else {
     header('Location: /');
@@ -63,10 +48,10 @@ if (isset($_SESSION['authentification']['user'])) {
 
 <?php if (!isset($ERROR_EDIT)) : ?>
     <form id="uploadForm" enctype="multipart/form-data">
-        <p class="pops-api-use"><span id="apiuse"><?= $video['server_url']; ?></span></p>
+        <p class="pops-api-use"><span id="apiuse"><?= $apiUrl ?></span></p>
         <p class="info-popup">La plupart des champs, sont en enregistrement automatiques. Vous avez juste à cliquer en dehors du champs</p>
 
-        <input id="videoTitle" type="text" name="videoTitle" placeholder="Titre de la vidéo" value="<?= $video['titre']; ?>"></input>
+        <input id="videoTitle" type="text" name="videoTitle" placeholder="Titre de la vidéo" placeholder="Récupération des informations ...."></input>
 
         <div class="player-thumbnail">
             <div id="no-video">
@@ -83,7 +68,7 @@ if (isset($_SESSION['authentification']['user'])) {
                     </span>
                 </div>
             </div>
-            <video id="Player" src="" poster="https://<?= $video['server_url']; ?>/Thumbnail/<?= $video['id_video_uuid']; ?>" controls></video>
+            <video id="Player" src="" poster="https://<?= $video['server_url']; ?>/Thumbnail/<?= $video['id_video_uuid']; ?>" controls width="85%"></video>
             <div class="thumbnail-video">
                 <img class="upload-image-select" id="imagePreview" style="display: none; max-width: 100%; max-height: 200px;">
                 <!-- BTN UPLOAD miniature -->
@@ -94,33 +79,13 @@ if (isset($_SESSION['authentification']['user'])) {
             </div>
         </div>
 
-        <textarea name="videoDescription" id="videoDescription" cols="30" rows="5" placeholder="Ma description trop cool ici"><?= $video['description']; ?></textarea>
+        <textarea name="videoDescription" id="videoDescription" cols="30" rows="5" placeholder="Récupération des informations ...."></textarea>
 
-        <input id="tagInput" type="text" placeholder="Renseigne ton tag, puis fait entrée">
-        <div id="tag-container">
-            <?php
-            if ($video['tag'] != "") :
-                $tags = json_decode($video['tag']);
-
-                if ($tags === null && json_last_error() !== JSON_ERROR_NONE) :
-                    // La conversion a échoué, gérer l'erreur ici
-                    echo 'Récupération des tag impossible';
-                else :
-                    foreach ($tags as $tag) { ?>
-                        <div class="tag"><?php if ($tag != "") {
-                                                echo $tag;
-                                            } ?></div>
-            <?php }
-                endif;
-            endif; ?>
-        </div>
+        <input id="tagInput" type="text" placeholder="Renseigne ton tag, puis fait entrée ou espace">
+        <div id="tag-container"></div>
 
         <div class="timezone-publication">
-            <input type="datetime-local" id="datetimepicker" value="<?php
-                                                                    if (isset($video['publish'])) {
-                                                                        echo date('Y-m-d\TH:i', strtotime($video['publish']));
-                                                                    }
-                                                                    ?>">
+            <input type="datetime-local" id="datetimepicker">
             <select name="videoStatus" id="videoStatus">
                 <option selected hidden value="<?= $video['status']; ?>">Choisir si la vidéo est visible ou non</option>
                 <?php if ($video['status'] !== "") : ?>
@@ -136,7 +101,7 @@ if (isset($_SESSION['authentification']['user'])) {
         </div>
     </form>
     <!-- SCRIPTS SRV -->
-    <script defer src="../javascripts/nino/edit_v2.js?4"></script>
+    <script defer src="../javascripts/nino/edit_v2.js?6"></script>
 <?php else : ?>
     <h1 class="error"><?= $message_Error ?></h1>
 <?php endif; ?>

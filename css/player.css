@@ -16,8 +16,9 @@ main {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 20px;
+    margin: 0px 0px 20px 0px;
     flex-wrap: wrap;
+    padding: 0px 5px 50px 5px;
 }
 
 h1 {
@@ -36,7 +37,7 @@ h1 {
     width: 750px;
     height: 400px;
     margin: 0 auto;
-    background-color: #f0f0f0;
+    background-color: black;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -57,7 +58,7 @@ h1 {
 video {
     width: 100%;
     height: auto;
-    object-fit: cover;
+    object-fit: scale-down;
     border-radius: 0px 0px 10px 10px;
     /* Coins arrondis */
 }
@@ -99,10 +100,12 @@ video.VideoHeightMax {
 }
 
 .controls-btn>i {
+    width: 30px;
     cursor: pointer;
     margin: 0px 10px;
     font-size: 20px;
     color: #f0f0f0;
+    text-align: center;
 }
 
 #skip10SecBtn {
@@ -221,6 +224,9 @@ video.VideoHeightMax {
 .TimeEnd{
     color: rgba(255, 255, 255, 0.6);
     font-size: 12px;
+    position: absolute;
+    right: 3px;
+    top: 1px;
 }
 
 footer {
@@ -279,6 +285,8 @@ footer {
 
     #videoContainer {
         width: 100%;
+        background-color: #000000;
+        border-radius: 0px 0px 10px 10px;
     }
 
     .description {
