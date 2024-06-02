@@ -18,7 +18,7 @@
 
 <section>
     <h5>API Nino (PROD)</h5>
-    <p><span class="circle-offline indiq-stats"></span><span class="txt-stats">En cours de développement</span></p>
+    <p><span id="api-nino-prod-circle" class="circle-offline"></span><span id="api-nino-prod-txt">Hors ligne</span></p>
 </section>
 
 <?php while ($service = $req->fetch()): ?>
@@ -28,4 +28,4 @@
     </section>
 <?php endwhile; ?>
 
-<script src="../javascripts/home/statut.js"></script>
+<script src="../javascripts/home/statut.js?1"></script>

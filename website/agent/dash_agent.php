@@ -87,18 +87,18 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
                     <button <?php if ($agent['ProcessorModule_autostart'] == 1) {
                                 echo 'class="delete"';
                             } ?> id="ProcessorModule_autostart" data-autostart="<?= $agent['ProcessorModule_autostart'] ?>" onclick="AutoStart('ProcessorModule_autostart')"><?php if ($agent['ProcessorModule_autostart'] == 1) {
-                                                                                                                                                                                                                                                            echo 'Désactivé';
-                                                                                                                                                                                                                                                        } else {
-                                                                                                                                                                                                                                                            echo 'Activé';
-                                                                                                                                                                                                                                                        } ?> AutoStart</button>
+                                                                                                                                                                                    echo 'Désactivé';
+                                                                                                                                                                                } else {
+                                                                                                                                                                                    echo 'Activé';
+                                                                                                                                                                                } ?> AutoStart</button>
 
                     <button <?php if ($agent['ProcessorModule_autorestart'] == 1) {
                                 echo 'class="delete"';
                             } ?> id="ProcessorModule_autorestart" data-autorestart="<?= $agent['ProcessorModule_autorestart'] ?>" style="margin-left: 15px;" onclick="AutoRestart('ProcessorModule_autorestart')"><?php if ($agent['ProcessorModule_autorestart'] == 1) {
-                                                                                                                                                                                                                                                                                                    echo 'Désactivé';
-                                                                                                                                                                                                                                                                                                } else {
-                                                                                                                                                                                                                                                                                                    echo 'Activé';
-                                                                                                                                                                                                                                                                                                } ?> AutoRestart</button>
+                                                                                                                                                                                                                        echo 'Désactivé';
+                                                                                                                                                                                                                    } else {
+                                                                                                                                                                                                                        echo 'Activé';
+                                                                                                                                                                                                                    } ?> AutoRestart</button>
 
                 </div>
             </section>
@@ -128,18 +128,18 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
                     <button <?php if ($agent['MemoryModule_autostart'] == 1) {
                                 echo 'class="delete"';
                             } ?> id="MemoryModule_autostart" data-autostart="<?= $agent['MemoryModule_autostart'] ?>" onclick="AutoStart('MemoryModule_autostart')"><?php if ($agent['MemoryModule_autostart'] == 1) {
-                                                                                                                                                                                                                                                echo 'Désactivé';
-                                                                                                                                                                                                                                            } else {
-                                                                                                                                                                                                                                                echo 'Activé';
-                                                                                                                                                                                                                                            } ?> AutoStart</button>
+                                                                                                                                                                        echo 'Désactivé';
+                                                                                                                                                                    } else {
+                                                                                                                                                                        echo 'Activé';
+                                                                                                                                                                    } ?> AutoStart</button>
 
                     <button <?php if ($agent['MemoryModule_autorestart'] == 1) {
                                 echo 'class="delete"';
                             } ?> id="MemoryModule_autorestart" data-autorestart="<?= $agent['MemoryModule_autorestart'] ?>" style="margin-left: 15px;" onclick="AutoRestart('MemoryModule_autorestart')"><?php if ($agent['MemoryModule_autorestart'] == 1) {
-                                                                                                                                                                                                                                                                                        echo 'Désactivé';
-                                                                                                                                                                                                                                                                                    } else {
-                                                                                                                                                                                                                                                                                        echo 'Activé';
-                                                                                                                                                                                                                                                                                    } ?> AutoRestart</button>
+                                                                                                                                                                                                                echo 'Désactivé';
+                                                                                                                                                                                                            } else {
+                                                                                                                                                                                                                echo 'Activé';
+                                                                                                                                                                                                            } ?> AutoRestart</button>
 
                 </div>
             </section>
@@ -165,24 +165,24 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
                     <button <?php if ($agent['PlexProcessCheck_autostart'] == 1) {
                                 echo 'class="delete"';
                             } ?> id="PlexProcessCheck_autostart" data-autostart="<?= $agent['PlexProcessCheck_autostart'] ?>" onclick="AutoStart('PlexProcessCheck_autostart')"><?php if ($agent['PlexProcessCheck_autostart'] == 1) {
-                                                                                                                                                                                                                                                                echo 'Désactivé';
-                                                                                                                                                                                                                                                            } else {
-                                                                                                                                                                                                                                                                echo 'Activé';
-                                                                                                                                                                                                                                                            } ?> AutoStart</button>
+                                                                                                                                                                                    echo 'Désactivé';
+                                                                                                                                                                                } else {
+                                                                                                                                                                                    echo 'Activé';
+                                                                                                                                                                                } ?> AutoStart</button>
 
                     <button <?php if ($agent['PlexProcessCheck_autorestart'] == 1) {
                                 echo 'class="delete"';
                             } ?> id="PlexProcessCheck_autorestart" data-autorestart="<?= $agent['PlexProcessCheck_autorestart'] ?>" style="margin-left: 15px;" onclick="AutoRestart('PlexProcessCheck_autorestart')"><?php if ($agent['PlexProcessCheck_autorestart'] == 1) {
-                                                                                                                                                                                                                                                                                                        echo 'Désactivé';
-                                                                                                                                                                                                                                                                                                    } else {
-                                                                                                                                                                                                                                                                                                        echo 'Activé';
-                                                                                                                                                                                                                                                                                                    } ?> AutoRestart</button>
+                                                                                                                                                                                                                            echo 'Désactivé';
+                                                                                                                                                                                                                        } else {
+                                                                                                                                                                                                                            echo 'Activé';
+                                                                                                                                                                                                                        } ?> AutoRestart</button>
 
                 </div>
             </section>
             <section id="JellyFin-sys" <?php if ($agent['JellyFinProcessCheck_autostart'] != 1) {
-                                        echo 'style="background-color: grey"';
-                                    } ?>>
+                                            echo 'style="background-color: grey"';
+                                        } ?>>
                 <h2>JellyFin</h2>
                 <div class="agent-data">
                     <p class="label">Etat du service :</p>
@@ -201,18 +201,18 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
                     <button <?php if ($agent['JellyFinProcessCheck_autostart'] == 1) {
                                 echo 'class="delete"';
                             } ?> id="JellyFinProcessCheck_autostart" data-autostart="<?= $agent['JellyFinProcessCheck_autostart'] ?>" onclick="AutoStart('JellyFinProcessCheck_autostart')"><?php if ($agent['JellyFinProcessCheck_autostart'] == 1) {
-                                                                                                                                                                                                                                                                echo 'Désactivé';
-                                                                                                                                                                                                                                                            } else {
-                                                                                                                                                                                                                                                                echo 'Activé';
-                                                                                                                                                                                                                                                            } ?> AutoStart</button>
+                                                                                                                                                                                                echo 'Désactivé';
+                                                                                                                                                                                            } else {
+                                                                                                                                                                                                echo 'Activé';
+                                                                                                                                                                                            } ?> AutoStart</button>
 
                     <button <?php if ($agent['JellyFinProcessCheck_autorestart'] == 1) {
                                 echo 'class="delete"';
                             } ?> id="JellyFinProcessCheck_autorestart" data-autorestart="<?= $agent['JellyFinProcessCheck_autorestart'] ?>" style="margin-left: 15px;" onclick="AutoRestart('JellyFinProcessCheck_autorestart')"><?php if ($agent['JellyFinProcessCheck_autorestart'] == 1) {
-                                                                                                                                                                                                                                                                                                        echo 'Désactivé';
-                                                                                                                                                                                                                                                                                                    } else {
-                                                                                                                                                                                                                                                                                                        echo 'Activé';
-                                                                                                                                                                                                                                                                                                    } ?> AutoRestart</button>
+                                                                                                                                                                                                                                        echo 'Désactivé';
+                                                                                                                                                                                                                                    } else {
+                                                                                                                                                                                                                                        echo 'Activé';
+                                                                                                                                                                                                                                    } ?> AutoRestart</button>
 
                 </div>
             </section>
@@ -227,5 +227,7 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
         <p>L'agent n'est pas encore associé. Si vous l'avez démarré et renseigné sont UUID, alors vous n'avez simplement qu'a patientez le temps de la synchro.</p>
     </section>
 <?php endif;
+        if ($agent['module'] === 'agent_luma' || $agent['module'] === null) { ?>
+    <script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/agent/dash-agent.js?0"></script>
+<?php }
     endif; ?>
-<script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/agent/dash-agent.js?0"></script>

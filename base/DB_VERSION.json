@@ -21,7 +21,7 @@
     },
     "DB_LUMA_AGENT_VERSION": {
         "DB_NAME": "DB_LUMA_AGENT_VERSION",
-        "version_dispo": "DB02",
+        "version_dispo": "DB03",
         "DB_USE": "luma_agent"
     },
     "DB_LUMA_STATUT_VERSION": {

@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
 
-            if (DB_LUMA_DOMAINS_VERSION >= "DB06") {
+            if (DB_LUMA_NINO_DATA_VERSION >= "DB06") {
                 $createTable = 1;
                 $columnsToAdd = [
                     "status VARCHAR(255) NULL",
@@ -149,49 +149,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 require './lib/mysql_table_create.php';
 
                 $tableName = "luma_agent";
-                $columns = [
-                    'id' => 'INT PRIMARY KEY AUTO_INCREMENT',
-                    'id_users' => 'BIGINT(20) NOT NULL',
-                    'uuid_agent' => 'VARCHAR(255) NOT NULL',
-                    'agent_name' => 'VARCHAR(255) NULL',
-                    'agent_etat' => 'TINYINT(4) NOT NULL DEFAULT 0',
-                    'agent_version' => 'VARCHAR(255) NOT NULL DEFAULT "0.0.0"',
-                    'module' => 'VARCHAR(255) NULL',
-                    'token' => 'VARCHAR(255) NULL',
-                    'MemoryModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
-                    'MemoryModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
-                    'ProcessorModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
-                    'ProcessorModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
-                    'DiskModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
-                    'DiskModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 1',
-                    'PlexProcessCheck_autostart' => 'TINYINT(1) NOT NULL DEFAULT 0',
-                    'PlexProcessCheck_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
-                    'JellyFinProcessCheck_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
-                    'JellyFinProcessCheck_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
-                    'DockerModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
-                    'DockerModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
-                    'users_autorized' => 'VARCHAR(255) NULL',
-                    'agent_create' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
-                    'agent_edit' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
-                ];
-                $result_PDO = createTablePDO($tableName, $columns, $pdo);
-
-                // Requête de UPDATE auto
-                $query = "CREATE TRIGGER IF NOT EXISTS update_agent_edit
-                                BEFORE UPDATE ON luma_agent
-                                FOR EACH ROW
-                                SET NEW.agent_edit = CURRENT_TIMESTAMP;";
-
-                // Exécution de la requête
-                $pdo->exec($query);
-
                 $BDD_CONST = "DB_LUMA_AGENT_VERSION";
                 $BDD_CONST_VAL = DB_LUMA_AGENT_VERSION;
-                ConstEdit($BDD_CONST, $BDD_CONST_VAL);
 
-                echo $result_PDO;
+                if (DB_LUMA_AGENT_VERSION == "DB00") {
+                    $columns = [
+                        'id' => 'INT PRIMARY KEY AUTO_INCREMENT',
+                        'id_users' => 'BIGINT(20) NOT NULL',
+                        'uuid_agent' => 'VARCHAR(255) NOT NULL',
+                        'agent_name' => 'VARCHAR(255) NULL',
+                        'agent_etat' => 'TINYINT(4) NOT NULL DEFAULT 0',
+                        'agent_version' => 'VARCHAR(255) NOT NULL DEFAULT "0.0.0"',
+                        'module' => 'VARCHAR(255) NOT NULL DEFAULT `agent_luma`',
+                        'token' => 'VARCHAR(255) NULL',
+                        'MemoryModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
+                        'MemoryModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
+                        'ProcessorModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
+                        'ProcessorModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
+                        'DiskModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
+                        'DiskModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 1',
+                        'PlexProcessCheck_autostart' => 'TINYINT(1) NOT NULL DEFAULT 0',
+                        'PlexProcessCheck_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
+                        'JellyFinProcessCheck_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
+                        'JellyFinProcessCheck_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
+                        'DockerModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
+                        'DockerModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
+                        'users_autorized' => 'VARCHAR(255) NULL',
+                        'agent_create' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+                        'agent_edit' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+                    ];
+                    $result_PDO = createTablePDO($tableName, $columns, $pdo);
 
-                exit;
+                    // Requête de UPDATE auto
+                    $query = "CREATE TRIGGER IF NOT EXISTS update_agent_edit
+                                    BEFORE UPDATE ON luma_agent
+                                    FOR EACH ROW
+                                    SET NEW.agent_edit = CURRENT_TIMESTAMP;";
+
+                    // Exécution de la requête
+                    $pdo->exec($query);
+                    echo $result_PDO;
+
+                    exit;
+                } else {
+                    $createTable = 1;
+                    $columnsToAdd = [
+                        "module VARCHAR(255) NOT NULL 'DEFAULT'"
+                    ];
+                }
+
             } catch (PDOException $e) {
                 echo 'configCreateTableAgent-echec --> ' . $e->getMessage();
                 exit;

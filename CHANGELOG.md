@@ -1,3 +1,15 @@
+### 5.1.2
+- Ajout du timer actuel de la vidéo dans le Player
+- Ajout du timer complet de la vidéo sans le player
+- Ajout de la fonctionnalités d'avance rapide du player
+- Correction des bogues d'erreur de chargement de l'heure de fin
+- Correction de bogues mineurs
+
+
+### 5.1.1
+- Ajout du check de l'API
+
+
 ### 5.1.0
 - Ajout du bouton Mute sur le player
 - Ajout d'un slider de volume

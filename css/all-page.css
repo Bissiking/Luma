@@ -123,7 +123,7 @@ h4 {
     margin: 15px 0px;
 }
 
-input {
+input, select {
     width: 100%;
     padding: 10px 0;
     border: none;

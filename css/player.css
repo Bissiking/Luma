@@ -16,8 +16,9 @@ main {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 20px;
+    margin: 0px 0px 20px 0px;
     flex-wrap: wrap;
+    padding: 0px 5px 50px 5px;
 }
 
 h1 {
@@ -34,8 +35,9 @@ h1 {
     display: inline-block;
     overflow: hidden;
     width: 750px;
+    height: 400px;
     margin: 0 auto;
-    background-color: #f0f0f0;
+    background-color: black;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -56,7 +58,7 @@ h1 {
 video {
     width: 100%;
     height: auto;
-    object-fit: cover;
+    object-fit: scale-down;
     border-radius: 0px 0px 10px 10px;
     /* Coins arrondis */
 }
@@ -68,13 +70,11 @@ video.VideoHeightMax {
 /* Styles pour les contrôles personnalisés */
 #customControls {
     display: flex;
-    align-items: center;
-    justify-content: center;
     position: absolute !important;
     bottom: 0 !important;
     left: 0 !important;
     width: 100% !important;
-    height: 50px !important;
+    height: 60px !important;
     background-color: rgba(0, 0, 0, 0.5) !important;
     z-index: 20 !important;
     transition: 0.3s;
@@ -100,10 +100,12 @@ video.VideoHeightMax {
 }
 
 .controls-btn>i {
+    width: 30px;
     cursor: pointer;
     margin: 0px 10px;
     font-size: 20px;
     color: #f0f0f0;
+    text-align: center;
 }
 
 #skip10SecBtn {
@@ -125,10 +127,31 @@ video.VideoHeightMax {
     transition: 0.5s;
 }
 
+#progressBar:hover{
+    cursor: pointer;
+    top: -10px;
+    height: 10px;
+    transition: 0.3s;
+}
+
 /* Style de la barre de progression remplie */
 .progress-bar-fill-loader {
     z-index: 19;
     /* Couleur de remplissage */
+}
+
+/* ProgressBar Mask */
+.progress-bar-fill-player{
+    display: flex;
+    justify-content: space-between;
+}
+
+.timer-player{
+    margin: 3px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    position: relative;
+    bottom: 18px;
 }
 
 #Player:fullscreen {
@@ -201,6 +224,9 @@ video.VideoHeightMax {
 .TimeEnd{
     color: rgba(255, 255, 255, 0.6);
     font-size: 12px;
+    position: absolute;
+    right: 3px;
+    top: 1px;
 }
 
 footer {
@@ -259,6 +285,8 @@ footer {
 
     #videoContainer {
         width: 100%;
+        background-color: #000000;
+        border-radius: 0px 0px 10px 10px;
     }
 
     .description {

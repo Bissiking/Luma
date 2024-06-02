@@ -24,7 +24,7 @@ if (!isset($id) || $id == null) {
         foreach ($req as $video) {
         }
 ?>
-        <link rel="stylesheet" href="<?= SITE_HTTP . SITE_URL ?>/css/player.css?V1">
+        <link rel="stylesheet" href="<?= SITE_HTTP . SITE_URL ?>/css/player.css?V2">
 
 
 
@@ -53,7 +53,10 @@ if (!isset($id) || $id == null) {
                 <video class="video-player VideoHeightMax" id="Player" poster="https://<?= htmlspecialchars(trim($video['server_url'])) ?>/Thumbnail/<?= htmlspecialchars(trim($video['id_video_uuid'])) ?>">
                 </video>
                 <div id="customControls" data-fullscreen="false">
-                    <span id="progressBar" class="progress-bar progress-bar-fill-player"></span>
+                    <span id="progressBar" class="progress-bar progress-bar-fill-player">
+                        <span id="timer-player-progress-video" class="timer-player">0:00</span>
+                        <span id="timer-player-total-video" class="timer-player">0:00</span>
+                    </span>
                     <span id="progressBarLoader" class="progress-bar progress-bar-fill-loader"></span>
                     <div class="controls-btn controls-left">
                         <i id="volume-mute" class="fa-solid fa-volume-low"></i>
@@ -67,7 +70,8 @@ if (!isset($id) || $id == null) {
                         <i id="skip10SecBtn" class="fa-solid fa-clock-rotate-left"></i>
                     </div>
                     <div class="controls-btn controls-right">
-                        <p class="TimeEnd">Se termine à : <span id="TimeEndVideo">**:**</span></p>
+                        <span class="TimeEnd">Se termine à <span id="TimeEndVideo">**:**</span></span>
+                        <i id="PiP" class="fa-solid fa-window-restore"></i>
                         <i id="fullscreenBtn" class="fas fa-expand"></i>
                     </div>
                 </div>
@@ -150,7 +154,7 @@ if (!isset($id) || $id == null) {
         <script>
             document.title = "Nino - <?= $video['titre'] ?>";
         </script>
-        <script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/nino/player.js?0"></script>
+        <script defer src="<?= SITE_HTTP . SITE_URL ?>/javascripts/nino/player.js?1"></script>
         <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
         <script>
             let url = "https://<?= htmlspecialchars(trim($video['server_url'])) ?>/<?= htmlspecialchars(trim($video['id_video_uuid'])) ?>"

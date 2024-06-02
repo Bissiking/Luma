@@ -15,6 +15,7 @@ var VCP = $('.video-container-player');
 var MS = $('#movies-screen');
 var PBP = $('#playPauseBtn');
 var volumeIcon = $('#volume-mute');
+var PiPBtn = $('#PiP');
 // AUTRES
 var idleTimeout;
 
@@ -35,25 +36,6 @@ VCP.on('mousemove keydown', function () {
 
 // Appeler la fonction de réinitialisation du délai d'inactivité au chargement de la page
 resetIdleTimeout();
-
-// ProgressBar
-myVideo.addEventListener('timeupdate', function () {
-    var value = (myVideo.currentTime / myVideo.duration) * 100;
-    var widthPB = value * ProgressBarJquery.width() / 100;
-    $('#progressBar').css('box-shadow', 'inset ' + widthPB + 'px 0px 0px 0px #0088a7');
-});
-
-setInterval(() => { // Barre de progression auto regul
-    // Calculer la proportion de la vidéo chargée
-    var bufferedEnd = myVideo.buffered.end(0);
-    var duration = myVideo.duration;
-    if (duration > 0) {
-        // Mettre à jour la valeur de la barre de progression
-        var value = (bufferedEnd / duration) * 100;
-        var widthPBL = value * ProgressBarJquery.width() / 100;
-        $('#progressBarLoader').css('box-shadow', 'inset ' + widthPBL + 'px 0px 0px 0px rgb(255 255 255 / 50%)');
-    }
-}, 500);
 
 // Bouton pause et play
 $('#playPauseBtn').click(function () {
@@ -103,12 +85,12 @@ setInterval(() => {
 }, 500);
 
 // Volume
-$('.slider').on('input', function() {
+$('.slider').on('input', function () {
     let volume = $(this).val();
     updateVolume(volume);
 });
 
-$('#volume-mute').click(function() {
+$('#volume-mute').click(function () {
     Player.muted = !Player.muted;
 
     // Mettez à jour le texte du bouton en fonction de l'état de la sourdine
@@ -129,17 +111,23 @@ function EditIcoVol(volume) {
 
     if (volume === 0) {
         volumeIcon.addClass('fa-volume-xmark');
-    }else if (volume < 33) {
+    } else if (volume < 33) {
         volumeIcon.addClass('fa-volume-off');
-    }else if (volume < 77) {
+    } else if (volume < 77) {
         volumeIcon.addClass('fa-volume-low');
-    }else{
+    } else {
         volumeIcon.addClass('fa-volume-high');
     }
 }
 
 function updateVolume(VolUP) {
-    const volNew = VolUP/100;
+
+    if (VolUP == 'null') {
+        console.log('NULL');
+        VolUP = 50;
+    }
+
+    const volNew = VolUP / 100;
     const volume = Math.min(Math.max(volNew, 0), 1);
     myVideo.volume = volume;
     // Stockez la valeur du volume dans sessionStorage
@@ -149,14 +137,13 @@ function updateVolume(VolUP) {
 }
 
 // Au chargement du Player
-if(sessionStorage.getItem('PlayerVolume') !== undefined || sessionStorage.getItem('PlayerVolume') !== "" || sessionStorage.getItem('PlayerVolume') !== null){
+if (sessionStorage.getItem('PlayerVolume') !== undefined || sessionStorage.getItem('PlayerVolume') !== "" || sessionStorage.getItem('PlayerVolume') !== null) {
     updateVolume(sessionStorage.getItem('PlayerVolume'));
     $('.slider').attr('value', sessionStorage.getItem('PlayerVolume'))
-}else{
+} else {
     updateVolume(50);
 }
 
-// BETA TEST
 videoContainer.addEventListener("fullscreenchange", function () {
     if (document.fullscreenElement) {
         $('video').css('height', "100vh");
@@ -170,23 +157,48 @@ videoContainer.addEventListener("fullscreenchange", function () {
 });
 
 // Fin de vidéo
-Player.addEventListener("loadedmetadata", function() {
+Player.addEventListener("loadedmetadata", function () {
     const duration = Player.duration;
     const currentTime = new Date();
     const endTime = new Date(currentTime.getTime() + duration * 1000);
 
     $('#TimeEndVideo').text(formatTime(endTime));
+    setInterval(() => {
+        ProgressBarUpdate();
+    }, 500);
+    DataTimeUpdate();
 });
 
-setInterval(() => {
-    const currentTime = Player.currentTime;
-    const duration = Player.duration;
+function ProgressBarUpdate() {
+    // Calculer la proportion de la vidéo chargée
+    var bufferedEnd = myVideo.buffered.end(0);
+    var duration = myVideo.duration;
+    if (duration > 0) {
+        // Mettre à jour la valeur de la barre de progression
+        var value = (bufferedEnd / duration) * 100;
+        var widthPBL = value * ProgressBarJquery.width() / 100;
+        $('#progressBarLoader').css('box-shadow', 'inset ' + widthPBL + 'px 0px 0px 0px rgb(255 255 255 / 50%)');
+    }
 
-    const remainingTime = duration - currentTime;
-    const endTime = new Date(Date.now() + remainingTime * 1000);
+    var value = (myVideo.currentTime / duration) * 100;
+    var widthPB = value * ProgressBarJquery.width() / 100;
+    $('#progressBar').css('box-shadow', 'inset ' + widthPB + 'px 0px 0px 0px #0088a7');
+}
 
-    $('#TimeEndVideo').text(formatTime(endTime));
-}, 1000);
+function DataTimeUpdate() {
+    setInterval(() => {
+        const currentTime = Player.currentTime;
+        const duration = Player.duration;
+
+        $('#timer-player-progress-video').text(formatTimeTimerMode(currentTime));
+        $('#timer-player-total-video').text(formatTimeTimerMode(duration));
+
+        const remainingTime = duration - currentTime;
+        const endTime = new Date(Date.now() + remainingTime * 1000);
+        $('#TimeEndVideo').text(formatTime(endTime));
+    }, 1000);
+}
+
 
 function formatTime(date) {
     const hours = pad(date.getHours());
@@ -195,9 +207,58 @@ function formatTime(date) {
     return hours + ":" + minutes;
 }
 
+function formatTimeTimerMode(time) {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
 function pad(number) {
     if (number < 10) {
         return "0" + number;
     }
     return number;
+}
+
+// TEST
+
+// Ajouter un écouteur d'événement de clic à la barre de progression
+ProgressBarJquery.click(function (event) {
+    // Récupérer la position x du clic
+    const clickX = event.clientX - ProgressBarJquery.offset().left;
+
+    // Calculer le pourcentage de progression en fonction de la position du clic
+    const progressBarWidth = ProgressBarJquery.width();
+    const progressPercentage = (clickX / progressBarWidth) * 100;
+
+    const duration = Player.duration;
+    const newPosition = (progressPercentage / 100) * duration;
+    Player.currentTime = newPosition;
+});
+
+if ('pictureInPictureEnabled' in document) {
+    console.log('PiP OK');
+} else {
+    PiPBtn.hide();
+    console.log('PiP NOK');
+}
+
+PiPBtn.click(function () {
+    togglePiPButton();
+})
+
+function togglePiPButton() {
+    if ('pictureInPictureEnabled' in document) {
+        try {
+            if (document.pictureInPictureElement) {
+                // Si une vidéo est déjà en mode Picture-in-Picture, désactivez-la
+                document.exitPictureInPicture();
+            } else {
+                // Sinon, activez le mode Picture-in-Picture pour la vidéo spécifiée
+                Player.requestPictureInPicture();
+            }
+        } catch (error) {
+            console.error('Erreur lors du changement en mode Picture-in-Picture :', error);
+        }
+    }
 }

@@ -1,14 +1,16 @@
 function agent_add() {
     // Effectuer la requête AJAX
     let uuid_agent = $('#uuid_agent').val(),
-        agent_name = $('#agent_name').val();
+        agent_name = $('#agent_name').val(),
+        module = $('#module').val();
 
     $.ajax({
         type: 'POST',
         url: './functions/agent_create',
         data: {
             uuid_agent: uuid_agent,
-            agent_name: agent_name
+            agent_name: agent_name,
+            module: module
         },
         success: function (response) {
             console.log(response);
