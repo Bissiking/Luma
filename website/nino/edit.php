@@ -6,55 +6,40 @@
 
 <?php
 if (isset($_SESSION['authentification']['user'])) {
-    require './base/nexus_base.php';
-    $id_users = $_SESSION['authentification']['user']['id'];
-    $id = $_GET['id'];
-    $v = array('id_users' => $id_users, 'id_video_uuid' => $id);
-    $sql = 'SELECT * FROM luma_nino_data WHERE id_users = :id_users AND id_video_uuid = :id_video_uuid';
-    $req = $pdo->prepare($sql);
-    $req->execute($v);
-    $result = $req->rowCount();
 
-    if ($result >= 1) {
-        foreach ($req as $video) {
-        }
-        $apiUrl = "https://".$video['server_url']."/check";
+    $apiUrl = "dev.nino.mhemery.fr";
 
-        $options = [
-            'http' => [
-                'timeout' => 1, // Timeout en secondes
-            ],
-        ];
+    $options = [
+        'http' => [
+            'timeout' => 3, // Timeout en secondes
+        ],
+    ];
 
-        // Création du contexte
-        $context = stream_context_create($options);
+    // Création du contexte
+    $context = stream_context_create($options);
 
-        // Récupération du contenu avec gestion du timeout
-        $content = @file_get_contents($apiUrl, false, $context);
+    // Récupération du contenu avec gestion du timeout
+    $content = @file_get_contents("https://".$apiUrl."/check", false, $context);
 
-        if ($content === false) {
-            // Gérer les erreurs en fonction de la raison de l'échec
-            $error = error_get_last();
-            if ($error !== null && strpos($error['message'], 'timed out') !== false) {
-                // Gérer le timeout
-                $ERROR_EDIT = 1;
-                $message_Error = "L\'API à mis trop de temps à répondre.\n";
-            } else {
-                // Gérer d'autres erreurs
-                $ERROR_EDIT = 1;
-                $message_Error = "Une erreur s'est produite lors de la récupération de la version de l'API = " . $apiUrl;
-            }
+    if ($content === false) {
+        // Gérer les erreurs en fonction de la raison de l'échec
+        $error = error_get_last();
+        if ($error !== null && strpos($error['message'], 'timed out') !== false) {
+            // Gérer le timeout
+            $ERROR_EDIT = 1;
+            $message_Error = "L\'API à mis trop de temps à répondre.\n";
         } else {
-            // Utiliser le contenu récupéré
-            $data = json_decode($content, true);
-            if ($data['version'] < '1.0.0') {
-                $ERROR_EDIT = 1;
-                $message_Error = 'l\'API n\'est pas de la bonne version. <br>Version minimal exigé: 1.0.0';
-            }
+            // Gérer d'autres erreurs
+            $ERROR_EDIT = 1;
+            $message_Error = "Une erreur s'est produite lors de la récupération de la version de l'API = " . $apiUrl;
         }
     } else {
-        $ERROR_EDIT = 1;
-        $message_Error = 'Aucune vidéo trouvé';
+        // Utiliser le contenu récupéré
+        $data = json_decode($content, true);
+        if ($data['version'] < '1.0.0') {
+            $ERROR_EDIT = 1;
+            $message_Error = 'l\'API n\'est pas de la bonne version. <br>Version minimal exigé: 1.0.0';
+        }
     }
 } else {
     header('Location: /');
@@ -63,7 +48,7 @@ if (isset($_SESSION['authentification']['user'])) {
 
 <?php if (!isset($ERROR_EDIT)) : ?>
     <form id="uploadForm" enctype="multipart/form-data">
-        <p class="pops-api-use"><span id="apiuse"><?= $video['server_url']; ?></span></p>
+        <p class="pops-api-use"><span id="apiuse"><?= $apiUrl ?></span></p>
         <p class="info-popup">La plupart des champs, sont en enregistrement automatiques. Vous avez juste à cliquer en dehors du champs</p>
 
         <input id="videoTitle" type="text" name="videoTitle" placeholder="Titre de la vidéo" placeholder="Récupération des informations ...."></input>

@@ -46,6 +46,11 @@ if (isset($_SESSION['authentification']['user'])) :
     <section>
         <h2>Création d'un agent</h2>
         <input type="text" id="agent_name" placeholder="Nom de l'agent">
+        <select type="text" id="module" placeholder="Nom de l'agent">
+            <option value="agent_luma" selected>Agent LUMA (Default)</option>
+            <option value="agent_minecraft">Agent Minecraft</option>
+            <option value="agent_nino">Agent Nino (Pas encore disponible)</option>
+        </select>
         <button onclick="agent_add()">Création de l'agent</button>
     </section>
 
@@ -80,7 +85,7 @@ if (isset($_SESSION['authentification']['user'])) :
         </div>
     </section>
 
-    <script src="javascripts/agent/dashboard.js?0"></script>
+    <script src="javascripts/agent/dashboard.js?1"></script>
 
 <?php else : header('Location: /');
 endif; ?>

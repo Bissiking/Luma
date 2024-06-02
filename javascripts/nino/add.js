@@ -1,17 +1,19 @@
-function reserveVideo(event) {
-    //event.preventDefault();
-    var titre = $('#videoTitle').val(),
-        APIselect = $('#APIselect').val();
+function reserveVideo(event, id) {
+    event.preventDefault();
+    var APIselect = $('#APIselect').val();
 
+    if (APIselect == "" || APIselect == null || APIselect == undefined) {
+        showPopup("warning", "Nino", "Selectionne l'API !");
+        return;
+    }
     // Effectuer la requête AJAX
     $.ajax({
         type: 'POST',
-        url: 'functions/nino_add',
-        data: { titre: titre, APIselect: APIselect },
+        url: "https://"+APIselect+"/createVideo/"+id,
         success: function (response) {
             console.log(response);
             if (response == 'succes') {
-                window.location.href = "/nino/add";
+                window.location.href = "/nino/edit?id="+id;
             } else {
                 showPopup("warning", "Nino !!", "Une informations à renseigner... Et tu as réussi à rater");
             }

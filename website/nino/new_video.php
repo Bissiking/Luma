@@ -5,77 +5,35 @@
 <h1>Ajouter une vidéo</h1>
 
 <div class="nino_add">
-    <?php     // URL de l'API que vous souhaitez interroger
-
-    // switch ($_SERVER['HTTP_HOST']) {
-    //     case 'mhemery.fr':
-    //         $apiUrl = 'https://nino.mhemery.fr/check';
-    //         break;
-
-    //     case 'dev.mhemery.fr':
-    //     case 'pre-prod.mhemery.fr':
-    //         $apiUrl = 'https://dev.nino.mhemery.fr/check';
-    //         break;
-
-    //     case 'luma.enerzein.fr':
-    //         $apiUrl = 'https://nino.enerzein.fr/check';
-    //         break;
-
-    //     default:
-    //         $apiUrl = null;
-    //         break;
-    // }
-
-    // if ($apiUrl !== null) :
-
-    //     $options = [
-    //         'http' => [
-    //             'timeout' => 1, // Timeout en secondes
-    //         ],
-    //     ];
-
-    //     // Création du contexte
-    //     $context = stream_context_create($options);
-
-    //     // Récupération du contenu avec gestion du timeout
-    //     $content = @file_get_contents($apiUrl, false, $context);
-
-    //     if ($content === false) {
-    //         // Gérer les erreurs en fonction de la raison de l'échec
-    //         $error = error_get_last();
-    //         if ($error !== null && strpos($error['message'], 'timed out') !== false) {
-    //             // Gérer le timeout
-    //             $message_Error = "L\'API à mis trop de temps à répondre.\n";
-    //         } else {
-    //             // Gérer d'autres erreurs
-    //             $message_Error = "Une erreur s'est produite lors de la récupération de la version de l'API = " . $apiUrl;
-    //         }
-    //         $data['version'] = '0.0.0';
-    //     } else {
-    //         // Utiliser le contenu récupéré
-    //         $data = json_decode($content, true);
-    //     }
-    // else :
-    //     $data['version'] == '0.0.0';
-    //     $message_Error = 'Ajout de vidéo impossible, version de l\'API requis "1.0.0"';
-    // endif;
-?>
-        <p class="info-popup error" style="justify-content: center;">
-            Cette page est obselète. <br> 
-            L'ajout de vidéo est actuellement impossible. <br> 
-            La page n'utilisant pas encore l'API, les données affiché ne sont pas correct et viennent de la base de donnée non maintenu à jour. <br>
-            L'API gère la gestion des données, se que le formulaire ne fait actuellement.
-        </p>
-        <form action="#" method="POST">
-            <label for="APIselect">Choix de l'API</label>
-            <select name="" id="">
-                <option selected disabled hidden>FORM EN UPDATE</option>
-                <!-- <option value="dev.nino.mhemery.fr">API de Nino DEV</option>
-                <option selected value="nino.mhemery.fr">API de Nino PROD</option>
-                <option value="enerzein.mhemery.fr">API de Nino (ENERZIN)</option> -->
-            </select>
-        </form>
-    <table>
+    <?php
+        // Création de l'ID de la vidéo
+        function generateUniqueVideoId()
+        {
+            if (function_exists('uuid_create')) {
+                $uuid = uuid_create(UUID_TYPE_RANDOM);
+                return uuid_parse($uuid);
+            } else {
+                // Génération d'UUID alternative si l'extension uuid n'est pas disponible
+                return uniqid('video_', true);
+            }
+        }
+        // Exemple d'utilisation
+        $videoId = generateUniqueVideoId();
+    ?>
+    <p class="info-popup error" style="justify-content: center;">
+        Cette page est obselète. <br>
+        L'ajout de vidéo est possible seulement par l'API de developpement
+    </p>
+    <form action="#" method="POST">
+        <select name="APIselect" id="APIselect">
+            <option selected disabled hidden>Choix de l'API</option>
+            <option value="dev.nino.mhemery.fr">API de Nino DEV</option>
+            <!-- <option selected value="nino.mhemery.fr">API de Nino PROD</option> -->
+            <!-- <option value="enerzein.mhemery.fr">API de Nino (ENERZIN)</option> -->
+        </select>
+        <button onclick="reserveVideo(event, '<?= $videoId ?>')">Ajouter la vidéo</button>
+    </form>
+    <!-- <table>
         <thead>
             <tr>
                 <th>Identifiant de la vidéo</th>
@@ -102,16 +60,63 @@
                             <td>Edition non disponible</td>
                         </tr>
                     <?php } ?>
-                <?php }else{ ?>
-                <tr>
-                    <tr><td>***</td><td style="text-align: center;">Aucune vidéo trouvé</td><td>***</td></tr>
-                </tr>
-            <?php }} else {
+                <?php } else { ?>
+                    <tr>
+                    <tr>
+                        <td>***</td>
+                        <td style="text-align: center;">Aucune vidéo trouvé</td>
+                        <td>***</td>
+                    </tr>
+                    </tr>
+            <?php }
+            } else {
                 echo '<tr><td></td><td style="text-align: center;">Connexion obligatoire</td><td></td></tr>';
             }
             ?>
         </tbody>
+    </table> -->
+    <table>
+        <thead>
+            <tr>
+                <th>Identifiant de la vidéo</th>
+                <th>Titre de la Vidéo</th>
+                <th>Éditer</th>
+            </tr>
+        </thead>
+        <tbody id="video-table-body">
+            <!-- Les données de la vidéo seront ajoutées ici -->
+        </tbody>
     </table>
+
+    <script>
+        $(document).ready(function() {
+            // Faire une requête AJAX pour récupérer les données depuis l'API
+            $.ajax({
+                type: 'GET',
+                url: 'https://dev.nino.mhemery.fr/videos/manifest', // Remplacez par l'URL de votre API
+                success: function(response) {
+                    // Récupérer les clés des vidéos et les trier dans l'ordre décroissant
+                    const videoIds = Object.keys(response).sort().reverse();
+                    // Parcourir les vidéos dans l'ordre inversé
+                    for (const videoId of videoIds) {
+                        const video = response[videoId];
+                        // Ajouter une ligne au tableau pour chaque vidéo
+                        $('tbody').append(`
+                    <tr>
+                        <td>${video.id}</td>
+                        <td>${video.titre}</td>
+                        <td><button onclick="editVideo('${video.id}')">Edition</button></td>
+                    </tr>
+                `);
+                    }
+                },
+                error: function(error) {
+                    console.error('Erreur lors de la récupération des données:', error);
+                }
+            });
+        });
+    </script>
+
 </div>
 
 
