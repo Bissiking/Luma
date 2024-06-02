@@ -28,4 +28,4 @@
     </section>
 <?php endwhile; ?>
 
-<script src="../javascripts/home/statut.js?0"></script>
+<script src="../javascripts/home/statut.js?1"></script>
