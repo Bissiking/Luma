@@ -171,14 +171,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </header>
 
+    <!-- Vos scripts JavaScript vont ici -->
+    <script src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/javascripts/popupv2.js"></script>
+    <script src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/javascripts/all-pages.js?3"></script>
+
     <main id="main">
         <?php require_once 'lib/router.php'; ?>
     </main>
 
     <!-- Vos scripts JavaScript vont ici -->
-    <script src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/javascripts/popupv2.js"></script>
-    <script src="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/javascripts/all-pages.js?3"></script>
-
+    
     <footer>
         &copy; 2023 HEMERY Mathéo
     </footer>

@@ -24,7 +24,8 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
 ?>
 
 
-
+const minMemory = '1024M'; // Mémoire minimale allouée au serveur
+const maxMemory = '2048M'; // Mémoire maximale allouée au serveur
 
 
 <div id="Block-Section-Data" class="content-dashboard-agent">

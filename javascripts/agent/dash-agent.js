@@ -367,6 +367,57 @@ function ServicesJellyFin() {
     });
 }
 
+function ServicesBeamMP() {
+    $.ajax({
+        url: url + "BeamMP-data.json",
+        dataType: 'json',
+        cache: false,
+        success: function (response) {
+            let data = response.result;
+            var currentTime = new Date();
+            var sondeTime = new Date(response.result.date);
+            var elapsedTimeInSeconds = (currentTime - sondeTime) / 1000;
+            // Calcule en Heure lisible
+            const jours = Math.floor(elapsedTimeInSeconds / (3600 * 24));
+            const heures = Math.floor((elapsedTimeInSeconds % (3600 * 24)) / 3600);
+            const minutes = Math.floor((elapsedTimeInSeconds % 3600) / 60);
+            const secondes = Math.floor(elapsedTimeInSeconds % 60);
+
+            if (elapsedTimeInSeconds > 900) { // 15 Minutes
+                // Avertissement alerte sonde
+                $('#BeamMP-sys').removeClass();
+                $('#BeamMP-sys').addClass('sonde-error');
+
+                // Message d'alerte de non contact de la sonde
+                $('#BeamMP-sys-alerte').text(`La sonde ne réponds plus depuis: ${jours} Jour(s), ${heures} Heure(s), ${minutes} minute(s) et ${secondes} seconde(s)`);
+            } else if (elapsedTimeInSeconds > 600) { // 10 Minutes 
+                // Avertissement alerte sonde
+                $('#BeamMP-sys').removeClass();
+                $('#BeamMP-sys').addClass('sonde-warning');
+
+                // Message d'alerte de non contact de la sonde
+                $('#BeamMP-sys-alerte').text(`La sonde ne réponds plus depuis: ${jours} Jour(s), ${heures} Heure(s), ${minutes} minute(s) et ${secondes} seconde(s)`);
+            } else {
+                $('#BeamMP-sys').removeClass();
+                $('#BeamMP-sys-alerte').text(`RAS`);
+            }
+
+            if (data.status == 1) {
+                statsTxt = 'En fonctionnement';
+            } else {
+                statsTxt = 'Service stoppé'
+            }
+
+            $('#data-agent-BeamMP').text(statsTxt)
+            $('#data-agent-servicesBeamMPUpdate').text(data.date)
+
+        },
+        error: function (error) {
+            console.error('Erreur lors du chargement du fichier JSON :', error);
+        }
+    });
+}
+
 function AutoStart(id) {
     let etat = $('#' + id).data('autostart');
     let uuid_agent = $('#agent-uuid').text();
@@ -441,6 +492,7 @@ ContainerCheck();
 ModelProcessor();
 ServicesPlex();
 ServicesJellyFin();
+ServicesBeamMP();
 Memory();
 LoadDisk();
 
@@ -456,6 +508,7 @@ setInterval(() => {
 setInterval(() => {
     ServicesPlex();
     ServicesJellyFin();
+    ServicesBeamMP();
     ContainerCheck();
 }, 150000);
 

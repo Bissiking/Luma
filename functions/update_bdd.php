@@ -174,6 +174,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'JellyFinProcessCheck_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
                         'DockerModule_autostart' => 'TINYINT(1) NOT NULL DEFAULT 1',
                         'DockerModule_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
+                        'Minecraft_minMemory' => 'INT(4) NULL DEFAULT 1024',
+                        'Minecraft_maxMemory' => 'INT(4) NULL DEFAULT 2048',
+                        'BeamMPProcessCheck_autostart' => 'TINYINT(1) NOT NULL DEFAULT 0',
+                        'BeamMPProcessCheck_autorestart' => 'TINYINT(1) NOT NULL DEFAULT 0',
                         'users_autorized' => 'VARCHAR(255) NULL',
                         'agent_create' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
                         'agent_edit' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
@@ -194,7 +198,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else {
                     $createTable = 1;
                     $columnsToAdd = [
-                        "module VARCHAR(255) NOT NULL 'DEFAULT'"
+                        "module VARCHAR(255) NOT NULL DEFAULT ''",
+                        "Minecraft_minMemory INT(4) NULL DEFAULT 1024", // Supprimer les quotes simples
+                        "Minecraft_maxMemory INT(4) NULL DEFAULT 2048",
+                        'BeamMPProcessCheck_autostart TINYINT(1) NOT NULL DEFAULT 0',
+                        'BeamMPProcessCheck_autorestart TINYINT(1) NOT NULL DEFAULT 0'
                     ];
                 }
 
