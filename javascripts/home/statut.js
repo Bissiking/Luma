@@ -42,10 +42,14 @@ function ServicesCheck() {
 
             let searchTerm = service.toLowerCase();
 
+            console.log(searchTerm);
+
             if (searchTerm.includes("plex")) {
                 service = "plex";
             } else if (searchTerm.includes("jelly")) {
                 service = "jellyfin";
+            } else  if (searchTerm.includes("beammp")) {
+                service = "beammp";
             } else {
                 let statsTxt = 'Service hors ligne';
                 let statsClass = "circle-offline";
