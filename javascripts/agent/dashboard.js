@@ -31,8 +31,12 @@ function agent_add() {
     });
 }
 
-function DashAgent(uuid) {
-    window.location.href = "/agent/uuid/" + uuid;
+function DashAgent(uuid, module) {
+    if (module === "agent_minecraft") {
+        window.location.href = "/agent/uuid/minecraft/" + uuid;
+    }else{
+        window.location.href = "/agent/uuid/luma/" + uuid;
+    }
 }
 
 function ColorStatut(divID, etatStats) {

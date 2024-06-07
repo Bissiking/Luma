@@ -216,6 +216,42 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
 
                 </div>
             </section>
+            <section id="BeamMP-sys" <?php if ($agent['BeamMPProcessCheck_autostart'] != 1) {
+                                            echo 'style="background-color: grey"';
+                                        } ?>>
+                <h2>BeamMP</h2>
+                <div class="agent-data">
+                    <p class="label">Etat du service :</p>
+                    <p id="data-agent-BeamMP" class="data-agent">Chargement des données</p>
+                </div>
+                <div class="agent-data">
+                    <p class="label">Dernière mise à jour:</p>
+                    <p id="data-agent-servicesBeamMPUpdate" class="data-agent">Chargement des données</p>
+                </div>
+                <div class="agent-data">
+                    <p class="label">Alerte:</p>
+                    <p id="BeamMP-sys-alerte" class="data-agent alert">RAS</p>
+                </div>
+                <div class="agent-data">
+
+                    <button <?php if ($agent['BeamMPProcessCheck_autostart'] == 1) {
+                                echo 'class="delete"';
+                            } ?> id="BeamMPProcessCheck_autostart" data-autostart="<?= $agent['BeamMPProcessCheck_autostart'] ?>" onclick="AutoStart('BeamMPProcessCheck_autostart')"><?php if ($agent['BeamMPProcessCheck_autostart'] == 1) {
+                                                                                                                                                                                                echo 'Désactivé';
+                                                                                                                                                                                            } else {
+                                                                                                                                                                                                echo 'Activé';
+                                                                                                                                                                                            } ?> AutoStart</button>
+
+                    <button <?php if ($agent['BeamMPProcessCheck_autorestart'] == 1) {
+                                echo 'class="delete"';
+                            } ?> id="BeamMPProcessCheck_autorestart" data-autorestart="<?= $agent['BeamMPProcessCheck_autorestart'] ?>" style="margin-left: 15px;" onclick="AutoRestart('BeamMPProcessCheck_autorestart')"><?php if ($agent['BeamMPProcessCheck_autorestart'] == 1) {
+                                                                                                                                                                                                                                        echo 'Désactivé';
+                                                                                                                                                                                                                                    } else {
+                                                                                                                                                                                                                                        echo 'Activé';
+                                                                                                                                                                                                                                    } ?> AutoRestart</button>
+
+                </div>
+            </section>
 </div>
 
 <section id="block-disk" class="content-dashboard-agent-disk">
@@ -228,6 +264,6 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
     </section>
 <?php endif;
         if ($agent['module'] === 'agent_luma' || $agent['module'] === null) { ?>
-    <script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/agent/dash-agent.js?0"></script>
+    <script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/agent/dash-agent.js?1"></script>
 <?php }
     endif; ?>
