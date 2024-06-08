@@ -27,6 +27,7 @@ $result = $req->rowCount();
         <tr>
             <th>Statut</th>
             <th>Agent à surveiller</th>
+            <th>Container Docker</th>
             <th>Option</th>
         </tr>
     </thead>
@@ -42,7 +43,12 @@ $result = $req->rowCount();
                 </select>
             </td>
             <td>
-                Aucune option disponible
+                <select id="srv_service_docker">
+                    <option selected disabled hidden>Liste des containers (Actualisation auto)</option>
+                </select>
+            </td>
+            <td>
+                <button id="btn_add_sonde">Ajouter la sonde</button>
             </td>
         </tr>
         <?php while ($service = $req->fetch()): ?>
@@ -56,10 +62,13 @@ $result = $req->rowCount();
                     <?php endforeach; ?>
                 </select>
             </td>
+            <td>
+                Pas encore disponible
+            </td>
             <td><button class="delete" data-id="<?= $service['service'] ?>">Supression</button></td>
         </tr>
         <?php endwhile; ?>
     </tbody>
 </table>
 
-<script src="../javascripts/admin/statut.js?0"></script>
+<script src="../javascripts/admin/statut.js?1"></script>
