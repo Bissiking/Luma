@@ -116,20 +116,15 @@ function DockerSonde(id, currentElement, DockerUUID) {
                 data = JSON.parse(data);
             }
 
-            console.log(data);
-            console.log('boucle');
-
             let found = data.find(data => data.id === DockerUUID);
 
             if (found) {
-                console.log("found", found);
                 if(found.status == 'running'){
                     Statut = 1;
                 }else{
                     Statut = 0;
                 }
             } else {
-                console.log("not found");
                 Statut = 0;
             }
 
