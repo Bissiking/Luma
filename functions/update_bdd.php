@@ -205,7 +205,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'BeamMPProcessCheck_autorestart TINYINT(1) NOT NULL DEFAULT 0'
                     ];
                 }
-
             } catch (PDOException $e) {
                 echo 'configCreateTableAgent-echec --> ' . $e->getMessage();
                 exit;
@@ -216,25 +215,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         case 'luma_statut':
 
+            $tableName = "luma_statut";
+            $BDD_CONST = "DB_LUMA_STATUT_VERSION";
+            $BDD_CONST_VAL = DB_LUMA_STATUT_VERSION;
+
             // Création de la table STATUT
             try {
-                require './lib/mysql_table_create.php';
+                if (DB_LUMA_STATUT_VERSION == "DB00") {
+                    require './lib/mysql_table_create.php';
 
-                $tableName = "luma_statut";
-                $columns = [
-                    'id' => 'INT PRIMARY KEY AUTO_INCREMENT',
-                    'service' => 'VARCHAR(255) NOT NULL',
-                    'uuid_agent' => 'VARCHAR(255) NOT NULL',
-                ];
-                $result_PDO = createTablePDO($tableName, $columns, $pdo);
+                    $columns = [
+                        'id' => 'INT PRIMARY KEY AUTO_INCREMENT',
+                        'service' => 'VARCHAR(255) NOT NULL',
+                        'uuid_agent' => 'VARCHAR(255) NOT NULL',
+                        'uuid_docker' => 'VARCHAR(255) NULL',
+                    ];
+                    $result_PDO = createTablePDO($tableName, $columns, $pdo);
 
-                $BDD_CONST = "DB_LUMA_STATUT_VERSION";
-                $BDD_CONST_VAL = DB_LUMA_STATUT_VERSION;
-                ConstEdit($BDD_CONST, $BDD_CONST_VAL);
+                    echo $result_PDO;
+                } else {
 
-                echo $result_PDO;
-
-                exit;
+                    $createTable = 1;
+                    $columnsToAdd = [
+                        "uuid_docker varchar(255) NULL"
+                    ];
+                }
+                
             } catch (PDOException $e) {
                 echo 'configCreateTableSTATUT-echec --> ' . $e->getMessage();
                 exit;

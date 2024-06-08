@@ -10,6 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $selectedOption = htmlspecialchars(trim($selectedOption));
     $selectedName = htmlspecialchars(trim($selectedName));
     $inputName = htmlspecialchars(trim($inputName));
+    if(isset($uuid_docker)){
+        $uuid_docker = htmlspecialchars(trim($uuid_docker));
+    }
     $tableName = "luma_statut";
 
     if ($selectedName == 'delete') {
@@ -18,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    if ($selectedName == "srv_service") {
+    if ($selectedName == "btn_add_sonde") {
         // Vérification de la présence du service
         $criteria = [
             'service' => $inputName
@@ -30,7 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Création du service
             $data = [
                 'service' => $inputName,
-                'uuid_agent' => $selectedOption
+                'uuid_agent' => $selectedOption,
+                'uuid_docker' => $uuid_docker
             ];
             echo insertDataPDO($tableName, $data, $pdo);
         } else {

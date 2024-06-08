@@ -26,7 +26,7 @@
     },
     "DB_LUMA_STATUT_VERSION": {
         "DB_NAME": "DB_LUMA_STATUT_VERSION",
-        "version_dispo": "DB01",
+        "version_dispo": "DB02",
         "DB_USE": "luma_statut"
     }
 }

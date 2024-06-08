@@ -24,8 +24,8 @@
 <?php while ($service = $req->fetch()): ?>
     <section class="serviceSection">
         <h5><?= $service['service'] ?></h5>
-        <p><span class="circle-stats circle-offline" data-service="<?= $service['service'] ?>" data-id="<?= $service['uuid_agent'] ?>"></span><span class="txt-stats">Check en cours</span></p>
+        <p><span class="circle-stats circle-offline" data-service="<?= $service['service'] ?>" data-id="<?= $service['uuid_agent'] ?>" data-uuiddocker="<?= $service['uuid_docker'] ?>"></span><span class="txt-stats">Check en cours</span></p>
     </section>
 <?php endwhile; ?>
 
-<script src="../javascripts/home/statut.js?1"></script>
+<script src="../javascripts/home/statut.js?2"></script>
