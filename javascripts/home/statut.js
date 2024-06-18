@@ -75,7 +75,7 @@ function ServicesCheck() {
                             this.removeClass(statsRemove);
                             this.siblings('.txt-stats').text(statsTxt);
                         } else {
-                            let statsTxt = 'Service hors ligne :(';
+                            let statsTxt = 'Service hors ligne';
                             let statsClass = "circle-offline";
                             let statsRemove = "circle-online";
                             this.addClass(statsClass);
@@ -85,7 +85,7 @@ function ServicesCheck() {
                     },
                     error: function (error) {
                         console.log(error);
-                        let statsTxt = 'Service hors ligne --';
+                        let statsTxt = 'Service hors ligne';
                         let statsClass = "circle-offline";
                         this.addClass(statsClass);
                         this.siblings('.txt-stats').text(statsTxt);
