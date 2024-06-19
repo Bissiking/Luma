@@ -49,10 +49,12 @@ function SatutAgentGlob() {
     var modernBoxes = $('.modern-box');
     let online = 0;
     let offline = 0;
+    let maintenance = 0;
     let promises = [];
 
     modernBoxes.each(function() {
         var data = $(this).data('uuidagent');
+        var statut = $(this).data('statut');
         var url = "/data/" + data + "/";
         var promise = new Promise(function(resolve, reject) {
             $.ajax({
@@ -64,14 +66,22 @@ function SatutAgentGlob() {
                     var currentTime = new Date();
                     var sondeTime = new Date(response.result.date);
                     var elapsedTimeInSeconds = (currentTime - sondeTime) / 1000;
-                    if (elapsedTimeInSeconds > 600) { // 10 Minutes
-                        offline++;
-                        $('#agent-statut-'+data).text('Hors ligne');
-                        ColorStatut('#agent-statut-'+data, 'error');
-                    } else {
-                        online++;
-                        $('#agent-statut-'+data).text('En ligne');
-                        ColorStatut('#agent-statut-'+data, 'good');
+
+                    if (statut == 99) {
+                            maintenance++;
+                            $('#agent-statut-'+data).text('En maintenance');
+                            ColorStatut('#agent-statut-'+data, 'warning');
+                    }else{
+                        if (elapsedTimeInSeconds > 600) { // 10 Minutes
+                            offline++;
+                            $('#agent-statut-'+data).text('Hors ligne');
+                            ColorStatut('#agent-statut-'+data, 'error');
+                        } else {
+                            online++;
+                            $('#agent-statut-'+data).text('En ligne');
+                            ColorStatut('#agent-statut-'+data, 'good');
+                        }
+                        
                     }
                     resolve();
                 },
@@ -86,8 +96,14 @@ function SatutAgentGlob() {
 
     Promise.all(promises).then(function() {
         // Indication du nombre
+
+        console.log(online);
+        console.log(offline);
+        console.log(maintenance);
+
         $('#agent-up-txt').text(online);
         $('#agent-down-txt').text(offline);
+        $('#agent-maintenance-txt').text(maintenance);
     });
 }
 

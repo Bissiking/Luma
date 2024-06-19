@@ -52,6 +52,15 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
                 <p class="label">Etat de l'agent:</p>
                 <p id="agent-statut" class="data-agent">Non disponible</p>
             </div>
+            <?php if ($agent['agent_etat'] !== 0) : ?>
+                <button id="agent_etat" <?php if ($agent['agent_etat'] == 99) {
+                            echo 'class="warning"';
+                        } ?> data-maintenance="<?= $agent['agent_etat'] ?>" onclick="MaintenanceMode('agent_etat')"><?php if ($agent['agent_etat'] == 99) {
+                            echo 'Mode maintenance activé';
+                        }else{
+                            echo 'Mode maintenance désactivé';
+                        } ?></button>
+            <?php endif; ?>
         </section>
         <?php if ($agent['agent_etat'] !== 0) : ?>
             <section id="config-sys" <?php if ($agent['ProcessorModule_autostart'] != 1) {
@@ -237,18 +246,18 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
                     <button <?php if ($agent['BeamMPProcessCheck_autostart'] == 1) {
                                 echo 'class="delete"';
                             } ?> id="BeamMPProcessCheck_autostart" data-autostart="<?= $agent['BeamMPProcessCheck_autostart'] ?>" onclick="AutoStart('BeamMPProcessCheck_autostart')"><?php if ($agent['BeamMPProcessCheck_autostart'] == 1) {
-                                                                                                                                                                                                echo 'Désactivé';
-                                                                                                                                                                                            } else {
-                                                                                                                                                                                                echo 'Activé';
-                                                                                                                                                                                            } ?> AutoStart</button>
+                                                                                                                                                                                            echo 'Désactivé';
+                                                                                                                                                                                        } else {
+                                                                                                                                                                                            echo 'Activé';
+                                                                                                                                                                                        } ?> AutoStart</button>
 
                     <button <?php if ($agent['BeamMPProcessCheck_autorestart'] == 1) {
                                 echo 'class="delete"';
                             } ?> id="BeamMPProcessCheck_autorestart" data-autorestart="<?= $agent['BeamMPProcessCheck_autorestart'] ?>" style="margin-left: 15px;" onclick="AutoRestart('BeamMPProcessCheck_autorestart')"><?php if ($agent['BeamMPProcessCheck_autorestart'] == 1) {
-                                                                                                                                                                                                                                        echo 'Désactivé';
-                                                                                                                                                                                                                                    } else {
-                                                                                                                                                                                                                                        echo 'Activé';
-                                                                                                                                                                                                                                    } ?> AutoRestart</button>
+                                                                                                                                                                                                                                echo 'Désactivé';
+                                                                                                                                                                                                                            } else {
+                                                                                                                                                                                                                                echo 'Activé';
+                                                                                                                                                                                                                            } ?> AutoRestart</button>
 
                 </div>
             </section>
@@ -264,6 +273,6 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
     </section>
 <?php endif;
         if ($agent['module'] === 'agent_luma' || $agent['module'] === null) { ?>
-    <script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/agent/dash-agent.js?1"></script>
+    <script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/agent/dash-agent.js?2"></script>
 <?php }
     endif; ?>
