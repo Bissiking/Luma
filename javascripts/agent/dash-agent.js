@@ -418,6 +418,42 @@ function ServicesBeamMP() {
     });
 }
 
+function MaintenanceMode(id) {
+    let etat = $('#' + id).data('maintenance');
+    let uuid_agent = $('#agent-uuid').text();
+
+    if (etat == 0) {
+        showPopup("error", "L'agent n'est pas d'accord", "Veuillez initialiser l'agent avant de la passer en mode maintenance");
+    } else if (etat == 1) {
+        etat = 99;
+        textBtn = "Mode maintenance activé";
+        Class = "warning"
+    } else {
+        etat = 1;
+        textBtn = "Mode maintenance désactivé";
+        Class = ""
+    }
+    // Effectuer la requête AJAX
+    $.ajax({
+        type: 'POST',
+        url: 'functions/update_statut_container',
+        data: 'id=' + id + "&etat=" + etat + "&uuid_agent=" + uuid_agent,
+        success: function (response) {
+            $('#' + id).data('autostart', etat);
+            $('#' + id).text(textBtn);
+            if (Class == 'warning') {
+                $('#' + id).addClass('warning');
+            } else {
+                $('#' + id).removeClass();
+            }
+        },
+        error: function (error) {
+            console.error('Erreur de connexion:', error);
+            showPopup("error", "Petit soucis imprévu ...", "Une erreur inconnu est survenue. Reéssayer plus tard");
+        }
+    });
+}
+
 function AutoStart(id) {
     let etat = $('#' + id).data('autostart');
     let uuid_agent = $('#agent-uuid').text();

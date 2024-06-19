@@ -37,7 +37,7 @@ if (isset($_SESSION['authentification']['user'])) :
                 <p class="stats-label-little">Serveur(s) Offline</p>
             </span>
             <span id="agent-maintenance" class="agent-stats-global">
-                <p class="stats-label bold">*</p>
+                <p id="agent-maintenance-txt" class="stats-label bold">*</p>
                 <p class="stats-label-little">Serveur(s) en maintenance(s)</p>
             </span>
         </div>
@@ -65,7 +65,7 @@ if (isset($_SESSION['authentification']['user'])) :
             } else {
                 while ($agent = $ListFunc->fetch()) {
             ?>
-                    <div class="modern-box" onclick="DashAgent('<?= $agent['uuid_agent'] ?>', '<?= $agent['module'] ?>')" data-uuidagent="<?= $agent['uuid_agent'] ?>" data-module="<?= $agent['module'] ?>">
+                    <div class="modern-box" onclick="DashAgent('<?= $agent['uuid_agent'] ?>', '<?= $agent['module'] ?>')" data-uuidagent="<?= $agent['uuid_agent'] ?>" data-module="<?= $agent['module'] ?>" data-statut="<?= $agent['agent_etat'] ?>">
                         <h2><?= $agent['agent_name'] ?></h2>
                         <?php if($agent['agent_etat'] == 0): ?>
                             <p id="agent-statut-<?= $agent['uuid_agent'] ?>" class="agent-etat info">Non associé</p>
@@ -74,7 +74,7 @@ if (isset($_SESSION['authentification']['user'])) :
                         <?php elseif($agent['agent_etat'] == 10): ?>
                             <p id="agent-statut-<?= $agent['uuid_agent'] ?>" class="agent-etat offline">Hors ligne</p>
                         <?php elseif($agent['agent_etat'] == 99): ?>
-                            <p id="agent-statut-<?= $agent['uuid_agent'] ?>" class="agent-etat">En maintenance</p>
+                            <p id="agent-statut-<?= $agent['uuid_agent'] ?>" class="agent-etat warning">En maintenance</p>
                         <?php else: ?>
                             <p id="agent-statut-<?= $agent['uuid_agent'] ?>" class="agent-etat">Etat indisponible</p>
                         <?php endif; ?>
@@ -85,7 +85,7 @@ if (isset($_SESSION['authentification']['user'])) :
         </div>
     </section>
 
-    <script src="javascripts/agent/dashboard.js?2"></script>
+    <script src="javascripts/agent/dashboard.js?3"></script>
 
 <?php else : header('Location: /');
 endif; ?>
