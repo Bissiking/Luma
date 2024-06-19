@@ -38,6 +38,15 @@ section > p > span{
     animation: pulse_online 2s infinite;
 }
 
+.circle-warning {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    background-color: orange;
+    border-radius: 50%;
+    animation: pulse_warning 2s infinite;
+}
+
 .circle-offline {
     display: flex;
     width: 30px;
@@ -59,15 +68,27 @@ section > p > span{
     }
 }
 
+@keyframes pulse_warning {
+    0% {
+        box-shadow: 0 0 0 0px rgba(100, 75, 0, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 20px rgba(100, 75, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0px rgba(100, 75, 0, 0);
+    }
+}
+
 @keyframes pulse_offline {
     0% {
         box-shadow: 0 0 0 0px rgba(100, 0, 0, 0.7);
     }
     50% {
-        box-shadow: 0 0 0 20px rgba(50, 0, 0, 0);
+        box-shadow: 0 0 0 20px rgba(100, 0, 0, 0);
     }
     100% {
-        box-shadow: 0 0 0 0px rgba(50, 0, 0, 0);
+        box-shadow: 0 0 0 0px rgba(100, 0, 0, 0);
     }
 }
 
