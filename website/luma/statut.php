@@ -27,7 +27,7 @@ function getAgentEtat($uuid, $agents)
 $agent_uuids = array_column($result_agent, 'uuid_agent');
 ?>
 
-<link rel="stylesheet" href="../css/statut.css?2">
+<link rel="stylesheet" href="../css/statut.css?3">
 <script>
     document.title = "Status";
 </script>
@@ -55,4 +55,4 @@ $agent_uuids = array_column($result_agent, 'uuid_agent');
     </section>
 <?php endwhile; ?>
 
-<script src="../javascripts/home/statut.js?4"></script>
+<script src="../javascripts/home/statut.js?5"></script>

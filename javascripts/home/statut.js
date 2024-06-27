@@ -23,7 +23,7 @@ function pingServer() {
             // Gérer l'erreur ou afficher un message d'erreur
 
             api_nino_cricle.addClass('circle-offline');
-            api_nino_txt.text('Service hors ligne');
+            api_nino_txt.text('Service hors ligne #0003');
         }
     });
 }
@@ -70,7 +70,7 @@ function ServicesCheck() {
                 } else if (searchTerm.includes("beammp")) {
                     service = "beammp";
                 } else {
-                    let statsTxt = 'Service hors ligne';
+                    let statsTxt = 'Service hors ligne #0001';
                     let statsClass = "circle-offline";
                     $currentElement.addClass(statsClass);
                     $currentElement.siblings('.txt-stats').text(statsTxt);
@@ -93,7 +93,7 @@ function ServicesCheck() {
                             this.removeClass(statsRemove);
                             this.siblings('.txt-stats').text(statsTxt);
                         } else {
-                            let statsTxt = 'Service hors ligne';
+                            let statsTxt = 'Service hors ligne #0002';
                             let statsClass = "circle-offline";
                             let statsRemove = "circle-online";
                             this.addClass(statsClass);
@@ -103,7 +103,7 @@ function ServicesCheck() {
                     },
                     error: function (error) {
                         console.log(error);
-                        let statsTxt = 'Service hors ligne';
+                        let statsTxt = 'Service hors ligne #0099';
                         let statsClass = "circle-offline";
                         this.addClass(statsClass);
                         this.siblings('.txt-stats').text(statsTxt);
@@ -154,7 +154,7 @@ function DockerSonde(id, currentElement, DockerUUID) {
                 this.removeClass(statsRemove);
                 this.siblings('.txt-stats').text(statsTxt);
             } else {
-                let statsTxt = 'Service hors ligne :(';
+                let statsTxt = 'Service hors ligne #0004';
                 let statsClass = "circle-offline";
                 let statsRemove = "circle-online";
                 this.addClass(statsClass);
