@@ -129,7 +129,28 @@ function DockerSonde(id, currentElement, DockerUUID) {
         success: function (response) {
             // Supposons que les données se trouvent dans response.result.containers
             let data = response.result.containers;
+            // Récupération de la date de dernière update
+            let dateUpdate = response.result.date
+
+            // Vérification du temps de dernière update
+            var currentTime = new Date();
+            // Vérification du temps de mise à jour
+            sondeTime = new Date(dateUpdate);
+            var elapsedTimeInSeconds = (currentTime - sondeTime) / 1000;
+
+            if (elapsedTimeInSeconds > 90000) { // Out depuis + de 15 minutes
+                let statsTxt = 'Service hors ligne #0005';
+                let statsClass = "circle-offline";
+                let statsRemove = "circle-online";
+                this.addClass(statsClass); // Utiliser this ici fait référence à $currentElement
+                this.removeClass(statsRemove);
+                this.siblings('.txt-stats').text(statsTxt);
+                return;
+            }
+
+
             // Convertir en objet JSON si c'est une chaîne
+            console.log(data);
             if (typeof data === "string") {
                 data = JSON.parse(data);
             }
