@@ -137,10 +137,7 @@ function DockerSonde(id, currentElement, DockerUUID) {
             // Vérification du temps de mise à jour
             sondeTime = new Date(dateUpdate);
             var elapsedTimeInSeconds = (currentTime - sondeTime) / 1000;
-
-            console.log(dateUpdate);
-            console.log(elapsedTimeInSeconds);
-            if (elapsedTimeInSeconds > 90000) { // Out depuis + de 15 minutes
+            if (elapsedTimeInSeconds > 9000) { // Out depuis + de 15 minutes
                 let statsTxt = 'Service hors ligne #0005';
                 let statsClass = "circle-offline";
                 let statsRemove = "circle-online";
