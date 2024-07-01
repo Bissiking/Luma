@@ -1,5 +1,26 @@
 var uuid = $('#agent-uuid').text();
 var url = "/data/" + uuid + "/";
+const nDate = new Date().toLocaleString('fr-FR', {
+    timeZone: 'Europe/Paris'
+});
+
+function convertTimestampToDateTime(timestamp) {
+    // Crée un nouvel objet Date en utilisant le timestamp
+    var date = new Date(timestamp);
+
+    // Obtenir les différentes parties de la date
+    var year = date.getFullYear();
+    var month = ("0" + (date.getMonth() + 1)).slice(-2); // Les mois sont de 0 à 11
+    var day = ("0" + date.getDate()).slice(-2);
+    var hours = ("0" + date.getHours()).slice(-2);
+    var minutes = ("0" + date.getMinutes()).slice(-2);
+    var seconds = ("0" + date.getSeconds()).slice(-2);
+
+    // Format de la date et heure en UTC
+    var formattedDate = `${day}/${month}/${year} - ${hours}:${minutes}:${seconds}`;
+
+    return formattedDate;
+}
 
 function ModelProcessor() {
     $.ajax({
@@ -10,8 +31,8 @@ function ModelProcessor() {
             let data = response.result.status.cpu;
 
             // Calcule du temps d'actualisation de la sonde
-            var currentTime = new Date();
-            var sondeTime = new Date(response.result.status.date);
+            var currentTime = Date.now(nDate);
+            var sondeTime = new Date(response.result.date);
             var elapsedTimeInSeconds = (currentTime - sondeTime) / 1000;
 
             if (elapsedTimeInSeconds > 600) {
@@ -49,10 +70,17 @@ function ModelProcessor() {
             $('#data-agent-architecture').text(data.architecture);
             $('#data-agent-Cores').text(data.cores);
             $('#data-agent-Used').text(data.usage);
-            $('#data-agent-processorUpdate').text(response.result.status.date);
+            $('#data-agent-processorUpdate').text(convertTimestampToDateTime(sondeTime));
         },
         error: function (error) {
             console.error('Erreur lors du chargement du fichier JSON :', error);
+            $('#data-agent-ModelProcessor').text('Information indisponible');
+            $('#data-agent-architecture').text('Information indisponible');
+            $('#data-agent-Cores').text('Information indisponible');
+            $('#data-agent-Used').text('Information indisponible');
+            $('#data-agent-processorUpdate').text('Information indisponible');
+            $('#config-sys-alerte').text(`Sonde indisponible`);
+
         }
     });
 }
@@ -64,8 +92,8 @@ function Memory() {
         cache: false,
         success: function (response) {
             let data = response.result.status.memory;
-            var currentTime = new Date();
-            var sondeTime = new Date(response.result.status.date);
+            var currentTime = Date.now(nDate);
+            var sondeTime = new Date(response.result.date);
             var elapsedTimeInSeconds = (currentTime - sondeTime) / 1000;
 
             if (elapsedTimeInSeconds > 300) {
@@ -99,13 +127,20 @@ function Memory() {
                 $('#memory-sys-alerte').text(`RAS`);
             }
 
+            let memoryFree = Math.round(data.free / (1024 * 1024));
+            let memoryTotal = Math.round(data.total / (1024 * 1024));
 
-            $('#data-agent-Memfree').text(data.free)
-            $('#data-agent-MemTotal').text(data.total)
-            $('#data-agent-memoryUpdate').text(response.result.status.date)
+            $('#data-agent-Memfree').text(memoryFree+ " MB");
+            $('#data-agent-MemTotal').text(memoryTotal+ " MB");
+            $('#data-agent-memoryUpdate').text(convertTimestampToDateTime(sondeTime))
         },
         error: function (error) {
             console.error('Erreur lors du chargement du fichier JSON :', error);
+
+            $('#data-agent-Memfree').text('Information indisponible');
+            $('#data-agent-MemTotal').text('Information indisponible');
+            $('#data-agent-memoryUpdate').text('Information indisponible');
+            $('#memory-sys-alerte').text(`Sonde indisponible`);
         }
     });
 }
@@ -117,7 +152,7 @@ function ServicesPlex() {
         cache: false,
         success: function (response) {
             let data = response.result;
-            var currentTime = new Date();
+            var currentTime = Date.now(nDate);
             var sondeTime = new Date(response.result.date);
             var elapsedTimeInSeconds = (currentTime - sondeTime) / 1000;
             // Calcule en Heure lisible
@@ -152,10 +187,14 @@ function ServicesPlex() {
             }
 
             $('#data-agent-plex').text(statsTxt)
-            $('#data-agent-servicesUpdate').text(data.date)
+            $('#data-agent-servicesUpdate').text(convertTimestampToDateTime(sondeTime))
         },
         error: function (error) {
             console.error('Erreur lors du chargement du fichier JSON :', error);
+            $('#data-agent-plex').text('Information indisponible');
+            $('#data-agent-servicesUpdate').text('Information indisponible');
+            $('#plex-sys-alerte').text(`Sonde indisponible`);
+
         }
     });
 }
@@ -186,6 +225,7 @@ function LoadDisk() {
         },
         error: function (error) {
             console.error('Erreur lors du chargement du fichier JSON :', error);
+            $('#block-disk').hide()
         }
     });
 }
@@ -232,11 +272,17 @@ function ContainerCheck() {
         success: function (response) {
 
             let containers = response.result.containers;
+
+            if (containers.docker === "no-data") {
+                console.log('Pas de container');
+                return;
+            }
+
             containers = JSON.parse(containers);
             NbContainers = containers.length;
 
             for (let i = 0; i < NbContainers; i++) {
-                var currentTime = new Date();
+                var currentTime = Date.now(nDate);
                 // Vérification du temps de mise à jour
                 sondeTime = new Date(response.result.date);
                 var elapsedTimeInSeconds = (currentTime - sondeTime) / 1000;
@@ -259,7 +305,7 @@ function ContainerCheck() {
                     // Message d'alerte de non contact de la sonde
                     txtSonde = `La sonde ne réponds plus depuis: ${jours} Jour(s), ${heures} Heure(s), ${minutes} minute(s) et ${secondes} seconde(s)`;
                 } else {
-                    txtSonde = response.result.date
+                    txtSonde = convertTimestampToDateTime(sondeTime)
                 }
 
 
@@ -324,7 +370,7 @@ function ServicesJellyFin() {
         cache: false,
         success: function (response) {
             let data = response.result;
-            var currentTime = new Date();
+            var currentTime = Date.now(nDate);
             var sondeTime = new Date(response.result.date);
             var elapsedTimeInSeconds = (currentTime - sondeTime) / 1000;
             // Calcule en Heure lisible
@@ -359,10 +405,14 @@ function ServicesJellyFin() {
             }
 
             $('#data-agent-JellyFin').text(statsTxt)
-            $('#data-agent-servicesJellyFinUpdate').text(data.date)
+            $('#data-agent-servicesJellyFinUpdate').text(convertTimestampToDateTime(sondeTime))
         },
         error: function (error) {
             console.error('Erreur lors du chargement du fichier JSON :', error);
+
+            $('#data-agent-JellyFin').text('Information indisponible');
+            $('#data-agent-servicesJellyFinUpdate').text('Information indisponible');
+            $('#JellyFin-sys-alerte').text(`Sonde indisponible`);
         }
     });
 }
@@ -374,7 +424,7 @@ function ServicesBeamMP() {
         cache: false,
         success: function (response) {
             let data = response.result;
-            var currentTime = new Date();
+            var currentTime = Date.now(nDate);
             var sondeTime = new Date(response.result.date);
             var elapsedTimeInSeconds = (currentTime - sondeTime) / 1000;
             // Calcule en Heure lisible
@@ -409,11 +459,14 @@ function ServicesBeamMP() {
             }
 
             $('#data-agent-BeamMP').text(statsTxt)
-            $('#data-agent-servicesBeamMPUpdate').text(data.date)
+            $('#data-agent-servicesBeamMPUpdate').text(convertTimestampToDateTime(sondeTime))
 
         },
         error: function (error) {
             console.error('Erreur lors du chargement du fichier JSON :', error);
+            $('#data-agent-BeamMP').text('Information indisponible');
+            $('#data-agent-servicesBeamMPUpdate').text('Information indisponible');
+            $('#BeamMP-sys-alerte').text(`Sonde indisponible`);
         }
     });
 }

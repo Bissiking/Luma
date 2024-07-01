@@ -50,7 +50,7 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
             </div>
             <div class="agent-data">
                 <p class="label">Etat de l'agent:</p>
-                <p id="agent-statut" class="data-agent">Non disponible</p>
+                <p id="agent-statut" class="data-agent">[EN DEV]</p>
             </div>
             <?php if ($agent['agent_etat'] !== 0) : ?>
                 <button id="agent_etat" <?php if ($agent['agent_etat'] == 99) {
@@ -273,6 +273,6 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
     </section>
 <?php endif;
         if ($agent['module'] === 'agent_luma' || $agent['module'] === null) { ?>
-    <script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/agent/dash-agent.js?2"></script>
+    <script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/agent/dash-agent.js?3"></script>
 <?php }
     endif; ?>
