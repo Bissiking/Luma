@@ -40,8 +40,6 @@ function ServicesCheck() {
             let DockerUUID = $(this).data('uuiddocker');
             let statut = $(this).data('statut');
 
-            console.log(statut);
-
             if (statut == "empty") {
                 let statsTxt = 'Récupération du statut impossible';
                 let statsClass = "circle-error";
@@ -149,7 +147,6 @@ function DockerSonde(id, currentElement, DockerUUID) {
 
 
             // Convertir en objet JSON si c'est une chaîne
-            console.log(data);
             if (typeof data === "string") {
                 data = JSON.parse(data);
             }
