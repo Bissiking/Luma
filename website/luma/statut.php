@@ -8,7 +8,7 @@ $req_services->execute();
 $result = $req_services->rowCount();
 
 // Extraction de la liste des agents
-$sql_agent = 'SELECT uuid_agent, agent_etat FROM luma_agent';
+$sql_agent = 'SELECT uuid_agent, agent_etat, module FROM luma_agent';
 $req_agent = $pdo->prepare($sql_agent);
 $req_agent->execute();
 $result_agent = $req_agent->fetchAll(PDO::FETCH_ASSOC);
@@ -23,8 +23,19 @@ function getAgentEtat($uuid, $agents)
     return null;
 }
 
+function getAgentModule($uuid, $agents)
+{
+    foreach ($agents as $agent) {
+        if ($agent['uuid_agent'] === $uuid) {
+            return $agent['module'];
+        }
+    }
+    return null;
+}
+
 // Extraire uniquement les uuid_agent dans un tableau
 $agent_uuids = array_column($result_agent, 'uuid_agent');
+$agent_module = array_column($result_agent, 'module');
 ?>
 
 <link rel="stylesheet" href="../css/statut.css?3">
@@ -40,14 +51,16 @@ $agent_uuids = array_column($result_agent, 'uuid_agent');
 <?php while ($service = $req_services->fetch(PDO::FETCH_ASSOC)) :
     if (in_array($service['uuid_agent'], $agent_uuids)) {
         $agent_etat = getAgentEtat($service['uuid_agent'], $result_agent);
+        $agent_module = getAgentModule($service['uuid_agent'], $result_agent);
     } else {
         $agent_etat = 'empty';
+        $agent_module = 'empty';
     };
 ?>
     <section class="serviceSection">
         <h5><?= htmlspecialchars($service['service']) ?></h5>
         <p>
-            <span class="circle-stats circle-offline" data-service="<?= htmlspecialchars($service['service']) ?>" data-id="<?= htmlspecialchars($service['uuid_agent']) ?>" data-uuiddocker="<?php if (!empty($service['uuid_docker'])) {
+            <span class="circle-stats circle-offline" data-module="<?= $agent_module ?>" data-service="<?= htmlspecialchars($service['service']) ?>" data-id="<?= htmlspecialchars($service['uuid_agent']) ?>" data-uuiddocker="<?php if (!empty($service['uuid_docker'])) {
                                                                                                                                                                                                     echo htmlspecialchars($service['uuid_docker']);
                                                                                                                                                                                                 } ?>" data-statut="<?= htmlspecialchars($agent_etat) ?>"></span>
             <span class="txt-stats">Check en cours</span>
@@ -55,4 +68,4 @@ $agent_uuids = array_column($result_agent, 'uuid_agent');
     </section>
 <?php endwhile; ?>
 
-<script src="../javascripts/home/statut.js?6"></script>
+<script src="../javascripts/home/statut.js?7"></script>
