@@ -49,7 +49,7 @@ if (isset($_SESSION['authentification']['user'])) :
         <select type="text" id="module" placeholder="Nom de l'agent">
             <option value="agent_luma" selected>Agent LUMA (Default)</option>
             <option value="agent_minecraft">Agent Minecraft</option>
-            <option value="agent_nino">Agent Nino (Pas encore disponible)</option>
+            <option value="agent_nino">Agent Nino (Player uniquement)</option>
         </select>
         <button onclick="agent_add()">Création de l'agent</button>
     </section>
