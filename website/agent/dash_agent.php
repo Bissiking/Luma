@@ -21,6 +21,8 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
         };
     }
 }
+
+$urlNewDash = explode('/', $url);
 ?>
 
 
@@ -60,6 +62,7 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
                         }else{
                             echo 'Mode maintenance désactivé';
                         } ?></button>
+                <a href="/agent/uuid/new/luma/<?= $urlNewDash[4] ?>"><button>New dashboard</button></a>
             <?php endif; ?>
         </section>
         <?php if ($agent['agent_etat'] !== 0) : ?>

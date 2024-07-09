@@ -8,6 +8,8 @@ class AgentDashboardController
         $queryUrl = parse_url($url);
         if (strpos($url, 'agent/uuid/luma') !== false) {
             require_once 'website/agent/dash_agent.php';
+        }else if (strpos($url, 'agent/uuid/new/luma') !== false) {
+            require_once 'website/agent/dash_agent_new.php';
         }else if (strpos($url, 'agent/uuid/minecraft') !== false) {
             require_once 'website/agent/dash_agent_minecraft.php';
         }else{
