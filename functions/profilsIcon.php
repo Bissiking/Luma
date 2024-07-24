@@ -25,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo $PDOResult;
     }else{
         echo 'ERROR UPDATE SESSION';
+        logMessage($pdo, 'ERROR', 'Echec de la mise à jour de la session.', getUserIdentifiant());
     }
 
     

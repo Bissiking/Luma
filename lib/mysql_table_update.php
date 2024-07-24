@@ -22,8 +22,10 @@ function updateDataPDO($tableName, $data, $pdo, $condition)
         // Exécution de la requête avec les valeurs des données
         $stmt->execute(array_values($data));
 
+        logMessage($pdo, 'INFO', 'Mise à jour de la table: '.$tableName.' réussi.', getUserIdentifiant()); // Username will be 'système'
         return "succes";
     } catch (PDOException $e) {
+        logMessage($pdo, 'ERROR', 'Echec de la mise à jour de la table: '.$tableName.' réussi. || SQL ERROR: '.$e->getMessage(), getUserIdentifiant());
         return "Erreur lors de la mise à jour des données dans la table $tableName : " . $e->getMessage();
     }
 }

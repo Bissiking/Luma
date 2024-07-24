@@ -14,8 +14,11 @@ function deleteDataPDO($tableName, $condition, $pdo)
         // Exécution de la requête
         $stmt->execute();
 
+        logMessage($pdo, 'INFO', 'Echec de la suppression de donnée dans la table: '.$tableName.' réussi', getUserIdentifiant());
         return "succes";
+        
     } catch (PDOException $e) {
+        logMessage($pdo, 'ERROR', 'Echec de la suppression de donnée dans la table: '.$tableName.' || SQL ERROR: '.$e->getMessage(), getUserIdentifiant());
         return "Erreur lors de la suppression des données de la table $tableName : " . $e->getMessage();
     }
 }

@@ -17,7 +17,7 @@ function createTablePDO($tableName, $columns, $pdo) {
         // Utiliser exec() car aucune valeur de retour attendue
         $pdo->exec($sql);
 
-        return "succes";
+        return "";
     } catch (PDOException $e) {
         return "Erreur lors de la création de la table $tableName : " . $e->getMessage();
     }

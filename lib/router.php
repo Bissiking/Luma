@@ -11,18 +11,18 @@ if (!file_exists($ConfigFile)) {
     ];
     // print_r($route);
     // exit();
-}else{
+} else {
     require_once($ConfigFile);
 
-    if (WEB_MAINTENANCE == 'true'){
+    if (WEB_MAINTENANCE == 'true') {
         // Si le système de maintenace est actif
         $route = [
             'controller' => 'MaintenanceController',
             'action' => 'show'
         ];
-    }else{
+    } else {
         // Connectez-vous à votre base de données ici
-        require_once 'base/nexus_base.php';
+
 
         // Si la base ne réponds pas
         if ($ERROR == 1) {
@@ -31,14 +31,14 @@ if (!file_exists($ConfigFile)) {
                 'controller' => 'HomeControllerOffline',
                 'action' => 'show'
             ];
-        }else{
+        } else {
             // Requête SQL pour récupérer les informations de routage
             try {
-                if (strpos($url, 'nino/player') !== false){
+                if (strpos($url, 'nino/player') !== false) {
                     $queryUrl['path'] = '/nino/player';
                 }
 
-                if (strpos($url, 'agent/uuid') !== false){
+                if (strpos($url, 'agent/uuid') !== false) {
                     $queryUrl['path'] = '/agent';
                 }
 
@@ -55,40 +55,38 @@ if (!file_exists($ConfigFile)) {
     }
 }
 
-if (strpos($url, 'functions') !== false){
+if (strpos($url, 'functions') !== false) {
 
     // Séparation de l'URL
     $parts = explode('/', $url);
     $functions = end($parts);
 
     // On vérifie si il y'a un paramètre
-    if (strpos($url, '?') !== false){
-       $query = explode('?', $functions);
-       // On réécrit la variable avec la nouvelle valeur
-       $functions = $query[0];
+    if (strpos($url, '?') !== false) {
+        $query = explode('?', $functions);
+        // On réécrit la variable avec la nouvelle valeur
+        $functions = $query[0];
     }
     // On appel la function
     require_once("functions/$functions.php");
     exit;
-    
 }
 
-if (strpos($url, 'init') !== false){
+if (strpos($url, 'init') !== false) {
 
     // Séparation de l'URL
     $parts = explode('/', $url);
     $functions = end($parts);
 
     // On vérifie si il y'a un paramètre
-    if (strpos($url, '?') !== false){
-       $query = explode('?', $functions);
-       // On réécrit la variable avec la nouvelle valeur
-       $functions = $query[0];
+    if (strpos($url, '?') !== false) {
+        $query = explode('?', $functions);
+        // On réécrit la variable avec la nouvelle valeur
+        $functions = $query[0];
     }
     // On appel la function
     require_once("functions/init/$functions.php");
     exit;
-    
 }
 
 

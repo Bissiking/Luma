@@ -123,7 +123,9 @@ h4 {
     margin: 15px 0px;
 }
 
-input, select {
+/* Styles pour les input */
+input,
+select {
     width: 100%;
     padding: 10px 0;
     border: none;
@@ -132,7 +134,8 @@ input, select {
     background-color: transparent;
 }
 
-input:focus {
+input:focus,
+select:focus {
     border-bottom: 2px solid #007bff;
 }
 
@@ -144,8 +147,10 @@ label {
     transition: top 0.3s, font-size 0.3s, color 0.3s;
 }
 
-input:focus+label,
-input:not(:placeholder-shown)+label {
+input:focus + label,
+input:not(:placeholder-shown) + label,
+select:focus + label,
+select:not([value=""]) + label {
     top: -10px;
     font-size: 12px;
     color: #007bff;
@@ -162,10 +167,76 @@ input:not(:placeholder-shown)+label {
     transition: transform 0.3s;
 }
 
-input:focus~.underline {
+input:focus ~ .underline,
+select:focus ~ .underline {
     transform: scaleX(1);
 }
 
+/* Styles pour le conteneur personnalisé */
+.custom-select {
+    position: relative;
+    width: 100%;
+}
+
+/* Styles pour le menu déroulant personnalisé */
+.custom-select select {
+    display: none; /* Masquer le menu déroulant natif */
+}
+
+/* Styles pour le conteneur du menu déroulant */
+.select-styled {
+    display: inline-block;
+    width: 100%;
+    padding: 10px 0px;
+    border-bottom: 2px solid #ccc;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+/* Styles pour la flèche */
+.select-styled:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #777 transparent transparent transparent;
+    transform: translateY(-50%);
+}
+
+/* Styles pour les options */
+.select-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    display: none;
+    padding: 5px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+/* Afficher les options au survol */
+.custom-select:hover .select-options {
+    display: block;
+    cursor: pointer;
+}
+
+/* Styliser les options */
+.select-options option {
+    padding: 5px 10px;
+}
+
+/* Styliser les options au survol */
+.select-options option:hover {
+    background-color: #f0f0f0;
+}
 /* FIN INPUT */
 
 

@@ -240,7 +240,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         "uuid_docker varchar(255) NULL"
                     ];
                 }
-                
             } catch (PDOException $e) {
                 echo 'configCreateTableSTATUT-echec --> ' . $e->getMessage();
                 exit;
@@ -249,6 +248,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             break;
 
+        case 'luma_logs':
+
+            $tableName = "luma_logs";
+            $BDD_CONST = "DB_LUMA_LOGS";
+            $BDD_CONST_VAL = DB_LUMA_LOGS;
+
+            // Création de la table STATUT
+            try {
+                if (DB_LUMA_LOGS == "DB00") {
+                    require './lib/mysql_table_create.php';
+
+
+                    $columns = [
+                        'id' => 'BIGINT PRIMARY KEY AUTO_INCREMENT',
+                        'log_level' => 'VARCHAR(50) NOT NULL',
+                        'log_message' => 'TEXT NOT NULL',
+                        'username' => 'VARCHAR(255) DEFAULT \'système\'',
+                        'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
+                    ];
+                    $result_PDO = createTablePDO($tableName, $columns, $pdo);
+
+                    echo $result_PDO;
+                }
+            } catch (PDOException $e) {
+                echo 'configCreateTableSTATUT-echec --> ' . $e->getMessage();
+                exit;
+            }
+
+
+            break;
 
         default:
             echo "error -> STOP CODE #001";
@@ -279,6 +308,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Edition de la CONSTANTE
         ConstEdit($BDD_CONST, $BDD_CONST_VAL);
         echo 'succes';
+
+        logMessage($pdo, 'INFO', 'Mise à jour de la base de donnée avec l\'utilisateur: '.getUserIdentifiant().'');
+
     } catch (PDOException $e) {
         echo "Erreur de connexion à la base de données : " . $e->getMessage();
     }

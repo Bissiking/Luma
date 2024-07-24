@@ -5,12 +5,20 @@ header('Content-Type: text/html; charset=utf-8');
 // Récupération de l'URL
 $url = $_SERVER['REQUEST_URI'];
 
+require 'base/nexus_base.php';
+
+// var_dump($ERROR);
+
+if (defined('DB_LUMA_LOGS') && DB_LUMA_LOGS > 'DB00'){
+    require_once 'lib/logging_luma.php';
+}
+
 if (strpos($url, 'api') !== false) {
     // Autoriser toutes les origines
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
     header('Access-Control-Allow-Headers: Content-Type');
-    require 'lib/router.php';
+    require_once 'lib/router.php';
     exit;
 }
 
@@ -25,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
+
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- LINK -->
-    <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/all-page.css?v=6">
+    <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/all-page.css?v=7">
     <?php if (strpos($url, 'nino') !== false) : ?>
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/nino.css?v=1">
         <link rel="stylesheet" href="<?= $uriHttp . $_SERVER['HTTP_HOST'] ?>/css/mobile/nino.css?v=0">
@@ -180,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </main>
 
     <!-- Vos scripts JavaScript vont ici -->
-    
+
     <footer>
         &copy; 2023 HEMERY Mathéo
     </footer>

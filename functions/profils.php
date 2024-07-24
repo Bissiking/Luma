@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($nomComplet) && $nomComplet !== "") {
         $data['nomComplet'] = htmlspecialchars(trim($nomComplet));
     }
-    
+
     if (isset($email) && $email !== "") {
         $data['email'] = htmlspecialchars(trim($email));
     }
@@ -22,24 +22,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($password) && $password !== "") {
         $data['password'] = password_hash("" . $password . "", PASSWORD_BCRYPT);
     }
-    
+
     // Utilisation de la fonction pour mettre à jour les données
-    $condition = 'id = '.$_SESSION['authentification']['user']['id'];
+    $condition = 'id = ' . $_SESSION['authentification']['user']['id'];
     $PDOResult = updateDataPDO($tableName, $data, $pdo, $condition);
 
 
     $v = array('id' => $_SESSION['authentification']['user']['id']);
-        $sql = 'SELECT * FROM luma_users WHERE id = :id';
-        $req = $pdo->prepare($sql);
-        $req->execute($v);
-        $result = $req->rowCount();
+    $sql = 'SELECT * FROM luma_users WHERE id = :id';
+    $req = $pdo->prepare($sql);
+    $req->execute($v);
+    $result = $req->rowCount();
     if ($result == 1) {
-        foreach($req as $user){}
+        foreach ($req as $user) {
+        }
         $_SESSION['authentification']['user'] = $user;
         echo $PDOResult;
-    }else{
+    } else {
         echo 'ERROR UPDATE SESSION';
+        logMessage($pdo, 'ERROR', 'Echec de la mise à jour de la session.', getUserIdentifiant());
     }
-
-    
 }

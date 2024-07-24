@@ -32,6 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         fwrite($file, "define('DB_LUMA_STATUT_VERSION', 'DB00');\n");
     }
 
+    if (!defined("DB_LUMA_LOGS")) {
+        fwrite($file, "define('DB_LUMA_LOGS', 'DB00');\n");
+    }
+
+
     // Fermer le fichier
     fclose($file);
     echo 'succes';
@@ -59,6 +64,8 @@ if ($DB_VERS_JSON === null) {
 <script>
     document.title = "Administration - Base de donnée";
 </script>
+
+<!-- <pre><?= print_r($_SESSION) ?></pre> -->
 
 <table>
     <thead>

@@ -176,20 +176,6 @@ form {
     flex-direction: column;
 }
 
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-}
-
-input, select {
-    width: 100%;
-    padding: 8px;
-    margin: 8px 0px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
 .group-checkboxes {
     margin-bottom: 16px;
 }

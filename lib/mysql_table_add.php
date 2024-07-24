@@ -27,9 +27,13 @@ function insertDataPDO($tableName, $data, $pdo)
         // Exécution de la requête avec les valeurs des données
         $stmt->execute(array_values($data));
 
+        logMessage($pdo, 'ERROR', 'Ajout de données à la table: '.$tableName.' effectué', getUserIdentifiant());
+
         return "succes";
     } catch (PDOException $e) {
+        logMessage($pdo, 'ERROR', 'Echec d\'ajout de données à la table: '.$tableName.' || Erreur SQL: '.$e->getMessage(), getUserIdentifiant());
         return "Erreur lors de l'ajout des données à la table $tableName : " . $e->getMessage();
+        
     }
 }
 

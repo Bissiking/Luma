@@ -29,10 +29,19 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
     <nav id="nav-dashboard">
         <ul>
             <li id="dashboard" class="select"><i class="fa-solid fa-table-columns"></i><span>Tableau de bord</span></li>
-            <li id="configuration"><i class="fa-solid fa-wrench"></i><span>Configuration de l'agent</span></li>
-            <li id="docker"><i class="fa-brands fa-docker"></i><span>Docker</span></li>
-            <li style="color: grey;"><i class="fa-solid fa-cube"></i><span>Minecraft</span></li>
-            <li style="color: grey;"><i class="fa-solid fa-play"></i><span>Nino (Player ou agent)</span></li>
+
+            <?php if ($agent['module'] == 'agent_luma') : ?>
+                <li id="configuration"><i class="fa-solid fa-wrench"></i><span>Configuration de l'agent</span></li>
+                <li id="docker"><i class="fa-brands fa-docker"></i><span>Docker</span></li>
+            <?php endif; ?>
+
+            <?php if ($agent['module'] == 'agent_minecraft') : ?>
+                <li style="color: grey;"><i class="fa-solid fa-cube"></i><span>Minecraft</span></li>
+            <?php endif; ?>
+
+            <?php if ($agent['module'] == 'agent_nino') : ?>
+                <li style="color: grey;"><i class="fa-solid fa-play"></i><span>Nino (Player ou agent)</span></li>
+            <?php endif; ?>
             <li style="color: grey;"><i class="fa-solid fa-clipboard-list"></i><span>Logs</span></li>
         </ul>
     </nav>
@@ -104,88 +113,90 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
     </div>
 </div>
 
-<!-- --------------- CONFIG --------------- -->
 
-<div class="bloc-agent hidden" id="content-configuration">
-    <h3>Configuration de l'agent</h3>
+<?php if ($agent['module'] == 'agent_luma') : ?>
+    <!-- --------------- CONFIG --------------- -->
 
-    <?php
-    $agent_module = [
-        0 => ['label' => 'Désactivé', 'class' => 'offline'],
-        1 => ['label' => 'Activé', 'class' => 'active']
-    ];
+    <div class="bloc-agent hidden" id="content-configuration">
+        <h3>Configuration de l'agent</h3>
 
-    // Les informations de chaque module avec les colonnes spécifiques
-    $modules = [
-        'processor' => [
-            'name' => 'Sonde du processeur',
-            'autostart' => 'ProcessorModule_autostart',
-            'autorestart' => 'ProcessorModule_autorestart'
-        ],
-        'memory' => [
-            'name' => 'Sonde de la mémoire',
-            'autostart' => 'MemoryModule_autostart',
-            'autorestart' => 'MemoryModule_autorestart'
-        ],
-        'disk' => [
-            'name' => 'Sonde des disques',
-            'autostart' => 'DiskModule_autostart',
-            'autorestart' => 'DiskModule_autorestart'
-        ],
-        'jellyfin' => [
-            'name' => 'Sonde de JellyFin',
-            'autostart' => 'JellyFinProcessCheck_autostart',
-            'autorestart' => 'JellyFinProcessCheck_autorestart'
-        ],
-        'plex' => [
-            'name' => 'Sonde de Plex',
-            'autostart' => 'PlexProcessCheck_autostart',
-            'autorestart' => 'PlexProcessCheck_autorestart'
-        ],
-        'beammp' => [
-            'name' => 'Sonde de BeamMP',
-            'autostart' => 'BeamMPProcessCheck_autostart',
-            'autorestart' => 'BeamMPProcessCheck_autorestart'
-        ],
-        'docker' => [
-            'name' => 'Sonde docker',
-            'autostart' => 'DockerModule_autostart',
-            'autorestart' => 'DockerModule_autorestart'
-        ]
-    ];
+        <?php
+        $agent_module = [
+            0 => ['label' => 'Désactivé', 'class' => 'offline'],
+            1 => ['label' => 'Activé', 'class' => 'active']
+        ];
 
-    // La fonction pour générer le HTML de chaque module
-    function generateModuleHtml($module_key, $module_info, $agent_module, $agent)
-    {
-        $autostart_state = $agent[$module_info['autostart']];
-        $autorestart_state = $agent[$module_info['autorestart']];
+        // Les informations de chaque module avec les colonnes spécifiques
+        $modules = [
+            'processor' => [
+                'name' => 'Sonde du processeur',
+                'autostart' => 'ProcessorModule_autostart',
+                'autorestart' => 'ProcessorModule_autorestart'
+            ],
+            'memory' => [
+                'name' => 'Sonde de la mémoire',
+                'autostart' => 'MemoryModule_autostart',
+                'autorestart' => 'MemoryModule_autorestart'
+            ],
+            'disk' => [
+                'name' => 'Sonde des disques',
+                'autostart' => 'DiskModule_autostart',
+                'autorestart' => 'DiskModule_autorestart'
+            ],
+            'jellyfin' => [
+                'name' => 'Sonde de JellyFin',
+                'autostart' => 'JellyFinProcessCheck_autostart',
+                'autorestart' => 'JellyFinProcessCheck_autorestart'
+            ],
+            'plex' => [
+                'name' => 'Sonde de Plex',
+                'autostart' => 'PlexProcessCheck_autostart',
+                'autorestart' => 'PlexProcessCheck_autorestart'
+            ],
+            'beammp' => [
+                'name' => 'Sonde de BeamMP',
+                'autostart' => 'BeamMPProcessCheck_autostart',
+                'autorestart' => 'BeamMPProcessCheck_autorestart'
+            ],
+            'docker' => [
+                'name' => 'Sonde docker',
+                'autostart' => 'DockerModule_autostart',
+                'autorestart' => 'DockerModule_autorestart'
+            ]
+        ];
 
-        $autostart_button = $agent_module[$autostart_state];
-        $autorestart_button = $agent_module[$autorestart_state];
+        // La fonction pour générer le HTML de chaque module
+        function generateModuleHtml($module_key, $module_info, $agent_module, $agent)
+        {
+            $autostart_state = $agent[$module_info['autostart']];
+            $autorestart_state = $agent[$module_info['autorestart']];
 
-        echo "
+            $autostart_button = $agent_module[$autostart_state];
+            $autorestart_button = $agent_module[$autorestart_state];
+
+            echo "
     <div class='content-agent config-agent-$module_key'>
         <h4>{$module_info['name']}</h4>
         <p class='config-agent'>Activer/Désactiver la sonde: <button id='autostart-$module_key' class='edit-Config agent {$autostart_button['class']}' data-button='{$autostart_button['class']}'>{$autostart_button['label']}</button></p>
         <p class='config-agent'>Activer/Désactiver le redémarrage auto en cas d'échec: <button id='autorestart-$module_key' class='edit-Config agent {$autorestart_button['class']}' data-button='{$autorestart_button['class']}'>{$autorestart_button['label']}</button></p>
     </div>";
-    }
+        }
 
-    // Générer le HTML pour chaque module
-    foreach ($modules as $module_key => $module_info) {
-        generateModuleHtml($module_key, $module_info, $agent_module, $agent);
-    }
-    ?>
+        // Générer le HTML pour chaque module
+        foreach ($modules as $module_key => $module_info) {
+            generateModuleHtml($module_key, $module_info, $agent_module, $agent);
+        }
+        ?>
 
 
-    <!-- <?php
-            $agent_module = [
-                0 => ['label' => 'Désactivé', 'class' => 'offline'],
-                1 => ['label' => 'Activé', 'class' => 'active']
-            ];
+        <!-- <?php
+                $agent_module = [
+                    0 => ['label' => 'Désactivé', 'class' => 'offline'],
+                    1 => ['label' => 'Activé', 'class' => 'active']
+                ];
 
-            $state = $agent_states[$agent['agent_etat']] ?? $agent_states['default'];
-            ?>
+                $state = $agent_states[$agent['agent_etat']] ?? $agent_states['default'];
+                ?>
 
     <div class="content-agent config-agent-processeur">
         <h4>Sonde du processeur</h4>
@@ -229,15 +240,20 @@ if (!isset($uuid) || $uuid == null || $uuid == "uuid") {
         <p class="config-agent">Activer/Désactiver la sonde: <button class="agent offline" data-button="offline">Désactivé</button></p>
         <p class="config-agent">Activer/Désactiver le redémarrage auto en cas d'échec: <button class="agent offline">Désactivé</button></p>
     </div> -->
-</div>
+    </div>
 
-<!-- --------------- DOCKER --------------- -->
 
-<div class="bloc-agent hidden" id="content-docker">
-    <h3>Containers docker</h3>
-</div>
+    <!-- --------------- DOCKER --------------- -->
 
+    <div class="bloc-agent hidden" id="content-docker">
+        <h3>Containers docker</h3>
+    </div>
+
+<?php endif; ?>
 <script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/agent/new-dash.js?0"></script>
 <script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/agent/bloc/dashboard.js?0"></script>
-<script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/agent/bloc/configuration.js?0"></script>
-<script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/agent/bloc/docker.js?0"></script>
+
+<?php if ($agent['module'] == 'agent_luma') : ?>
+    <script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/agent/bloc/configuration.js?0"></script>
+    <script src="<?= SITE_HTTP . SITE_URL ?>/javascripts/agent/bloc/docker.js?0"></script>
+<?php endif; ?>

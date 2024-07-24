@@ -24,35 +24,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $identifiant = htmlspecialchars(trim($identifiant));
     $password = htmlspecialchars(trim($password));
 
-    if(!empty($_POST)){
+    if (!empty($_POST)) {
         $v = array('identifiant' => $identifiant);
         $sql = 'SELECT * FROM luma_users WHERE identifiant = :identifiant';
         $req = $pdo->prepare($sql);
         $req->execute($v);
         $result = $req->rowCount();
-    
+
         if ($result == 1) {
-            foreach($req as $user){}
+            foreach ($req as $user) {
+            }
             // Vérification du bon domaine
-            
+
 
             $tbldomainUser = explode(',', $user['users_domain']);
             $DomainValid = in_array($_SERVER['HTTP_HOST'], $tbldomainUser);
 
-            if($DomainValid === false){
+            if ($DomainValid === false) {
                 echo 'error_domain';
+                logMessage($pdo, 'ERROR', 'Connexion de l\'utilisateur: ' . getUserIdentifiant() . ' impossible, l\'utilisateur n\'est pas autorisé à se connecter sur le domaine');
+
                 exit;
             }
 
             // Vérification du mot de passe et création de la session
-            if(password_verify($password, $user['password']) && $identifiant == $user['identifiant']){
+            if (password_verify($password, $user['password']) && $identifiant == $user['identifiant']) {
                 // INTEGRATION DES SESSIONS
                 $_SESSION['authentification']['user'] = $user;
-                echo 'succes';    
-            } else { echo 'error #001'; }
-        }else{ echo 'error #002'; }
-    }else{ echo 'empty'; }
-
+                echo 'succes';
+                logMessage($pdo, 'INFO', 'Connexion de l\'utilisateur: ' . getUserIdentifiant() . '');
+            } else {
+                echo 'error #001';
+            }
+        } else {
+            echo 'error #002';
+        }
+    } else {
+        echo 'empty';
+    }
 } else {
     // Méthode de requête incorrecte
     echo 'Méthode de requête incorrecte.';

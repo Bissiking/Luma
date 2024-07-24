@@ -1,6 +1,6 @@
 <?php
 require_once 'config.php';
-
+// echo '-- TSET --';
 try {
     $ERROR = 0;
     $pdo = new PDO ('mysql:host=' . DB_HOST.':'.DB_PORT.';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASSWORD);

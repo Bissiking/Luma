@@ -1,11 +1,16 @@
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+var_dump($pdo);
+var_dump($ERROR);
 
-    require 'base/nexus_base.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    
     require 'lib/mysql_table_select.php';
     require 'lib/mysql_table_update.php';
     $json = file_get_contents('php://input');
+
 
     // Convertir le JSON en tableau associatif
     $data = json_decode($json, true);
@@ -35,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $condition = "uuid_agent = '".$data['uuid']."'";
 
                 // Utilisation de la fonction pour mettre à jour les données
+
                 $update = updateDataPDO($tableName, $dataPDO, $pdo, $condition);
                 if ($update == 'succes') {
                     // Envoie de la config à l'agent

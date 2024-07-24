@@ -28,12 +28,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ";
                 $pdo->exec($insertUser1Query);
             } catch (PDOException $e) {
+                logMessage($pdo, 'ERROR', 'Echec de l\'ajout de route: '.$selectedEntry['routeName'].' || SQL ERROR: '.$e->getMessage(), getUserIdentifiant());
                 echo 'configCreateTable01-echec --> ' . $e->getMessage();
                 exit;
             }
             echo 'succes';
+            logMessage($pdo, 'INFO', 'Route '.$selectedEntry['routeName'].' ajouté avec succès', getUserIdentifiant());
+
         }else {
             echo 'NOK';
+            logMessage($pdo, 'ERROR', 'Aucune route défini', getUserIdentifiant());
+
         }
         // Afficher les données
         print_r($route);

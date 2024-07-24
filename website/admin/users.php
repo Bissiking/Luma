@@ -6,7 +6,7 @@ if ($_SESSION['authentification']['user']['account_administrator'] !== 1) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     extract($_REQUEST);
 
-    if ($user == 'system'){
+    if ($user == 'system') {
         header('Location: /admin/users?edit&user=system&refused');
         exit;
     }
@@ -195,25 +195,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php if ($ERROR_USER == 1) : ?>
                 <span class="user-invalid">L'utilisateur recherché est invalide ou innexistant</span>
             <?php else : ?>
-                <label for="identifiant">Identifiant :</label>
-                <input type="text" id="identifiant" name="identifiant" placeholder="<?= $user['identifiant'] ?>">
+                <div class="input-container">
+                    <input type="text" id="identifiant" name="identifiant" value="<?= $user['identifiant'] ?>">
+                    <label for="identifiant">Identifiant :</label>
+                    <span class="underline"></span>
+                </div>
 
-                <label for="nom_complet">Nom complet :</label>
-                <input type="text" id="nom_complet" name="nom_complet" value="<?php if (isset($user['nomComplet']) == "") {
-                                                                                    echo '';
-                                                                                } else {
-                                                                                    echo $user['nomComplet'];
-                                                                                }
-                                                                                ?>">
+                <div class="input-container">
+                    <input type="text" id="nom_complet" name="nom_complet" value="<?php if (isset($user['nomComplet']) == "") {
+                                                                                        echo '';
+                                                                                    } else {
+                                                                                        echo $user['nomComplet'];
+                                                                                    }
+                                                                                    ?>">
+                    <label for="nom_complet">Nom complet :</label>
+                    <span class="underline"></span>
+                </div>
+
                 <?php if (defined("DB_LUMA_USERS_VERSION")) :
                     if (DB_LUMA_USERS_VERSION >= 'DB02') : ?>
-                        <label for="email">Adresse e-mail :</label>
-                        <input type="email" id="email" name="email" value="<?php if (isset($user['email']) == "") {
-                                                                                echo '';
-                                                                            } else {
-                                                                                echo $user['email'];
-                                                                            }
-                                                                            ?>">
+                        <div class="input-container">
+                            <input type="email" id="email" name="email" value="
+                            <?php if (isset($user['email'])) {
+                                echo $user['email'];
+                            } ?>">
+                            <label for="email">Adresse e-mail :</label>
+                            <span class="underline"></span>
+
+                        </div>
+
                 <?php endif;
                 endif; ?>
                 <ul class="domain-list" id="domainList">
@@ -245,8 +255,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     endif;
                     ?>
                 </ul>
-                <?php if($user['account_system'] !== 1): ?>
-                <button id="editUserInfo">Enregistrer les modifications</button>
+                <?php if ($user['account_system'] !== 1) : ?>
+                    <button id="editUserInfo">Enregistrer les modifications</button>
                 <?php endif; ?>
             <?php endif; ?>
 
@@ -285,60 +295,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </thead>
         <tbody>
             <tr>
-            <?php if (defined('DB_LUMA_USERS_VERSION') && DB_LUMA_USERS_VERSION >= 'DB02'): ?>
-                <!-- FORMULAIRE D'AJOUT DE COMPTE (FORCED) -->
-                <td><input id="add-nomComplet" type="text" name="nom_complet" placeholder="SMITH John" require></td>
-                <td><input id="add-identifiant" type="identifiant" name="identifiant" placeholder="jsmith44" require></td>
-                <td><input id="add-email" type="email" name="email" placeholder="smith.john@mhemery.fr"></td>
-                <td><select id="add-account_administrator" type="account_administrator" name="account_administrator">
-                        <option value="1">Oui</option>
-                        <option value="0" selected>Non</option>
-                    </select></td>
-                <td><button id="add-btn" onclick="addUser()">Ajouter</button></td>
+                <?php if (defined('DB_LUMA_USERS_VERSION') && DB_LUMA_USERS_VERSION >= 'DB02') : ?>
+                    <!-- FORMULAIRE D'AJOUT DE COMPTE (FORCED) -->
+                    <td><input id="add-nomComplet" type="text" name="nom_complet" placeholder="SMITH John" require></td>
+                    <td><input id="add-identifiant" type="identifiant" name="identifiant" placeholder="jsmith44" require></td>
+                    <td><input id="add-email" type="email" name="email" placeholder="smith.john@mhemery.fr"></td>
+                    <td><select id="add-account_administrator" type="account_administrator" name="account_administrator">
+                            <option value="1">Oui</option>
+                            <option value="0" selected>Non</option>
+                        </select></td>
+                    <td><button id="add-btn" onclick="addUser()">Ajouter</button></td>
             </tr>
             <?php endif;
-            require './base/nexus_base.php';
-            $sql = 'SELECT * FROM luma_users';
-            $req = $pdo->prepare($sql);
-            $req->execute();
-            $result = $req->rowCount();
-            if ($result >= 1) :
-                while ($user = $req->fetch()) {
+                require './base/nexus_base.php';
+                $sql = 'SELECT * FROM luma_users';
+                $req = $pdo->prepare($sql);
+                $req->execute();
+                $result = $req->rowCount();
+                if ($result >= 1) :
+                    while ($user = $req->fetch()) {
             ?>
-                    <tr>
-                        <td><?php if ($user['nomComplet'] == '') {
+                <tr>
+                    <td><?php if ($user['nomComplet'] == '') {
+                            echo 'Unknown';
+                        } else {
+                            echo $user['nomComplet'];
+                        } ?></td>
+                    <td><?= $user['identifiant'] ?></td>
+                    <td><?php if (defined('DB_LUMA_USERS_VERSION') && DB_LUMA_USERS_VERSION >= 'DB02') {
+                            if (!isset($user['email']) || $user['email'] == "") {
                                 echo 'Unknown';
                             } else {
-                                echo $user['nomComplet'];
-                            } ?></td>
-                        <td><?= $user['identifiant'] ?></td>
-                        <td><?php if (defined('DB_LUMA_USERS_VERSION') && DB_LUMA_USERS_VERSION >= 'DB02') {
-                            if(!isset($user['email']) || $user['email'] == ""){
-                                echo 'Unknown';
-                            }else{
                                 echo $user['email'];
                             }
-                        }else{ echo "Votre base de donnée n'est pas à jour"; } ?></td>
-                        <td><?php if ($user['account_administrator'] == 0) {
-                                echo 'Non';
-                            } else {
-                                echo 'Oui';
-                            } ?></td>
-                        <td class="options">
-                            <i class="fa-solid fa-user-pen edit-user" data-identifiant="<?= $user['identifiant'] ?>"></i>
-                        </td>
-                    </tr>
-                <?php }
-            else : ?>
-                <tr>
-                    <td>####</td>
-                    <td>NO USER</td>
-                    <td>####</td>
-                    <td>####</td>
+                        } else {
+                            echo "Votre base de donnée n'est pas à jour";
+                        } ?></td>
+                    <td><?php if ($user['account_administrator'] == 0) {
+                            echo 'Non';
+                        } else {
+                            echo 'Oui';
+                        } ?></td>
+                    <td class="options">
+                        <i class="fa-solid fa-user-pen edit-user" data-identifiant="<?= $user['identifiant'] ?>"></i>
+                    </td>
                 </tr>
-            <?php endif; ?>
+            <?php }
+                else : ?>
+            <tr>
+                <td>####</td>
+                <td>NO USER</td>
+                <td>####</td>
+                <td>####</td>
+            </tr>
+        <?php endif; ?>
 
-            <!-- Ajoutez d'autres lignes pour chaque utilisateur -->
+        <!-- Ajoutez d'autres lignes pour chaque utilisateur -->
         </tbody>
     </table>
 <?php endif;  ?>
