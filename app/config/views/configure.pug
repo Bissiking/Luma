@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    h1 Configuration manquante
+    p.popup.popup-info Fichier de configuration de la base de donnée non trouvé.
+    p.popup.popup-error Formulaire non fonctionnel. Création du fichier manuellement obligatoire
+
+    div.content-center
+        form.formBlock
+            h3 Configuration de la base de donnée
+            div.omrs-input-group
+                label.omrs-input-underlined
+                    input#ip-domain-mongodb(required)
+                    span.omrs-input-label Adresse IP ou domaine de mongoDB
+                    span.omrs-input-helper Ne pas mettre https ou autres
+            div.omrs-input-group
+                label.omrs-input-underlined
+                    input#SecretKey(required)
+                    span.omrs-input-label Mot de passe ou clé de la base de donnée
+                    span.omrs-input-helper Tout est dit ....
+            div.button-block.button-right
+                button.button-std-dark(role="button") 
+                    span Validation

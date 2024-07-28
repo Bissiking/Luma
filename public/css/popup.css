@@ -1,0 +1,16 @@
+p.popup{
+    display: flex;
+    margin: 5px 0px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.3);
+
+}
+
+p.popup-info{
+    background-color: rgba(0, 183, 255, 0.8);
+}
+
+p.popup-error{
+    background-color: rgba(180, 0, 0, 0.8);
+}

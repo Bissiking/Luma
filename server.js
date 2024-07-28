@@ -25,24 +25,27 @@ app.use(express.static('public'));
 
 // Route de base pour vérifier la configuration
 app.get('/', (req, res) => {
-    if (!mongoConfig || lumaConfig.install) {
-        console.log('CONFIG MODE');
-        return res.render('configure', { title: 'Configuration requise', message: 'Configuration de MongoDB' });
-    }
+    // if (!mongoConfig.mongoActive || lumaConfig.install) {
+
+    //     console.log("MONGO CONFIG -- " + mongoConfig);
+    //     console.log(lumaConfig.install);
+    //     console.log('CONFIG MODE');
+    //     return res.render('configure', { title: 'Configuration requise', message: 'Configuration de MongoDB' });
+    // }
     res.render('index', { title: 'Page d\'accueil', message: 'Bienvenue sur mon site Node.js !' });
 });
 
 // Connexion à MongoDB
 connectDB().then(() => {
     // Configurer les sessions seulement si la configuration existe et install est false
-    if (mongoConfig) {
-        app.use(session({
-            secret: mongoConfig.secretOrKey,
-            resave: false,
-            saveUninitialized: false,
-            store: MongoStore.create({ mongoUrl: mongoConfig.mongoURI })
-        }));
-    }
+    // if (mongoConfig) {
+    //     app.use(session({
+    //         secret: mongoConfig.secretOrKey,
+    //         resave: false,
+    //         saveUninitialized: false,
+    //         store: MongoStore.create({ mongoUrl: mongoConfig.mongoURI })
+    //     }));
+    // }
 
     // Configurer les routes
     setupRoutes(app);
