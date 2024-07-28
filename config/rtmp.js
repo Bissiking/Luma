@@ -1,6 +1,6 @@
-const path = require('path');
+const NodeMediaServer = require('node-media-server');
 
-module.exports = {
+const config = {
   rtmp: {
     port: 1935,
     chunk_size: 60000,
@@ -10,18 +10,25 @@ module.exports = {
   },
   http: {
     port: 8000,
-    allow_origin: '*'
+    allow_origin: '*',
+    mediaroot: './media',
+    webroot: './www',
+    api: true
   },
   trans: {
-    ffmpeg: '/usr/local/bin/ffmpeg', // Chemin correct vers votre installation FFmpeg
+    ffmpeg: 'C:/ffmpeg/bin/ffmpeg.exe',
     tasks: [
       {
-        app: 'live', // Assurez-vous que l'application est 'live'
+        app: 'live',
+        vc: 'copy',
+        ac: 'aac',
         hls: true,
-        hlsFlags: '[hls_time=8:hls_list_size=3:hls_flags=delete_segments+append_list]',
+        hlsFlags: '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]',
         dash: false
       }
     ]
-  },
-  mediaRoot: path.join(__dirname, '..', 'streams') // Chemin absolu du répertoire MediaRoot
+  }
 };
+
+const nms = new NodeMediaServer(config);
+nms.run();
