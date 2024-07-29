@@ -23,7 +23,7 @@ const config = {
         vc: 'copy',
         ac: 'aac',
         hls: true,
-        hlsFlags: '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]',
+        hlsFlags: '[hls_time=4:hls_list_size=6:hls_flags=delete_segments]',
         dash: false
       }
     ]
