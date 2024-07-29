@@ -1,0 +1,20 @@
+extends ../layouts/layout_nino
+
+block content
+    //- Assurez-vous que `videos` contient les données appropriées
+    - videos.sort((a, b) => new Date(b.datetimepicker) - new Date(a.datetimepicker));
+    if Array.isArray(videos)
+        each video in videos
+            .video-item
+                .video-tools
+                    i.fa-regular.fa-circle-play(onclick=`PlayVideo('${video.id}')`)
+                img(src=`${url}/Thumbnail/${video.id}`, alt=video.titre)
+                a(href=`details/${video.id}`).video-title= video.titre
+    else
+        p Aucune vidéo disponible
+    
+    
+    script.
+        function PlayVideo(id){
+            window.location.href = '/play/'+id;
+        }

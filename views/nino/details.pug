@@ -1,0 +1,41 @@
+//- views/details.pug
+
+extends ../layouts/layout_nino
+
+block content
+    link(rel="stylesheet" href="/css/nino/details.css")
+    if video
+        .video-thumbnail(style=`background-image: url(${url}/Thumbnail/${video.data.id})`)
+        .video-title
+            h1.title= video.data.titre
+        .video-info
+            .options 
+                i.fa-solid.fa-play
+                i.fa-solid.fa-check.disable
+                i.fa-solid.fa-heart.disable
+
+            .description
+                //- Itération à travers chaque ligne de la description
+                each line in video.data.description.split('\n')
+                    p= line
+
+            .metadata
+                p 
+                    span.label Format :
+                    span.data= video.metadata.format.format_long_name
+                p   
+                    span.label Résolution :
+                    span.data= video.metadata.streams[0].width + 'x' + video.metadata.streams[0].height
+                p   
+                    span.label Codec vidéo :
+                    span.data= video.metadata.streams[0].codec_long_name
+                p
+                    span.label Codec audio :
+                    span.data= video.metadata.streams[1].codec_long_name
+    else
+        p Aucune vidéo trouvée pour cet ID
+
+    script. 
+        $('.fa-play').click(function(){
+            window.location.href = '/play/' + '#{video.data.id}';
+        });

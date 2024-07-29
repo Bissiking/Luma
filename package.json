@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "await": "^0.2.6",
+    "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "connect-mongo": "^5.1.0",
     "express": "^4.19.2",

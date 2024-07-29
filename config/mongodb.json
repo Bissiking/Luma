@@ -1,5 +1,0 @@
-{
-    "mongoURI": "mongodb://127.0.0.1/",
-    "secret": "",
-    "mongoActive": false
-}

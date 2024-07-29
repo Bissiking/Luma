@@ -1,31 +1,159 @@
-:root {
-	font-family: 'Arial', sans-serif;
-	--background-color: #ffffff;
-	--text-color: #000000;
-	--input-background-color: #f0f0f0;
-	--input-text-color: #333333;
-}
-
-[data-theme="dark"] {
-	--background-color: #1c1c1c;
-	--text-color: #f0f0f0;
-	--input-background-color: #333333;
-	--input-text-color: #f0f0f0;
-}
-
+/* Styles globaux */
 body {
-	background-color: var(--background-color);
-	color: var(--text-color);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #181818;
 }
 
-.omrs-input-group .omrs-input-underlined input {
-	background-color: var(--input-background-color);
-	color: var(--input-text-color);
+/* PROVISOIRE */
+#msg-dev{
+    background-color: rgb(0, 127, 211);
+    position: absolute;
+    top: 35px;
+    left: 25%;
+    right: 25%;
+    z-index: 1;
+    border-radius: 5px;
+    padding: 2px 5px;
+    width: 50%;
 }
 
-.content-center {
-	width: 100%;
-	margin: 10px;
-	display: flex;
-	justify-content: center;
+header {
+    height: 50px;
+    background-color: #333;
+    color: white;
+    padding: 5px 0;
+    text-align: center;
+}
+
+h1{
+    padding: 0px;
+}
+
+nav {
+    background-color: #444;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+}
+
+nav a:hover {
+    background-color: #555;
+}
+
+main {
+    padding: 20px;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Button */
+.button-block{
+    display: flex;
+    justify-content: space-between;
+}
+
+.custom-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.custom-button:hover {
+    background-color: #0056b3;
+}
+
+.cancel{
+    background-color: rgb(202, 0, 0);
+}
+
+.button-connexion-deconnexion{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* INPUT */
+.input-container {
+    position: relative;
+    margin: 15px 0px;
+}
+
+/* Styles pour les input */
+input,
+select {
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 2px solid rgb(62, 68, 70);
+    outline: none;
+    background-color: transparent;
+}
+
+input:focus,
+select:focus {
+    border-bottom: 2px solid #007bff;
+}
+
+label {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    color: #777;
+    transition: top 0.3s, font-size 0.3s, color 0.3s;
+}
+
+input:focus + label,
+input:not(:placeholder-shown) + label,
+select:focus + label,
+select:not([value=""]) + label {
+    top: -10px;
+    font-size: 12px;
+    color: #007bff;
+}
+
+.underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #007bff;
+    transform: scaleX(0);
+    transition: transform 0.3s;
+}
+
+input:focus ~ .underline,
+select:focus ~ .underline {
+    transform: scaleX(1);
+}
+
+@media screen and (max-width: 500px)  {
+    main{
+        justify-items: center;
+    }
+    #logo-nino{
+        display: none;
+    }
+    #msg-dev{
+        display: none;
+    }
 }

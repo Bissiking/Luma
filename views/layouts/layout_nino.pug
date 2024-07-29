@@ -1,0 +1,42 @@
+doctype html
+html(lang="fr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Nino
+    link(rel="icon" type="image/png" href="/images/small_logo75.png")
+    link(rel="stylesheet" href="/css/all.min.css")
+    link(rel="stylesheet" href="/css/style.css")
+    link(rel="stylesheet" href="/css/nino/menu-player.css")
+    link(rel="stylesheet" href="/css/nino/video-bloc.css")
+    script(src="/javascripts/jquery.js") 
+    script(src="/javascripts/axios.js") 
+  body
+    header
+      img#logo-nino(src="/images/logo150-1.png" alt="Nino")
+        //- Afficher la valeur de req.session.authenticated
+      if authenticated
+        button.custom-button.button-connexion-deconnexion.cancel#logout Déconnexion
+      else
+        button.custom-button.button-connexion-deconnexion#login Connexion
+
+    #menu-nino(onclick="BtnMenu('menu-nino')" data-windows="MenuNINO")
+      span.bar
+      span.bar
+      span.bar
+    #MenuNINO(data-open='close')
+      h4 Nino
+      a.block-url(href='/')
+        i.fa-solid.fa-house
+        p Retour à LUMA
+      a.block-url(href='/nino')
+        i.fa-solid.fa-rotate-left
+        p Vidéo Nino
+      a.block-url(href='/nino/streams')
+        i.fa-solid.fa-video
+        p Stream
+    main
+      //- Contenu de la page
+      block content
+
+    script(src="/javascripts/allpages.js")

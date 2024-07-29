@@ -1,0 +1,66 @@
+extends ../layouts/layout_nino
+
+block content
+    link(rel="stylesheet" href="/css/nino/play.css")
+    figure#videoContainer.video-container-player
+        video.video-player.VideoHeightMax#Player(poster=`${url}/Thumbnail/${video.data.id}`)
+        div#customControls(data-fullscreen="false")
+            span#progressBar.progress-bar.progress-bar-fill-player
+                span#timer-player-progress-video.timer-player 0:00
+                span#timer-player-total-video.timer-player 0:00
+            span#progressBarLoader.progress-bar.progress-bar-fill-loader
+            div.controls-btn.controls-left
+                i#volume-mute.fa-solid.fa-volume-low
+                .slider-container
+                    input.slider(type="range" min="0" max="100" value="50" id="volumeSlider")
+            div.controls-btn.controls-center
+                i#back10SecBtn.fa-solid.fa-clock-rotate-left
+                i#playPauseBtn.fas.fa-play
+                i#skip10SecBtn.fa-solid.fa-clock-rotate-left
+            div.controls-btn.controls-right
+                span.TimeEnd Se termine à 
+                    span#TimeEndVideo **:**
+                i#PiP.fa-solid.fa-window-restore
+                i#fullscreenBtn.fas.fa-expand
+
+    script(src="/javascripts/hls.js") 
+    script(src="/javascripts/play.js") 
+    script(src="/javascripts/play-fullscreen.js") 
+    script.
+
+        var url = '#{url}/#{video.data.id}';
+        var id = new URL(url).pathname;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var videoContainer = document.getElementById("videoContainer");
+            var fsButton = document.getElementById("fullscreenBtn");
+
+            fsButton.addEventListener("click", function() {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    if (videoContainer.requestFullscreen) {
+                        videoContainer.requestFullscreen();
+                    } else if (videoContainer.webkitRequestFullscreen) {
+                        /* Safari */
+                        videoContainer.webkitRequestFullscreen();
+                    } else if (videoContainer.msRequestFullscreen) {
+                        /* IE11 */
+                        videoContainer.msRequestFullscreen();
+                    }
+                }
+            });
+        });
+
+        //- HLS
+        const video = document.getElementById('Player');
+        const videoSrc = url + '/nino.m3u8';
+        if (Hls.isSupported()) {
+            const hls = new Hls();
+            hls.loadSource(videoSrc);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, () => {});
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = videoSrc;
+            video.addEventListener('loadedmetadata', () => {});
+        }
