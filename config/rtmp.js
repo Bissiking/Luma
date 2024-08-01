@@ -25,6 +25,14 @@ const config = {
         hls: true,
         hlsFlags: '[hls_time=4:hls_list_size=6:hls_flags=delete_segments]',
         dash: false
+      },
+      {
+        app: 'live',
+        vc: 'copy',
+        ac: 'aac',
+        mp4: true,
+        mp4Flags: '[movflags=frag_keyframe+empty_moov]',
+        flv: true
       }
     ]
   }
